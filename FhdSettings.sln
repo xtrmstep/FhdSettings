@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Impl.Tests", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Api", "FhdSettings.Api\FhdSettings.Api.csproj", "{02D60764-2774-44B0-8710-BFFBC7889B50}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Api.Tests", "FhdSettings.Api.Tests\FhdSettings.Api.Tests.csproj", "{212CB691-BA58-41D5-A780-7528BC8AB37E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Api.MsTests", "FhdSettings.Api.MsTests\FhdSettings.Api.MsTests.csproj", "{8AB5983D-2712-4081-9C7C-DD9F28E0C96C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +45,21 @@ Global
 		{02D60764-2774-44B0-8710-BFFBC7889B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02D60764-2774-44B0-8710-BFFBC7889B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02D60764-2774-44B0-8710-BFFBC7889B50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{212CB691-BA58-41D5-A780-7528BC8AB37E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{212CB691-BA58-41D5-A780-7528BC8AB37E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{212CB691-BA58-41D5-A780-7528BC8AB37E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{212CB691-BA58-41D5-A780-7528BC8AB37E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB5983D-2712-4081-9C7C-DD9F28E0C96C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB5983D-2712-4081-9C7C-DD9F28E0C96C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB5983D-2712-4081-9C7C-DD9F28E0C96C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB5983D-2712-4081-9C7C-DD9F28E0C96C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C7D7C823-48F4-48B2-B6D3-96DB5A387E3A} = {E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}
+		{212CB691-BA58-41D5-A780-7528BC8AB37E} = {E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}
+		{8AB5983D-2712-4081-9C7C-DD9F28E0C96C} = {E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}
 	EndGlobalSection
 EndGlobal

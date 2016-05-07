@@ -4,37 +4,45 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using FhdSettings.Api.Controllers.Attributes;
+using FhdSettings.Data;
+using FhdSettings.Data.Models;
 
 namespace FhdSettings.Api.Controllers
 {
-    [Authorize]
+    [ValidateAuthToken]
     public class RulesController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
+        private ICrawlerRepository crawlerRepository;
+
+        public RulesController(ICrawlerRepository crawlerRepository)
         {
-            return new string[] { "value1", "value2" };
+            this.crawlerRepository = crawlerRepository;
         }
 
-        // GET api/values/5
-        public string Get(int id)
+        public IEnumerable<CrawlRule> Get(string host)
         {
-            return "value";
+            return crawlerRepository.GetRules(host);
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
+        public CrawlRule Get(Guid id)
         {
+            return crawlerRepository.GetRule(id);
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        public void Post([FromBody]CrawlRule rule)
         {
+            crawlerRepository.AddRule(rule);
         }
 
-        // DELETE api/values/5
-        public void Delete(int id)
+        public void Put(Guid id, [FromBody]CrawlRule rule)
         {
+            crawlerRepository.UpdateRule(rule);
+        }
+
+        public void Delete(Guid id)
+        {
+            crawlerRepository.RemoveRule(id);
         }
     }
 }
