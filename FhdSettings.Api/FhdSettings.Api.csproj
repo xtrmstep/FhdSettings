@@ -83,8 +83,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Auth\AuthToken.cs" />
+    <Compile Include="Models\Auth\AuthTokenViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\ViewModelMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

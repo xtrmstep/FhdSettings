@@ -10,5 +10,10 @@ namespace FhdSettings.Api.Tests.Controllers
     [TestClass]
     public class RulesControllerTests
     {
+        [TestInitialize]
+        public void Setup()
+        {
+            //var 
+        }
     }
 }
