@@ -16,14 +16,4 @@ namespace FhdSettings.Data.Models
         public string Host { get; set; }
         public NumericDataType DataType { get; set; }
     }
-
-    /// <summary>
-    ///     Type of numeric data
-    /// </summary>
-    public enum NumericDataType
-    {
-        Likes,
-        Views,
-        Comments
-    }
 }

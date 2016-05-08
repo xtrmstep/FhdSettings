@@ -8,6 +8,29 @@ namespace FhdSettings.Impl.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.AuthTokens",
+                c => new
+                    {
+                        ServiceCode = c.String(nullable: false, maxLength: 128),
+                        Token = c.String(),
+                        Expires = c.DateTimeOffset(nullable: false, precision: 7),
+                    })
+                .PrimaryKey(t => t.ServiceCode)
+                .ForeignKey("dbo.ClinetServices", t => t.ServiceCode)
+                .Index(t => t.ServiceCode);
+            
+            CreateTable(
+                "dbo.ClinetServices",
+                c => new
+                    {
+                        Code = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(),
+                        Password = c.String(),
+                        PasswordExpires = c.DateTimeOffset(precision: 7),
+                    })
+                .PrimaryKey(t => t.Code);
+            
+            CreateTable(
                 "dbo.CrawlHostSettings",
                 c => new
                     {
@@ -54,10 +77,14 @@ namespace FhdSettings.Impl.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.AuthTokens", "ServiceCode", "dbo.ClinetServices");
+            DropIndex("dbo.AuthTokens", new[] { "ServiceCode" });
             DropTable("dbo.NumericDataExtractorRules");
             DropTable("dbo.CrawlUrlSeeds");
             DropTable("dbo.CrawlRules");
             DropTable("dbo.CrawlHostSettings");
+            DropTable("dbo.ClinetServices");
+            DropTable("dbo.AuthTokens");
         }
     }
 }
