@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using FhdSettings.Data.Models;
 
 namespace FhdSettings.Impl
@@ -14,6 +9,5 @@ namespace FhdSettings.Impl
         public DbSet<CrawlHostSetting> CrawlHostSettings { get; set; }
         public DbSet<CrawlUrlSeed> CrawlUrlSeeds { get; set; }
         public DbSet<NumericDataExtractorRule> NumericDataExtractorRules { get; set; }
-
     }
 }
