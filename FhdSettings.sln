@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings", "FhdSettings\FhdSettings.csproj", "{12932E4F-AADD-4885-91AB-5BF0BDAEAB42}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Web", "FhdSettings.Web\FhdSettings.Web.csproj", "{4941EAAD-85A8-4814-A6ED-D8DD36BE393A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Tests", "FhdSettings.Tests\FhdSettings.Tests.csproj", "{59CFAA45-3FD4-46AD-B33B-A7C6B4EFB843}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{4941EAAD-85A8-4814-A6ED-D8DD36BE393A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4941EAAD-85A8-4814-A6ED-D8DD36BE393A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4941EAAD-85A8-4814-A6ED-D8DD36BE393A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59CFAA45-3FD4-46AD-B33B-A7C6B4EFB843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59CFAA45-3FD4-46AD-B33B-A7C6B4EFB843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59CFAA45-3FD4-46AD-B33B-A7C6B4EFB843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59CFAA45-3FD4-46AD-B33B-A7C6B4EFB843}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,5 +60,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C7D7C823-48F4-48B2-B6D3-96DB5A387E3A} = {E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}
 		{212CB691-BA58-41D5-A780-7528BC8AB37E} = {E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}
+		{59CFAA45-3FD4-46AD-B33B-A7C6B4EFB843} = {E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}
 	EndGlobalSection
 EndGlobal

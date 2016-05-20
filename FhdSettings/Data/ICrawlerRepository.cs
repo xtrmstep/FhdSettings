@@ -48,9 +48,9 @@ namespace FhdSettings.Data
         /// <summary>
         ///     Get a query to get settings for a host of the URL
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="host"></param>
         /// <returns></returns>
-        CrawlHostSetting GetHostSettings(string url);
+        CrawlHostSetting GetHostSettings(string host);
 
         /// <summary>
         ///     Update existing host settings
@@ -69,8 +69,8 @@ namespace FhdSettings.Data
         /// <summary>
         ///     Remove existing host settings
         /// </summary>
-        /// <param name="url"></param>
-        void RemoveHostSettings(string url);
+        /// <param name="host"></param>
+        void RemoveHostSettings(string host);
 
         #endregion
 
