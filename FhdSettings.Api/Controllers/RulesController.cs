@@ -13,36 +13,36 @@ namespace FhdSettings.Api.Controllers
     [ValidateAuthToken]
     public class RulesController : ApiController
     {
-        private ICrawlerRepository crawlerRepository;
+        private readonly ICrawlerRepository _crawlerRepository;
 
         public RulesController(ICrawlerRepository crawlerRepository)
         {
-            this.crawlerRepository = crawlerRepository;
+            _crawlerRepository = crawlerRepository;
         }
 
         public IEnumerable<CrawlRule> Get(string host)
         {
-            return crawlerRepository.GetRules(host);
+            return _crawlerRepository.GetRules(host);
         }
 
         public CrawlRule Get(Guid id)
         {
-            return crawlerRepository.GetRule(id);
+            return _crawlerRepository.GetRule(id);
         }
 
         public void Post([FromBody]CrawlRule rule)
         {
-            crawlerRepository.AddRule(rule);
+            _crawlerRepository.AddRule(rule);
         }
 
         public void Put(Guid id, [FromBody]CrawlRule rule)
         {
-            crawlerRepository.UpdateRule(rule);
+            _crawlerRepository.UpdateRule(rule);
         }
 
         public void Delete(Guid id)
         {
-            crawlerRepository.RemoveRule(id);
+            _crawlerRepository.RemoveRule(id);
         }
     }
 }

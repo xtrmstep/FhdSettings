@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using AutoMapper;
 using FhdSettings.Api.Models.Auth;
 using FhdSettings.Data.Models;
 
@@ -9,8 +7,19 @@ namespace FhdSettings.Api.Types
 {
     public class ViewModelMapper
     {
-        static dynamic _instance = new Lazy<ViewModelMapper>(() => new ViewModelMapper());
-        private static dynamic Instance { get { return _instance.Value; } }
+        private static readonly dynamic _instance = new Lazy<ViewModelMapper>(() => new ViewModelMapper());
+        private readonly IMapper _mapper;
+
+        public ViewModelMapper()
+        {
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<AuthToken, AuthTokenViewModel>(); });
+            _mapper = config.CreateMapper();
+        }
+
+        private static dynamic Instance
+        {
+            get { return _instance.Value; }
+        }
 
         public static TToModel Map<TFromEntity, TToModel>(TFromEntity entity) where TToModel : new()
         {
@@ -21,8 +30,7 @@ namespace FhdSettings.Api.Types
 
         private void MapFromTo(AuthToken from, AuthTokenViewModel to)
         {
-            to.Token = from.Token;
-            to.Expires = from.Expires;
+            _mapper.Map(from, to);
         }
     }
 }

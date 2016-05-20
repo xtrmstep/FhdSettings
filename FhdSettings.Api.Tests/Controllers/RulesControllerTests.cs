@@ -8,9 +8,6 @@ namespace FhdSettings.Api.Tests.Controllers
 {
     public class RulesControllerTests
     {
-        public void Setup()
-        {
-            //var 
-        }
+        
     }
 }

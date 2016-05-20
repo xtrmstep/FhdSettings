@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using FhdSettings.Data;
 using FhdSettings.Data.Models;
-using FhdSettings.Utilities;
 
 namespace FhdSettings.Impl.Repositories
 {

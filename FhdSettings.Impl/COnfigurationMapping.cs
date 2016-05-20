@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using FhdSettings.Data.Models;
+﻿using AutoMapper;
 
 namespace FhdSettings.Impl
 {
@@ -12,7 +6,6 @@ namespace FhdSettings.Impl
     {
         protected override void Configure()
         {
-            
         }
     }
 }

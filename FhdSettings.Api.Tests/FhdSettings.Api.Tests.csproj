@@ -63,9 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\ViewModelMapperTests.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

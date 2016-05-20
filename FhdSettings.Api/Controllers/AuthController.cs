@@ -13,16 +13,16 @@ namespace FhdSettings.Api.Controllers
 {
     public class AuthController : ApiController
     {
-        IAuthRepository authRepository;
+        readonly IAuthRepository _authRepository;
 
         public AuthController(IAuthRepository authRepository)
         {
-            this.authRepository = authRepository;
+            _authRepository = authRepository;
         }
 
         public AuthTokenViewModel Register(string serviceCode, string password)
         {
-            var authToken = authRepository.GetToken(serviceCode, password);
+            var authToken = _authRepository.GetToken(serviceCode, password);
             var model = ViewModelMapper.Map<AuthToken, AuthTokenViewModel>(authToken);
             return model;
         }
