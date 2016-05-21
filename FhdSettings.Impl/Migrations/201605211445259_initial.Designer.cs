@@ -13,7 +13,7 @@ namespace FhdSettings.Impl.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201605081732169_initial"; }
+            get { return "201605211445259_initial"; }
         }
         
         string IMigrationMetadata.Source

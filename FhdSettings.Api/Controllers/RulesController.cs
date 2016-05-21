@@ -10,7 +10,7 @@ using FhdSettings.Data.Models;
 
 namespace FhdSettings.Api.Controllers
 {
-    [ValidateAuthToken]
+    //[ValidateAuthToken]
     public class RulesController : ApiController
     {
         private readonly ICrawlerRepository _crawlerRepository;
