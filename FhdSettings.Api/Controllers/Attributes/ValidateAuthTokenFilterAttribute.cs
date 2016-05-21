@@ -13,12 +13,13 @@ namespace FhdSettings.Api.Controllers.Attributes
     {
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            base.OnAuthorization(actionContext);
-        }
+            //var token = actionContext.Request.Headers.Authorization.Parameter;
+            //if (!IsValid(token))
+            //{
+            //    SimulationRepository.LogEvent("Token X-Fourth-Token is invalid", DateTime.UtcNow);
 
-        public override Task OnAuthorizationAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
-        {
-            return base.OnAuthorizationAsync(actionContext, cancellationToken);
+            //    filterContext.Result = new HttpUnauthorizedResult();
+            //}
         }
     }
 }

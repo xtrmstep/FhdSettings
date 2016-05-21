@@ -18,7 +18,7 @@ namespace FhdSettings.Api.Tests.Controllers
             _testDb = testDb;
         }
 
-        [Fact]
+        [Fact(DisplayName = "GET: api/rules?host=test")]
         public void Should_return_list_of_rules()
         {
             using (var ctx = _testDb.CreateContext())
