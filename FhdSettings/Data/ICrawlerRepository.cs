@@ -77,7 +77,7 @@ namespace FhdSettings.Data
         #region seed
 
         /// <summary>
-        ///     Get the whole list of urls in the seed
+        ///     Get the whole list of URLs in the seed
         /// </summary>
         /// <returns></returns>
         IList<string> GetSeedUrls();

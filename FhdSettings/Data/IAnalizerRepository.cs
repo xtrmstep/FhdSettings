@@ -10,7 +10,7 @@ namespace FhdSettings.Data
         ///     Returns a list of rules to extract numeric data for a specific URL
         /// </summary>
         /// <returns></returns>
-        IList<NumericDataExtractorRule> GetNumericRules(string url);
+        IList<NumericDataExtractorRule> GetNumericRules(string host);
 
         /// <summary>
         ///     Update existing rule
