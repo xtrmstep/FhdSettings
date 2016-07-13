@@ -65,7 +65,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ConfigurationMapping.cs" />
     <Compile Include="Repositories\AnalizerRepository.cs" />
-    <Compile Include="Repositories\AuthRepository.cs" />
     <Compile Include="Repositories\CrawlerRepository.cs" />
     <Compile Include="SettingDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
