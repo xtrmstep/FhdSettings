@@ -1,1 +1,1 @@
-See details here https://github.com/xtrmstep/FhdSettings/wiki
+Find more on [Wiki](https://github.com/xtrmstep/requiem/wiki/Settings)
