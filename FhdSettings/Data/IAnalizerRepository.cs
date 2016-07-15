@@ -7,6 +7,13 @@ namespace FhdSettings.Data
     public interface IAnalizerRepository
     {
         /// <summary>
+        ///     Returns a single rule
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        NumericDataExtractorRule GetNumericRule(Guid id);
+
+        /// <summary>
         ///     Returns a list of rules to extract numeric data for a specific URL
         /// </summary>
         /// <returns></returns>

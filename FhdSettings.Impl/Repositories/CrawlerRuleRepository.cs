@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -7,57 +7,57 @@ using FhdSettings.Data.Models;
 
 namespace FhdSettings.Impl.Repositories
 {
-    internal class AnalizerRepository : IAnalizerRepository
+    internal class CrawlerRuleRepository : ICrawlerRuleRepository
     {
         private readonly IMapper _mapper;
 
-        public AnalizerRepository(IMapper mapper)
+        public CrawlerRuleRepository(IMapper mapper)
         {
             _mapper = mapper;
         }
 
-        public void AddNumericRule(NumericDataExtractorRule rule)
+        public void AddRule(CrawlRule rule)
         {
             using (var ctx = new SettingDbContext())
             {
-                var newRule = ctx.NumericDataExtractorRules.Create();
+                var newRule = ctx.CrawlRules.Create();
                 _mapper.Map(rule, newRule);
-                ctx.NumericDataExtractorRules.Add(newRule);
+                ctx.CrawlRules.Add(newRule);
                 ctx.SaveChanges();
             }
         }
 
-        public NumericDataExtractorRule GetNumericRule(Guid id)
+        public CrawlRule GetRule(Guid ruleId)
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.NumericDataExtractorRules.AsQueryable().FirstOrDefault(r => r.Id == id);
+                return ctx.CrawlRules.AsNoTracking().SingleOrDefault(r => r.Id == ruleId);
             }
         }
 
-        public IList<NumericDataExtractorRule> GetNumericRules(string host)
+        public IList<CrawlRule> GetRules(string host)
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.NumericDataExtractorRules.AsQueryable().Where(r => r.Host == host).ToList();
+                return ctx.CrawlRules.AsNoTracking().Where(r => r.Host == host).ToList();
             }
         }
 
-        public void RemoveNumericRule(Guid id)
+        public void RemoveRule(Guid ruleId)
         {
             using (var ctx = new SettingDbContext())
             {
-                var rule = ctx.NumericDataExtractorRules.SingleOrDefault(r => r.Id == id);
-                ctx.NumericDataExtractorRules.Remove(rule);
+                var rule = ctx.CrawlRules.SingleOrDefault(s => s.Id == ruleId);
+                ctx.CrawlRules.Remove(rule);
                 ctx.SaveChanges();
             }
         }
 
-        public void UpdateNumericRule(NumericDataExtractorRule rule)
+        public void UpdateRule(CrawlRule rule)
         {
             using (var ctx = new SettingDbContext())
             {
-                var existing = ctx.NumericDataExtractorRules.SingleOrDefault(r => r.Id == rule.Id);
+                var existing = ctx.CrawlRules.SingleOrDefault(s => s.Id == rule.Id);
                 if (existing != null)
                 {
                     _mapper.Map(rule, existing);
