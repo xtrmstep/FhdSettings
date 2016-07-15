@@ -29,11 +29,18 @@ namespace FhdSettings.Api.Controllers
         }
 
         [Route("{id:guid}")]
-        public IHttpActionResult Put(Guid id, [FromBody] CrawlHostSetting crawlHostSetting)
+        public IHttpActionResult Put(string host, [FromBody] CrawlHostSetting crawlHostSetting)
         {
-            if (id != crawlHostSetting.Id) return BadRequest();
+            if (host != crawlHostSetting.Host) return BadRequest();
 
             _hostSettingsRepository.UpdateHostSettings(crawlHostSetting);
+            return Ok();
+        }
+
+        [Route("{id:guid}")]
+        public IHttpActionResult Delete(string host)
+        {
+            _hostSettingsRepository.RemoveHostSettings(host);
             return Ok();
         }
     }
