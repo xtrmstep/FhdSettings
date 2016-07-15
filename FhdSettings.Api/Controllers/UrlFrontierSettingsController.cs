@@ -14,13 +14,13 @@ namespace FhdSettings.Api.Controllers
         }
 
         [Route("")]
-        public IHttpActionResult Get(string host)
+        public IHttpActionResult Get()
         {
             return Ok(_urlFrontierSettingsRepository.GetSeedUrls());
         }
 
         [Route("")]
-        public IHttpActionResult Post([FromBody] string url)
+        public IHttpActionResult Post(string url)
         {
             _urlFrontierSettingsRepository.AddSeedUrl(url);
             return Ok();
