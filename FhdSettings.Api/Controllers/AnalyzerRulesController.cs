@@ -15,13 +15,13 @@ namespace FhdSettings.Api.Controllers
             _analizerRepository = analizerRepository;
         }
 
-        [Route("{host:string}")]
+        [Route("")]
         public IHttpActionResult Get(string host)
         {
             return Ok(_analizerRepository.GetNumericRules(host));
         }
 
-        [Route("{id:Guid}")]
+        [Route("{id:guid}")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(_analizerRepository.GetNumericRule(id));
@@ -34,7 +34,7 @@ namespace FhdSettings.Api.Controllers
             return Ok();
         }
 
-        [Route("{id:Guid}")]
+        [Route("{id:guid}")]
         public IHttpActionResult Put(Guid id, [FromBody] NumericDataExtractorRule rule)
         {
             if (id != rule.Id) return BadRequest();
@@ -42,7 +42,7 @@ namespace FhdSettings.Api.Controllers
             return Ok();
         }
 
-        [Route("{id:Guid}")]
+        [Route("{id:guid}")]
         public IHttpActionResult Delete(Guid id)
         {
             _analizerRepository.RemoveNumericRule(id);

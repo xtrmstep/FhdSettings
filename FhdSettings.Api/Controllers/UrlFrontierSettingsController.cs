@@ -26,7 +26,7 @@ namespace FhdSettings.Api.Controllers
             return Ok();
         }
 
-        [Route("{url:string}")]
+        [Route("")]
         public IHttpActionResult Delete(string url)
         {
             _urlFrontierSettingsRepository.RemoveSeedUrl(url);

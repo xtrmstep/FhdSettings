@@ -15,7 +15,7 @@ namespace FhdSettings.Api.Controllers
             _hostSettingsRepository = hostSettingsRepository;
         }
 
-        [Route("{host:string}")]
+        [Route("")]
         public IHttpActionResult Get(string host)
         {
             return Ok(_hostSettingsRepository.GetHostSettings(host));
@@ -28,7 +28,7 @@ namespace FhdSettings.Api.Controllers
             return Ok();
         }
 
-        [Route("{id:Guid}")]
+        [Route("{id:guid}")]
         public IHttpActionResult Put(Guid id, [FromBody] CrawlHostSetting crawlHostSetting)
         {
             if (id != crawlHostSetting.Id) return BadRequest();

@@ -15,13 +15,13 @@ namespace FhdSettings.Api.Controllers
             _crawlerRulesRepository = crawlerRulesRepository;
         }
 
-        [Route("{host:string}")]
+        [Route("")]
         public IHttpActionResult Get(string host)
         {
             return Ok(_crawlerRulesRepository.GetRules(host));
         }
 
-        [Route("{id:Guid}")]
+        [Route("{id:guid}")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(_crawlerRulesRepository.GetRule(id));
@@ -34,7 +34,7 @@ namespace FhdSettings.Api.Controllers
             return Ok();
         }
 
-        [Route("{id:Guid}")]
+        [Route("{id:guid}")]
         public IHttpActionResult Put(Guid id, [FromBody] CrawlRule rule)
         {
             if (id != rule.Id) return BadRequest();
@@ -42,7 +42,7 @@ namespace FhdSettings.Api.Controllers
             return Ok();
         }
 
-        [Route("{id:Guid}")]
+        [Route("{id:guid}")]
         public IHttpActionResult Delete(Guid id)
         {
             _crawlerRulesRepository.RemoveRule(id);
