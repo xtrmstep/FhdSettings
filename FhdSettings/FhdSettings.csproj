@@ -43,13 +43,15 @@
   <ItemGroup>
     <Compile Include="Data\IAnalizerRepository.cs" />
     <Compile Include="Data\IAuthRepository.cs" />
+    <Compile Include="Data\ICrawlerRuleRepository.cs" />
+    <Compile Include="Data\IHostSettingsRepository.cs" />
     <Compile Include="Data\Models\AuthToken.cs" />
     <Compile Include="Data\Models\ClinetService.cs" />
     <Compile Include="Data\Models\CrawlDataBlockType.cs" />
     <Compile Include="Data\Models\CrawlHostSetting.cs" />
     <Compile Include="Data\Models\CrawlUrlSeed.cs" />
     <Compile Include="Data\Models\NumericDataType.cs" />
-    <Compile Include="Data\ICrawlerRepository.cs" />
+    <Compile Include="Data\IUrlFrontierSettingsRepository.cs" />
     <Compile Include="Data\Models\NumericDataExtractorRule.cs" />
     <Compile Include="Data\Models\CrawlRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

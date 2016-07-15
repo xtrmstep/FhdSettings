@@ -65,7 +65,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ConfigurationMapping.cs" />
     <Compile Include="Repositories\AnalizerRepository.cs" />
-    <Compile Include="Repositories\CrawlerRepository.cs" />
+    <Compile Include="Repositories\UrlFrontierSettingsRepository.cs" />
+    <Compile Include="Repositories\CrawlerRuleRepository.cs" />
+    <Compile Include="Repositories\HostSettingsRepository.cs" />
     <Compile Include="SettingDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
