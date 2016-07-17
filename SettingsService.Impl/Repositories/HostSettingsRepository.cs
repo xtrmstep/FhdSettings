@@ -3,7 +3,7 @@ using AutoMapper;
 using SettingsService.Core.Data;
 using SettingsService.Core.Data.Models;
 
-namespace FhdSettings.Impl.Repositories
+namespace SettingsService.Impl.Repositories
 {
     internal class HostSettingsRepository : IHostSettingsRepository
     {

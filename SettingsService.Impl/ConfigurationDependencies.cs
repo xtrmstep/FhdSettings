@@ -1,9 +1,8 @@
 ﻿using Autofac;
-using AutoMapper;
-using FhdSettings.Impl.Repositories;
 using SettingsService.Core.Data;
+using SettingsService.Impl.Repositories;
 
-namespace FhdSettings.Impl
+namespace SettingsService.Impl
 {
     public class ConfigurationDependencies : Module
     {

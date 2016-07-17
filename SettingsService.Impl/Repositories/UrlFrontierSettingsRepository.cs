@@ -2,7 +2,7 @@
 using System.Linq;
 using SettingsService.Core.Data;
 
-namespace FhdSettings.Impl.Repositories
+namespace SettingsService.Impl.Repositories
 {
     internal class UrlFrontierSettingsRepository : IUrlFrontierSettingsRepository
     {

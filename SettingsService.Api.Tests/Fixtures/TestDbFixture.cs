@@ -2,8 +2,8 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using FhdSettings.Impl;
-using FhdSettings.Impl.Migrations;
+using SettingsService.Impl;
+using SettingsService.Impl.Migrations;
 
 namespace SettingsService.Api.Tests.Fixtures
 {

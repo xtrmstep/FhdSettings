@@ -4,7 +4,7 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 using AutoMapper;
-using FhdSettings.Impl;
+using SettingsService.Impl;
 
 namespace SettingsService.Api
 {
@@ -27,7 +27,7 @@ namespace SettingsService.Api
             var configMapper = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<ConfigurationMapping>();
-                cfg.AddProfile<FhdSettings.Impl.ConfigurationMapping>();
+                cfg.AddProfile<Impl.ConfigurationMapping>();
             });
             var mapper = configMapper.CreateMapper();
             builder.RegisterInstance(mapper).As<IMapper>().SingleInstance();

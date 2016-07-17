@@ -15,9 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Api.Tests",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Web", "FhdSettings.Web\FhdSettings.Web.csproj", "{4941EAAD-85A8-4814-A6ED-D8DD36BE393A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Web", "SettingsService.Web\SettingsService.Web.csproj", "{4941EAAD-85A8-4814-A6ED-D8DD36BE393A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Tests", "FhdSettings.Tests\FhdSettings.Tests.csproj", "{59CFAA45-3FD4-46AD-B33B-A7C6B4EFB843}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Core.Tests", "SettingsService.Core.Tests\SettingsService.Core.Tests.csproj", "{59CFAA45-3FD4-46AD-B33B-A7C6B4EFB843}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

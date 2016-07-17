@@ -1,6 +1,6 @@
 using System.Data.Entity.Migrations;
 
-namespace FhdSettings.Impl.Migrations
+namespace SettingsService.Impl.Migrations
 {
     public sealed class Configuration : DbMigrationsConfiguration<SettingDbContext>
     {

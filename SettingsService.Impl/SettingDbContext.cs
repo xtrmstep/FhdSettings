@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using SettingsService.Core.Data.Models;
 
-namespace FhdSettings.Impl
+namespace SettingsService.Impl
 {
     public class SettingDbContext : DbContext
     {
