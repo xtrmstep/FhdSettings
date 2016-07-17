@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Core", "SettingsService.Core\SettingsService.Core.csproj", "{12932E4F-AADD-4885-91AB-5BF0BDAEAB42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Impl", "FhdSettings.Impl\FhdSettings.Impl.csproj", "{D87BCA4B-25A5-4616-899F-93544A14F6BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Impl", "SettingsService.Impl\SettingsService.Impl.csproj", "{D87BCA4B-25A5-4616-899F-93544A14F6BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Impl.Tests", "FhdSettings.Impl.Tests\FhdSettings.Impl.Tests.csproj", "{C7D7C823-48F4-48B2-B6D3-96DB5A387E3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Impl.Tests", "SettingsService.Impl.Tests\SettingsService.Impl.Tests.csproj", "{C7D7C823-48F4-48B2-B6D3-96DB5A387E3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Api", "SettingsService.Api\SettingsService.Api.csproj", "{02D60764-2774-44B0-8710-BFFBC7889B50}"
 EndProject

@@ -136,9 +136,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FhdSettings.Impl\FhdSettings.Impl.csproj">
+    <ProjectReference Include="..\SettingsService.Impl\SettingsService.Impl.csproj">
       <Project>{d87bca4b-25a5-4616-899f-93544a14f6be}</Project>
-      <Name>FhdSettings.Impl</Name>
+      <Name>SettingsService.Impl</Name>
     </ProjectReference>
     <ProjectReference Include="..\SettingsService.Core\SettingsService.Core.csproj">
       <Project>{12932e4f-aadd-4885-91ab-5bf0bdaeab42}</Project>
