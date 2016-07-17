@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FhdSettings.Data.Models;
+using SettingsService.Core.Data.Models;
 
 namespace FhdSettings.Impl
 {

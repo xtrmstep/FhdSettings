@@ -1,4 +1,4 @@
-﻿using FhdSettings.Utilities;
+﻿using SettingsService.Core.Utilities;
 using Xunit;
 
 namespace FhdSettings.Tests.Utilities

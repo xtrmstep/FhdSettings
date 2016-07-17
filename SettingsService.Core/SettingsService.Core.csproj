@@ -7,8 +7,8 @@
     <ProjectGuid>{12932E4F-AADD-4885-91AB-5BF0BDAEAB42}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FhdSettings</RootNamespace>
-    <AssemblyName>FhdSettings</AssemblyName>
+    <RootNamespace>SettingsService.Core</RootNamespace>
+    <AssemblyName>SettingsService.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

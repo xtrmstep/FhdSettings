@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FhdSettings.Data
+namespace SettingsService.Core.Data
 {
     public interface IUrlFrontierSettingsRepository
     {

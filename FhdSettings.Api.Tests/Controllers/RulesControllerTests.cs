@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using FhdSettings.Api.Tests.Fixtures;
-using FhdSettings.Data.Models;
+using SettingsService.Core.Data.Models;
 using Xunit;
 
 namespace FhdSettings.Api.Tests.Controllers
@@ -18,7 +18,7 @@ namespace FhdSettings.Api.Tests.Controllers
             _testDb = testDb;
         }
 
-        [Fact(DisplayName = "GET: api/rules?host=test")]
+        [Fact(DisplayName = "GET: api/crawler/rules?host=test")]
         public void Should_return_list_of_rules()
         {
             using (var ctx = _testDb.CreateContext())
@@ -31,12 +31,12 @@ namespace FhdSettings.Api.Tests.Controllers
                 });
                 ctx.SaveChanges();
 
-                using (var response = _httpServer.GetJson("api/rules?host=test"))
+                using (var response = _httpServer.GetJson("api/crawler/rules?host=test"))
                 {
-                    var content = response.Content as ObjectContent<IEnumerable<CrawlRule>>;
+                    var content = response.Content as ObjectContent<IList<CrawlRule>>;
                     Assert.NotNull(content);
 
-                    var result = content.Value as IEnumerable<CrawlRule>;
+                    var result = content.Value as IList<CrawlRule>;
                     Assert.NotNull(result);
 
                     Assert.True(result.Any());

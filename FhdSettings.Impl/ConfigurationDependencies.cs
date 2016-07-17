@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
-using FhdSettings.Data;
 using FhdSettings.Impl.Repositories;
+using SettingsService.Core.Data;
 
 namespace FhdSettings.Impl
 {

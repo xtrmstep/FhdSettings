@@ -99,7 +99,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +113,9 @@
       <Project>{d87bca4b-25a5-4616-899f-93544a14f6be}</Project>
       <Name>FhdSettings.Impl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FhdSettings\FhdSettings.csproj">
+    <ProjectReference Include="..\SettingsService.Core\SettingsService.Core.csproj">
       <Project>{12932e4f-aadd-4885-91ab-5bf0bdaeab42}</Project>
-      <Name>FhdSettings</Name>
+      <Name>SettingsService.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

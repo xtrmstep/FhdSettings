@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings", "FhdSettings\FhdSettings.csproj", "{12932E4F-AADD-4885-91AB-5BF0BDAEAB42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Core", "SettingsService.Core\SettingsService.Core.csproj", "{12932E4F-AADD-4885-91AB-5BF0BDAEAB42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Impl", "FhdSettings.Impl\FhdSettings.Impl.csproj", "{D87BCA4B-25A5-4616-899F-93544A14F6BE}"
 EndProject

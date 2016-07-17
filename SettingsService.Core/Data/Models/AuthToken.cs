@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FhdSettings.Data.Models
+namespace SettingsService.Core.Data.Models
 {
     public class AuthToken
     {

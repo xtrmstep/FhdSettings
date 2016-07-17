@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using FhdSettings.Data.Models;
+using SettingsService.Core.Data.Models;
 
-namespace FhdSettings.Data
+namespace SettingsService.Core.Data
 {
     public interface ICrawlerRuleRepository
     {

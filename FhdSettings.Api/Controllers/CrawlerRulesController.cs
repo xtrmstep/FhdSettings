@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Http;
-using FhdSettings.Data;
-using FhdSettings.Data.Models;
+using SettingsService.Core.Data;
+using SettingsService.Core.Data.Models;
 
 namespace FhdSettings.Api.Controllers
 {

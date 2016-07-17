@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using FhdSettings.Data;
-using FhdSettings.Data.Models;
+using SettingsService.Core.Data;
+using SettingsService.Core.Data.Models;
 
 namespace FhdSettings.Impl.Repositories
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using FhdSettings.Api.Models.Auth;
-using FhdSettings.Data.Models;
+using SettingsService.Core.Data.Models;
 
 namespace FhdSettings.Api.Types
 {

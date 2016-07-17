@@ -1,7 +1,7 @@
 ﻿using System;
 using FhdSettings.Api.Models.Auth;
 using FhdSettings.Api.Types;
-using FhdSettings.Data.Models;
+using SettingsService.Core.Data.Models;
 using Xunit;
 
 namespace FhdSettings.Api.MsTests.Types

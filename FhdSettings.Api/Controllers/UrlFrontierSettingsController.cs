@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using FhdSettings.Data;
+using SettingsService.Core.Data;
 
 namespace FhdSettings.Api.Controllers
 {

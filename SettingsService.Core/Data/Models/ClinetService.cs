@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FhdSettings.Data.Models
+namespace SettingsService.Core.Data.Models
 {
     public class ClinetService
     {

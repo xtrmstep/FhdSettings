@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FhdSettings.Data.Models
+namespace SettingsService.Core.Data.Models
 {
     /// <summary>
     ///     Descriptor of the first URL to start crawling

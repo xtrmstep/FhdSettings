@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace FhdSettings.Utilities
+namespace SettingsService.Core.Utilities
 {
     public static class StringExtensions
     {

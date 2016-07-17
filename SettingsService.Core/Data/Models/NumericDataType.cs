@@ -1,4 +1,4 @@
-﻿namespace FhdSettings.Data.Models
+﻿namespace SettingsService.Core.Data.Models
 {
     /// <summary>
     ///     Type of numeric data

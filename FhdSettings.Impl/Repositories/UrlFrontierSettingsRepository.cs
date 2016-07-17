@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FhdSettings.Data;
+using SettingsService.Core.Data;
 
 namespace FhdSettings.Impl.Repositories
 {

@@ -81,9 +81,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FhdSettings\FhdSettings.csproj">
+    <ProjectReference Include="..\SettingsService.Core\SettingsService.Core.csproj">
       <Project>{12932e4f-aadd-4885-91ab-5bf0bdaeab42}</Project>
-      <Name>FhdSettings</Name>
+      <Name>SettingsService.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
