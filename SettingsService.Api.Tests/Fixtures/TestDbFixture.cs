@@ -5,7 +5,7 @@ using System.Transactions;
 using FhdSettings.Impl;
 using FhdSettings.Impl.Migrations;
 
-namespace FhdSettings.Api.Tests.Fixtures
+namespace SettingsService.Api.Tests.Fixtures
 {
     public class TestDbFixture
     {

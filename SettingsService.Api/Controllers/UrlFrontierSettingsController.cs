@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using SettingsService.Core.Data;
 
-namespace FhdSettings.Api.Controllers
+namespace SettingsService.Api.Controllers
 {
     [RoutePrefix("api/urls")]
     public class UrlFrontierSettingsController : ApiController

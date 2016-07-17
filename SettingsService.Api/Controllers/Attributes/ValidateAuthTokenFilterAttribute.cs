@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http.Controllers;
+﻿using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace FhdSettings.Api.Controllers.Attributes
+namespace SettingsService.Api.Controllers.Attributes
 {
     public class ValidateAuthTokenAttribute : AuthorizationFilterAttribute
     {

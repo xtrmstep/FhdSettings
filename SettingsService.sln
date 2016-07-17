@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Impl", "FhdSett
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Impl.Tests", "FhdSettings.Impl.Tests\FhdSettings.Impl.Tests.csproj", "{C7D7C823-48F4-48B2-B6D3-96DB5A387E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Api", "FhdSettings.Api\FhdSettings.Api.csproj", "{02D60764-2774-44B0-8710-BFFBC7889B50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Api", "SettingsService.Api\SettingsService.Api.csproj", "{02D60764-2774-44B0-8710-BFFBC7889B50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FhdSettings.Api.Tests", "FhdSettings.Api.Tests\FhdSettings.Api.Tests.csproj", "{212CB691-BA58-41D5-A780-7528BC8AB37E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsService.Api.Tests", "SettingsService.Api.Tests\SettingsService.Api.Tests.csproj", "{212CB691-BA58-41D5-A780-7528BC8AB37E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E1DA2041-F9CA-4ACD-8296-EC97DE11B82E}"
 EndProject

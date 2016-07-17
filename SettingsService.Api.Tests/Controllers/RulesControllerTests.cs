@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using FhdSettings.Api.Tests.Fixtures;
+using SettingsService.Api.Tests.Fixtures;
 using SettingsService.Core.Data.Models;
 using Xunit;
 
-namespace FhdSettings.Api.Tests.Controllers
+namespace SettingsService.Api.Tests.Controllers
 {
     public class RulesControllerTests : IClassFixture<HttpServerFixture>, IClassFixture<TestDbFixture>
     {

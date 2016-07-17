@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace FhdSettings.Api
+namespace SettingsService.Api
 {
     public class ConfigurationMapping : Profile
     {

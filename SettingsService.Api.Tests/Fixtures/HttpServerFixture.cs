@@ -3,9 +3,8 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using Xunit;
 
-namespace FhdSettings.Api.Tests.Fixtures
+namespace SettingsService.Api.Tests.Fixtures
 {
     public class HttpServerFixture : IDisposable
     {

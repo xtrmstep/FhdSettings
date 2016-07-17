@@ -1,10 +1,10 @@
 ﻿using System;
-using FhdSettings.Api.Models.Auth;
-using FhdSettings.Api.Types;
+using SettingsService.Api.Models.Auth;
+using SettingsService.Api.Types;
 using SettingsService.Core.Data.Models;
 using Xunit;
 
-namespace FhdSettings.Api.MsTests.Types
+namespace SettingsService.Api.Tests.Types
 {
     public class ViewModelMapperTests
     {

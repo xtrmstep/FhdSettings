@@ -3,7 +3,7 @@ using System.Web.Http;
 using SettingsService.Core.Data;
 using SettingsService.Core.Data.Models;
 
-namespace FhdSettings.Api.Controllers
+namespace SettingsService.Api.Controllers
 {
     [RoutePrefix("api/crawler/rules")]
     public class CrawlerRulesController : ApiController

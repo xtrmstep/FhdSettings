@@ -1,9 +1,9 @@
 ﻿using System;
 using AutoMapper;
-using FhdSettings.Api.Models.Auth;
+using SettingsService.Api.Models.Auth;
 using SettingsService.Core.Data.Models;
 
-namespace FhdSettings.Api.Types
+namespace SettingsService.Api.Types
 {
     public class ViewModelMapper
     {
