@@ -5,6 +5,11 @@ namespace SettingsService.Impl
 {
     public class SettingDbContext : DbContext
     {
+        public SettingDbContext() : base("SettingsServiceDb")
+        {
+
+        }
+
         public DbSet<CrawlRule> CrawlRules { get; set; }
         public DbSet<CrawlHostSetting> CrawlHostSettings { get; set; }
         public DbSet<CrawlUrlSeed> CrawlUrlSeeds { get; set; }
