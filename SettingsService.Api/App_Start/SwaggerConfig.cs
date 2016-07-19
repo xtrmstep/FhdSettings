@@ -1,3 +1,4 @@
+using System;
 using System.Web.Http;
 using SettingsService.Api;
 using Swashbuckle.Application;
@@ -96,7 +97,7 @@ namespace SettingsService.Api
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //c.IncludeXmlComments(GetXmlCommentsPath());
+                        c.IncludeXmlComments(GetXmlCommentsPath());
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.
@@ -224,6 +225,11 @@ namespace SettingsService.Api
                         //
                         //c.EnableOAuth2Support("test-client-id", "test-realm", "Swagger UI");
                     });
+        }
+
+        private static string GetXmlCommentsPath()
+        {
+            return string.Format(@"{0}\SettingsService.Api.xml", System.AppDomain.CurrentDomain.BaseDirectory);
         }
     }
 }
