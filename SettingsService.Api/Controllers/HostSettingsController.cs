@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Description;
 using SettingsService.Core.Data;
 using SettingsService.Core.Data.Models;
 
@@ -14,12 +15,23 @@ namespace SettingsService.Api.Controllers
             _hostSettingsRepository = hostSettingsRepository;
         }
 
+        /// <summary>
+        /// Get host settings with crawl delay and other
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
         [Route("")]
+        [ResponseType(typeof(CrawlHostSetting))]
         public IHttpActionResult Get(string host)
         {
             return Ok(_hostSettingsRepository.GetHostSettings(host));
         }
 
+        /// <summary>
+        /// Create a record with settings for a new host
+        /// </summary>
+        /// <param name="crawlHostSetting">Settings object</param>
+        /// <returns></returns>
         [Route("")]
         public IHttpActionResult Post([FromBody] CrawlHostSetting crawlHostSetting)
         {
@@ -27,6 +39,12 @@ namespace SettingsService.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Update host crawl settings
+        /// </summary>
+        /// <param name="host">Host name</param>
+        /// <param name="crawlHostSetting">Updated crawl settings for the host</param>
+        /// <returns>Host in the parameter and in the object must be equal.</returns>
         [Route("{id:guid}")]
         public IHttpActionResult Put(string host, [FromBody] CrawlHostSetting crawlHostSetting)
         {
@@ -36,6 +54,11 @@ namespace SettingsService.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Delete crawl settings for specified host
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
         [Route("{id:guid}")]
         public IHttpActionResult Delete(string host)
         {

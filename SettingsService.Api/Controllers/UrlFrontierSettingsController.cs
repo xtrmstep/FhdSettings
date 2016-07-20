@@ -13,12 +13,21 @@ namespace SettingsService.Api.Controllers
             _urlFrontierSettingsRepository = urlFrontierSettingsRepository;
         }
 
+        /// <summary>
+        /// Get all URLs from the frontier seed
+        /// </summary>
+        /// <returns></returns>
         [Route("")]
         public IHttpActionResult Get()
         {
             return Ok(_urlFrontierSettingsRepository.GetSeedUrls());
         }
 
+        /// <summary>
+        /// Add new URL to the frontier seed
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         [Route("")]
         public IHttpActionResult Post(string url)
         {
@@ -26,6 +35,11 @@ namespace SettingsService.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Delete URL from the frontier seed
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         [Route("")]
         public IHttpActionResult Delete(string url)
         {
