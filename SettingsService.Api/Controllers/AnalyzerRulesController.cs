@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
 using SettingsService.Core.Data;
@@ -6,11 +7,18 @@ using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Api.Controllers
 {
+    /// <summary>
+    /// Provides methods to manipulate with analyzer rules
+    /// </summary>
     [RoutePrefix("api/analyzer/rules")]
     public class AnalyzerRulesController : ApiController
     {
         private readonly IAnalizerRepository _analizerRepository;
 
+        /// <summary>
+        /// Controller
+        /// </summary>
+        /// <param name="analizerRepository"></param>
         public AnalyzerRulesController(IAnalizerRepository analizerRepository)
         {
             _analizerRepository = analizerRepository;
@@ -22,6 +30,7 @@ namespace SettingsService.Api.Controllers
         /// <param name="host"></param>
         /// <returns></returns>
         [Route("")]
+        [ResponseType(typeof(IList<NumericDataExtractorRule>))]
         public IHttpActionResult Get(string host)
         {
             return Ok(_analizerRepository.GetNumericRules(host));
@@ -57,6 +66,8 @@ namespace SettingsService.Api.Controllers
         /// <param name="id"></param>
         /// <param name="rule">Updated analyzer rule</param>
         /// <returns>Identifiers in the parameter and the rule object must be equal.</returns>
+        /// <response code="200">OK</response>
+        /// <response code="400">Identifiers do not match</response>
         [Route("{id:guid}")]
         public IHttpActionResult Put(Guid id, [FromBody] NumericDataExtractorRule rule)
         {

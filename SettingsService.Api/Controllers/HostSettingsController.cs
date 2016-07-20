@@ -5,11 +5,18 @@ using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Api.Controllers
 {
+    /// <summary>
+    /// Provides methods to manipulate with crawl settings for hosts
+    /// </summary>
     [RoutePrefix("api/hosts")]
     public class HostSettingsController : ApiController
     {
         private readonly IHostSettingsRepository _hostSettingsRepository;
 
+        /// <summary>
+        /// Controller
+        /// </summary>
+        /// <param name="hostSettingsRepository"></param>
         public HostSettingsController(IHostSettingsRepository hostSettingsRepository)
         {
             _hostSettingsRepository = hostSettingsRepository;
@@ -45,6 +52,8 @@ namespace SettingsService.Api.Controllers
         /// <param name="host">Host name</param>
         /// <param name="crawlHostSetting">Updated crawl settings for the host</param>
         /// <returns>Host in the parameter and in the object must be equal.</returns>
+        /// <response code="200">OK</response>
+        /// <response code="400">Identifiers do not match</response>
         [Route("{id:guid}")]
         public IHttpActionResult Put(string host, [FromBody] CrawlHostSetting crawlHostSetting)
         {
