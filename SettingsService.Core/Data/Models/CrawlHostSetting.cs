@@ -19,6 +19,9 @@ namespace SettingsService.Core.Data.Models
         // todo test for uniqueness
         public string Host { get; set; }
 
+        /// <summary>
+        /// Sets the files or folders that are not allowed to be crawled
+        /// </summary>
         public string Disallow { get; set; }
         public int CrawlDelay { get; set; }
     }
