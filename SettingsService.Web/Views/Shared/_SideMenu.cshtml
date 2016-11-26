@@ -1,0 +1,10 @@
+﻿@using SettingsService.Web.Types
+@{
+    const string classActive = "class=active";
+    var generalActiveClass = ViewBag.Section == SiteSections.GereralSections ? classActive : string.Empty;
+    var crawlerActiveClass = ViewBag.Section == SiteSections.CrawlerRules ? classActive : string.Empty;
+    var analyzerActiveClass = ViewBag.Section == SiteSections.AnalyzerRules ? classActive : string.Empty;
+}
+<li @generalActiveClass>@Html.ActionLink("General Settings","Index", "GeneralSettings")</li>
+<li @crawlerActiveClass>@Html.ActionLink("Crawler Rules", "Index", "CrawlerSettings")</li>
+<li @analyzerActiveClass>@Html.ActionLink("Analyzer Rules", "Index", "AnalyzerSettings")</li>
