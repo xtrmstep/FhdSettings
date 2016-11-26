@@ -5,10 +5,13 @@ namespace SettingsService.Web.Controllers
 {
     public class GeneralSettingsController : Controller
     {
+        public GeneralSettingsController()
+        {
+            ViewBag.PageCaption = "General Settings";
+        }
         public ActionResult Index()
         {
-            var model = new BaseViewModel {PageCaption = "General Settings" };
-            return View(model);
+            return View();
         }
     }
 }

@@ -9,10 +9,13 @@ namespace SettingsService.Web.Controllers
 {
     public class CrawlerSettingsController : Controller
     {
+        public CrawlerSettingsController()
+        {
+            ViewBag.PageCaption = "Crawler Settings";
+        }
         public ActionResult Index()
         {
-            var model = new BaseViewModel { PageCaption = "Crawler Settings" };
-            return View(model);
+            return View();
         }
     }
 }

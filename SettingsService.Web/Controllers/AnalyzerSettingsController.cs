@@ -9,10 +9,13 @@ namespace SettingsService.Web.Controllers
 {
     public class AnalyzerSettingsController : Controller
     {
+        public AnalyzerSettingsController()
+        {
+            ViewBag.PageCaption = "Analyzer Settings";
+        }
         public ActionResult Index()
         {
-            var model = new BaseViewModel { PageCaption = "Analyzer Settings" };
-            return View(model);
+            return View();
         }
     }
 }
