@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using SettingsService.Web.Models;
+using SettingsService.Web.Types;
 
 namespace SettingsService.Web.Controllers
 {
@@ -8,6 +8,7 @@ namespace SettingsService.Web.Controllers
         public GeneralSettingsController()
         {
             ViewBag.PageCaption = "General Settings";
+            ViewBag.Section = SiteSections.GereralSections;
         }
         public ActionResult Index()
         {

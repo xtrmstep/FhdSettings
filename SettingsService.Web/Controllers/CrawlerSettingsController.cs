@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SettingsService.Web.Models;
+using SettingsService.Web.Types;
 
 namespace SettingsService.Web.Controllers
 {
@@ -12,6 +12,7 @@ namespace SettingsService.Web.Controllers
         public CrawlerSettingsController()
         {
             ViewBag.PageCaption = "Crawler Settings";
+            ViewBag.Section = SiteSections.CrawlerRules;
         }
         public ActionResult Index()
         {
