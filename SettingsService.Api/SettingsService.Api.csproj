@@ -35,7 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>SettingsService.Api.xml</DocumentationFile>
+    <DocumentationFile>bin\SettingsService.Api.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,7 +44,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>SettingsService.Api.xml</DocumentationFile>
+    <DocumentationFile>bin\SettingsService.Api.xml</DocumentationFile>
     <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <ItemGroup>
@@ -186,7 +186,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Project_Readme.html" />
     <None Include="Properties\PublishProfiles\SettingsService - Web Deploy.pubxml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
   </ItemGroup>

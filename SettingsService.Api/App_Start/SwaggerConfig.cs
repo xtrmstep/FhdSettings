@@ -246,7 +246,7 @@ namespace SettingsService.Api
 
         private static string GetXmlCommentsPath()
         {
-            return string.Format(@"{0}\SettingsService.Api.xml", System.AppDomain.CurrentDomain.BaseDirectory);
+            return string.Format(@"{0}\bin\SettingsService.Api.xml", System.AppDomain.CurrentDomain.BaseDirectory);
         }
     }
 }
