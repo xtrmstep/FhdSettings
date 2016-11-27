@@ -14,5 +14,11 @@ namespace SettingsService.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Details()
+        {
+            ViewBag.PageSubCaption = "Details";
+            return View();
+        }
     }
 }

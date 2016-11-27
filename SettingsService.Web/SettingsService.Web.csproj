@@ -202,6 +202,7 @@
     <Content Include="Views\Shared\_SideMenu.cshtml" />
     <Content Include="Views\CrawlerSettings\Index.cshtml" />
     <Content Include="Views\AnalyzerSettings\Index.cshtml" />
+    <Content Include="Views\GeneralSettings\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
