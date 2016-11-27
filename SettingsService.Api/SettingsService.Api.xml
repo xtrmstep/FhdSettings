@@ -175,5 +175,14 @@
             <param name="host"></param>
             <returns></returns>
         </member>
+        <member name="T:SettingsService.Api.Loggers.TelemetryExceptionsLogger">
+            <summary>
+                Handles all unhandled exception in API
+            </summary>
+            <remarks>
+            More about loggers here https://www.asp.net/web-api/overview/error-handling/web-api-global-error-handling
+            More about telemetry loggers https://docs.microsoft.com/en-us/azure/application-insights/app-insights-asp-net-exceptions#exceptions
+            </remarks>
+        </member>
     </members>
 </doc>

@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using Autofac;
 using Autofac.Integration.WebApi;
 using AutoMapper;
+using SettingsService.Api.Loggers;
 using SettingsService.Impl;
 
 namespace SettingsService.Api
@@ -37,6 +39,9 @@ namespace SettingsService.Api
             #endregion
 
             config.EnsureInitialized();
+
+            // register the logger for unhandled exceptions
+            config.Services.Add(typeof(IExceptionLogger), new TelemetryExceptionsLogger());
         }
     }
 }
