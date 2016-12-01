@@ -29,7 +29,7 @@ namespace SettingsService.Api.Controllers
         /// <returns></returns>
         [Route("")]
         [ResponseType(typeof(CrawlHostSetting))]
-        public IHttpActionResult Get(string host)
+        public IHttpActionResult Get([FromUri]string host = null)
         {
             return Ok(_hostSettingsRepository.GetHostSettings(host));
         }

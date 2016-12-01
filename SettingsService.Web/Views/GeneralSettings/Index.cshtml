@@ -1,4 +1,17 @@
-﻿<div class="panel panel-default">
+﻿@using SettingsService.Web.Properties
+@section Scripts {
+    <script>
+        var settingsServiceApi = new SettingsServiceApi("@Settings.Default.SettingServiceUrl");
+        function buildSettings(disallow, delay) {
+            alert("settings loaded");
+        }
+        function buildFrontier(urls) {
+            alert("urls loaded");
+        }
+        settingsServiceApi.loadGeneralSettings(buildSettings, buildFrontier);
+    </script>
+}
+<div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Default Crawler Settings</h3>
     </div>
