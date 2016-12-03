@@ -14,4 +14,4 @@ var SettingsServiceApi = (function () {
     };
     return SettingsServiceApi;
 }());
-//# sourceMappingURL=Site.js.map
+//# sourceMappingURL=general-settings.js.map
