@@ -24,7 +24,7 @@ class SettingsServiceApi {
 
     loadGeneralSettings(buildDefaultSettings: IBuilderDefaultCrawlerSettings,
         buildFrontierSettings: IBuilderFrontierSettings) {
-        $.get(this.serviceUrl + "/api/hosts?host=''", (data: CrawlHostSetting) => { buildDefaultSettings(data.disallow, data.crawlDelay); });
+        $.get(this.serviceUrl + "/api/hosts/default", (data: CrawlHostSetting) => { buildDefaultSettings(data.disallow, data.crawlDelay); });
         $.get(this.serviceUrl + "/api/urls", (data: string[]) => { buildFrontierSettings(data); });
     }
 }

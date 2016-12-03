@@ -9,9 +9,8 @@ var SettingsServiceApi = (function () {
         this.serviceUrl = baseServiceUrl;
     }
     SettingsServiceApi.prototype.loadGeneralSettings = function (buildDefaultSettings, buildFrontierSettings) {
-        $.get(this.serviceUrl + "/api/hosts?host=''", function (data) { buildDefaultSettings(data.disallow, data.crawlDelay); });
+        $.get(this.serviceUrl + "/api/hosts/default", function (data) { buildDefaultSettings(data.disallow, data.crawlDelay); });
         $.get(this.serviceUrl + "/api/urls", function (data) { buildFrontierSettings(data); });
     };
     return SettingsServiceApi;
 }());
-//# sourceMappingURL=general-settings.js.map
