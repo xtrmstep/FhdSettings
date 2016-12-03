@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
 using SettingsService.Core.Data;
+using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Api.Controllers
 {
@@ -28,16 +30,28 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof(IList<string>))]
+        [ResponseType(typeof(IList<CrawlUrlSeed>))]
         public IHttpActionResult Get()
         {
             return Ok(_urlFrontierSettingsRepository.GetSeedUrls());
         }
 
         /// <summary>
+        /// Get URL by identifier
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("{id:guid}")]
+        [ResponseType(typeof(CrawlUrlSeed))]
+        public IHttpActionResult Get(Guid id)
+        {
+            return Ok(_urlFrontierSettingsRepository.GetUrl(id));
+        }
+
+        /// <summary>
         /// Add new URL to the frontier seed
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">URL to be added</param>
         /// <returns></returns>
         [Route("")]
         public IHttpActionResult Post(string url)
@@ -49,12 +63,12 @@ namespace SettingsService.Api.Controllers
         /// <summary>
         /// Delete URL from the frontier seed
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="id">Guid identifier of the seed</param>
         /// <returns></returns>
-        [Route("")]
-        public IHttpActionResult Delete(string url)
+        [Route("{id:guid}")]
+        public IHttpActionResult Delete(Guid id)
         {
-            _urlFrontierSettingsRepository.RemoveSeedUrl(url);
+            _urlFrontierSettingsRepository.RemoveSeedUrl(id);
             return Ok();
         }
     }
