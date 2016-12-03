@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using SettingsService.Core.Data;
 using SettingsService.Core.Data.Models;
@@ -25,11 +27,20 @@ namespace SettingsService.Impl.Repositories
             }
         }
 
-        public CrawlHostSetting GetHostSettings(string host)
+        public IList<CrawlHostSetting> GetHostSettings()
         {
             using (var ctx = new SettingDbContext())
             {
-                var settings = ctx.CrawlHostSettings.AsNoTracking().SingleOrDefault(s => s.Host == host);
+                var settings = ctx.CrawlHostSettings.AsNoTracking().ToList();
+                return settings;
+            }
+        }
+
+        public CrawlHostSetting GetHostSettings(Guid id)
+        {
+            using (var ctx = new SettingDbContext())
+            {
+                var settings = ctx.CrawlHostSettings.AsNoTracking().SingleOrDefault(s => s.Id == id);
                 return settings;
             }
         }

@@ -28,7 +28,7 @@ namespace SettingsService.Api.Tests.Fixtures
                     var r = ctx.CrawlRules.Take(1).ToList();
                 }
                 // create a transaction scope
-                _transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions {IsolationLevel = IsolationLevel.ReadUncommitted});
+                _transaction = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions {IsolationLevel = IsolationLevel.ReadUncommitted});
                 Context = new SettingDbContext();
             }
 

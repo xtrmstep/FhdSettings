@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Http;
 using System.Web.Http.Description;
 using SettingsService.Core.Data;
 using SettingsService.Core.Data.Models;
@@ -23,15 +25,26 @@ namespace SettingsService.Api.Controllers
         }
 
         /// <summary>
-        /// Get host settings with crawl delay and other
+        /// Get settings of all hosts
         /// </summary>
-        /// <param name="host"></param>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof(CrawlHostSetting))]
-        public IHttpActionResult Get([FromUri]string host = null)
+        [ResponseType(typeof(IList<CrawlHostSetting>))]
+        public IHttpActionResult Get()
         {
-            return Ok(_hostSettingsRepository.GetHostSettings(host));
+            return Ok(_hostSettingsRepository.GetHostSettings());
+        }
+
+        /// <summary>
+        /// Get host settings with crawl delay and other
+        /// </summary>
+        /// <param name="id">Guid identifier of settings</param>
+        /// <returns></returns>
+        [Route("{id:guid}")]
+        [ResponseType(typeof(CrawlHostSetting))]
+        public IHttpActionResult Get(Guid id)
+        {
+            return Ok(_hostSettingsRepository.GetHostSettings(id));
         }
 
         /// <summary>
