@@ -75,10 +75,12 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <param name="crawlHostSetting">Updated crawl settings for the host</param>
         /// <returns>Host in the parameter and in the object must be equal.</returns>
-        [Route("default")]
-        public IHttpActionResult Put([FromBody] CrawlHostSetting crawlHostSetting)
+        [Route("{id:guid}")]
+        public IHttpActionResult Put(Guid id, [FromBody] CrawlHostSetting crawlHostSetting)
         {
-            _hostSettingsRepository.UpdateHostSettings(crawlHostSetting);
+            if (id == crawlHostSetting.Id)
+                _hostSettingsRepository.UpdateHostSettings(crawlHostSetting);
+
             return Ok();
         }
         /// <summary>
