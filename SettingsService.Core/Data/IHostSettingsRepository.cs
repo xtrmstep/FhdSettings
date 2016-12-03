@@ -36,7 +36,7 @@ namespace SettingsService.Core.Data
         /// <summary>
         ///     Remove existing host settings
         /// </summary>
-        /// <param name="host"></param>
-        void RemoveHostSettings(string host);
+        /// <param name="id"></param>
+        void RemoveHostSettings(Guid id);
     }
 }

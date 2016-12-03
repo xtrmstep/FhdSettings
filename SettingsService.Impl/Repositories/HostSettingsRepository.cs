@@ -45,11 +45,11 @@ namespace SettingsService.Impl.Repositories
             }
         }
 
-        public void RemoveHostSettings(string host)
+        public void RemoveHostSettings(Guid id)
         {
             using (var ctx = new SettingDbContext())
             {
-                var settings = ctx.CrawlHostSettings.SingleOrDefault(s => s.Host == host);
+                var settings = ctx.CrawlHostSettings.SingleOrDefault(s => s.Id == id);
                 ctx.CrawlHostSettings.Remove(settings);
                 ctx.SaveChanges();
             }

@@ -48,6 +48,17 @@ namespace SettingsService.Api.Controllers
         }
 
         /// <summary>
+        /// Get host default settings
+        /// </summary>
+        /// <returns></returns>
+        [Route("default")]
+        [ResponseType(typeof(CrawlHostSetting))]
+        public IHttpActionResult GetDefault()
+        {
+            return Ok(_hostSettingsRepository.GetHostSettings(Guid.Empty));
+        }
+
+        /// <summary>
         /// Create a record with settings for a new host
         /// </summary>
         /// <param name="crawlHostSetting">Settings object</param>
@@ -62,29 +73,36 @@ namespace SettingsService.Api.Controllers
         /// <summary>
         /// Update host crawl settings
         /// </summary>
-        /// <param name="host">Host name</param>
         /// <param name="crawlHostSetting">Updated crawl settings for the host</param>
         /// <returns>Host in the parameter and in the object must be equal.</returns>
-        /// <response code="200">OK</response>
-        /// <response code="400">Identifiers do not match</response>
-        [Route("{id:guid}")]
-        public IHttpActionResult Put(string host, [FromBody] CrawlHostSetting crawlHostSetting)
+        [Route("default")]
+        public IHttpActionResult Put([FromBody] CrawlHostSetting crawlHostSetting)
         {
-            if (host != crawlHostSetting.Host) return BadRequest();
-
             _hostSettingsRepository.UpdateHostSettings(crawlHostSetting);
+            return Ok();
+        }
+        /// <summary>
+        /// Update host crawl settings
+        /// </summary>
+        [Route("default")]
+        public IHttpActionResult PutDefault(int delay, string disallow)
+        {
+            var settings = _hostSettingsRepository.GetHostSettings(Guid.Empty);
+            settings.Disallow = disallow;
+            settings.CrawlDelay = delay;
+            _hostSettingsRepository.UpdateHostSettings(settings);
             return Ok();
         }
 
         /// <summary>
         /// Delete crawl settings for specified host
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="id">Guid identifier of the settings</param>
         /// <returns></returns>
         [Route("{id:guid}")]
-        public IHttpActionResult Delete(string host)
+        public IHttpActionResult Delete(Guid id)
         {
-            _hostSettingsRepository.RemoveHostSettings(host);
+            _hostSettingsRepository.RemoveHostSettings(id);
             return Ok();
         }
     }
