@@ -17,7 +17,9 @@ class SettingsServiceApi {
             }
         });
         $.get(this.serviceUrl + "/api/urls", (data: CrawlUrlSeed[]) => {
-            //
+            if (data != null) {
+                generalSettings.urls(data);
+            }
         });
     }
 
@@ -37,8 +39,12 @@ class SettingsServiceApi {
 var generalSettings = {
     delay: ko.observable(),
     disallow: ko.observable(),
+    urls: ko.observableArray(),
     saveSettings() {
         settingsServiceApi.saveSettings(this.disallow(), this.delay());
+    },
+    addUrl() {
+        
     }
 };
 

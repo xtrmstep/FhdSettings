@@ -15,7 +15,9 @@ var SettingsServiceApi = (function () {
             }
         });
         $.get(this.serviceUrl + "/api/urls", function (data) {
-            //
+            if (data != null) {
+                generalSettings.urls(data);
+            }
         });
     };
     SettingsServiceApi.prototype.saveSettings = function (disallow, delay) {
@@ -34,8 +36,11 @@ var SettingsServiceApi = (function () {
 var generalSettings = {
     delay: ko.observable(),
     disallow: ko.observable(),
+    urls: ko.observableArray(),
     saveSettings: function () {
         settingsServiceApi.saveSettings(this.disallow(), this.delay());
+    },
+    addUrl: function () {
     }
 };
 var settingsServiceApi = new SettingsServiceApi();

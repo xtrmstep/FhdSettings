@@ -53,12 +53,14 @@
                 <th>URL</th>
                 <th></th>
             </tr>
-            <tr>
-                <td>http://mywebsite.com</td>
-                <td>
-                    <button type="button" class="btn btn-default btn-sm" title="Remove"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                </td>
-            </tr>
+            <tbody data-bind="foreach: urls">
+                <tr>
+                    <td data-bind="text: Url"></td>
+                    <td>
+                        <button type="button" class="btn btn-default btn-sm" title="Remove"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>
