@@ -7,6 +7,7 @@ namespace SettingsService.Api
     {
         public static void Register(HttpConfiguration config)
         {
+            // good explanation of CORS https://www.html5rocks.com/en/tutorials/cors/
             // enable CORS. read more https://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
