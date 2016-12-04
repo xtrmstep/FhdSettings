@@ -1,28 +1,45 @@
 ﻿/// <reference path="typings/jquery/jquery.d.ts" />
+/// <reference path="typings/knockout/knockout.d.ts" />
 /// <reference path="typings/site.d.ts" />
-
-interface IBuilderDefaultCrawlerSettings {
-    (data: CrawlHostSetting): void
-}
-
-interface IBuilderFrontierSettings {
-    (urls: CrawlUrlSeed[]): void
-}
 
 class SettingsServiceApi {
     serviceUrl: string;
 
-    constructor(baseServiceUrl: string) {
+    setApiServer(baseServiceUrl: string) {
         this.serviceUrl = baseServiceUrl;
     }
 
-    loadGeneralSettings(buildDefaultSettings: IBuilderDefaultCrawlerSettings,
-        buildFrontierSettings: IBuilderFrontierSettings) {
+    loadGeneralSettings() {
         $.get(this.serviceUrl + "/api/hosts/default", (data: CrawlHostSetting) => {
-            buildDefaultSettings(data);
+            if (data != null) {
+                generalSettings.delay(data.crawlDelay);
+                generalSettings.disallow(data.disallow);
+            }
         });
         $.get(this.serviceUrl + "/api/urls", (data: CrawlUrlSeed[]) => {
-            buildFrontierSettings(data);
+            //
+        });
+    }
+
+    saveSettings(disallow: string, delay: number) {
+        $.ajax({
+            url: this.serviceUrl + "/api/hosts/default",
+            method: "PUT",
+            data: {
+                disallow: disallow,
+                delay: delay
+            },
+            contentType: "application/json"
         });
     }
 }
+
+var generalSettings = {
+    delay: ko.observable(),
+    disallow: ko.observable(),
+    saveSettings() {
+        settingsServiceApi.saveSettings(this.disallow(), this.delay());
+    }
+};
+
+var settingsServiceApi = new SettingsServiceApi();

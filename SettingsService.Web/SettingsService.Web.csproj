@@ -231,6 +231,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\general-settings.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\knockout\tests\jasmine.extensions.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\site.d.ts" />
   </ItemGroup>
   <ItemGroup>
