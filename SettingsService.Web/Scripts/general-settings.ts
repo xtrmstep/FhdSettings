@@ -1,6 +1,16 @@
 ﻿/// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="typings/knockout/knockout.d.ts" />
-/// <reference path="typings/site.d.ts" />
+/// <reference path="typings/models.d.ts" />
+
+class UrlInfo {
+    Id: string;
+    Url: string;
+
+    constructor(id: string, url: string) {
+        this.Id = id;
+        this.Url = url;
+    }
+}
 
 class SettingsServiceApi {
     serviceUrl: string;
@@ -10,13 +20,13 @@ class SettingsServiceApi {
     }
 
     loadGeneralSettings() {
-        $.get(this.serviceUrl + "/api/hosts/default", (data: CrawlHostSetting) => {
+        $.get(this.serviceUrl + "/api/hosts/default", (data: HostSettings) => {
             if (data != null) {
-                generalSettings.delay(data.crawlDelay);
-                generalSettings.disallow(data.disallow);
+                generalSettings.delay(data.CrawlDelay);
+                generalSettings.disallow(data.Disallow);
             }
         });
-        $.get(this.serviceUrl + "/api/urls", (data: CrawlUrlSeed[]) => {
+        $.get(this.serviceUrl + "/api/urls", (data: UrlInfo[]) => {
             if (data != null) {
                 generalSettings.urls(data);
             }
@@ -37,14 +47,29 @@ class SettingsServiceApi {
 }
 
 var generalSettings = {
-    delay: ko.observable(),
-    disallow: ko.observable(),
-    urls: ko.observableArray(),
+    delay: ko.observable(60),
+    disallow: ko.observable("*"),
+    urls: ko.observableArray([]),
+    newUrl: ko.observable("http://someurl"),
     saveSettings() {
-        settingsServiceApi.saveSettings(this.disallow(), this.delay());
+        var disallow = generalSettings.disallow();
+        var delay = generalSettings.delay();
+        settingsServiceApi.saveSettings(disallow, delay);
     },
     addUrl() {
-        
+        var url = new UrlInfo();
+        url.Url = generalSettings.newUrl();
+        generalSettings.urls.push(url);
+    },
+    removeUrl() {
+        var urls = generalSettings.urls();
+        for (var i = 0; i < urls.length; i++) {
+            if (urls[i].Id === this.Id) {
+                urls.splice(i, 1);
+                generalSettings.urls(urls);
+                break;
+            }
+        }
     }
 };
 

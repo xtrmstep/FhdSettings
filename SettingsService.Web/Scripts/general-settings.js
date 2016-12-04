@@ -1,6 +1,13 @@
 /// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="typings/knockout/knockout.d.ts" />
-/// <reference path="typings/site.d.ts" />
+/// <reference path="typings/models.d.ts" />
+var UrlInfo = (function () {
+    function UrlInfo(id, url) {
+        this.Id = id;
+        this.Url = url;
+    }
+    return UrlInfo;
+}());
 var SettingsServiceApi = (function () {
     function SettingsServiceApi() {
     }
@@ -10,8 +17,8 @@ var SettingsServiceApi = (function () {
     SettingsServiceApi.prototype.loadGeneralSettings = function () {
         $.get(this.serviceUrl + "/api/hosts/default", function (data) {
             if (data != null) {
-                generalSettings.delay(data.crawlDelay);
-                generalSettings.disallow(data.disallow);
+                generalSettings.delay(data.CrawlDelay);
+                generalSettings.disallow(data.Disallow);
             }
         });
         $.get(this.serviceUrl + "/api/urls", function (data) {
@@ -34,13 +41,29 @@ var SettingsServiceApi = (function () {
     return SettingsServiceApi;
 }());
 var generalSettings = {
-    delay: ko.observable(),
-    disallow: ko.observable(),
-    urls: ko.observableArray(),
+    delay: ko.observable(60),
+    disallow: ko.observable("*"),
+    urls: ko.observableArray([]),
+    newUrl: ko.observable("http://someurl"),
     saveSettings: function () {
-        settingsServiceApi.saveSettings(this.disallow(), this.delay());
+        var disallow = generalSettings.disallow();
+        var delay = generalSettings.delay();
+        settingsServiceApi.saveSettings(disallow, delay);
     },
     addUrl: function () {
+        var url = new UrlInfo();
+        url.Url = generalSettings.newUrl();
+        generalSettings.urls.push(url);
+    },
+    removeUrl: function () {
+        var urls = generalSettings.urls();
+        for (var i = 0; i < urls.length; i++) {
+            if (urls[i].Id === this.Id) {
+                urls.splice(i, 1);
+                generalSettings.urls(urls);
+                break;
+            }
+        }
     }
 };
 var settingsServiceApi = new SettingsServiceApi();
