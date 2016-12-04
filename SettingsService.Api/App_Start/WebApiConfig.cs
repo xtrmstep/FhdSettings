@@ -9,6 +9,7 @@ namespace SettingsService.Api
         {
             // good explanation of CORS https://www.html5rocks.com/en/tutorials/cors/
             // enable CORS. read more https://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
+            // detailed clarification https://msdn.microsoft.com/en-us/magazine/dn532203.aspx
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             // Web API routes
