@@ -1,18 +1,12 @@
 ﻿/// <reference path="typings/jquery/jquery.d.ts" />
+/// <reference path="typings/site.d.ts" />
 
 interface IBuilderDefaultCrawlerSettings {
-    (disallow: string, delay: number): void
+    (data: CrawlHostSetting): void
 }
 
 interface IBuilderFrontierSettings {
-    (urls: string[]): void
-}
-
-class CrawlHostSetting {
-    id: string;
-    host: string;
-    disallow: string;
-    crawlDelay: number;
+    (urls: CrawlUrlSeed[]): void
 }
 
 class SettingsServiceApi {
@@ -24,7 +18,11 @@ class SettingsServiceApi {
 
     loadGeneralSettings(buildDefaultSettings: IBuilderDefaultCrawlerSettings,
         buildFrontierSettings: IBuilderFrontierSettings) {
-        $.get(this.serviceUrl + "/api/hosts/default", (data: CrawlHostSetting) => { buildDefaultSettings(data.disallow, data.crawlDelay); });
-        $.get(this.serviceUrl + "/api/urls", (data: string[]) => { buildFrontierSettings(data); });
+        $.get(this.serviceUrl + "/api/hosts/default", (data: CrawlHostSetting) => {
+            buildDefaultSettings(data);
+        });
+        $.get(this.serviceUrl + "/api/urls", (data: CrawlUrlSeed[]) => {
+            buildFrontierSettings(data);
+        });
     }
 }

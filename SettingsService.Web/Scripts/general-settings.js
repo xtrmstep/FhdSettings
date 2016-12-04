@@ -1,16 +1,16 @@
 /// <reference path="typings/jquery/jquery.d.ts" />
-var CrawlHostSetting = (function () {
-    function CrawlHostSetting() {
-    }
-    return CrawlHostSetting;
-}());
+/// <reference path="typings/site.d.ts" />
 var SettingsServiceApi = (function () {
     function SettingsServiceApi(baseServiceUrl) {
         this.serviceUrl = baseServiceUrl;
     }
     SettingsServiceApi.prototype.loadGeneralSettings = function (buildDefaultSettings, buildFrontierSettings) {
-        $.get(this.serviceUrl + "/api/hosts/default", function (data) { buildDefaultSettings(data.disallow, data.crawlDelay); });
-        $.get(this.serviceUrl + "/api/urls", function (data) { buildFrontierSettings(data); });
+        $.get(this.serviceUrl + "/api/hosts/default", function (data) {
+            buildDefaultSettings(data);
+        });
+        $.get(this.serviceUrl + "/api/urls", function (data) {
+            buildFrontierSettings(data);
+        });
     };
     return SettingsServiceApi;
 }());
