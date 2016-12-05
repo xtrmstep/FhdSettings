@@ -57,8 +57,7 @@ var generalSettings = {
         settingsServiceApi.saveSettings(disallow, delay);
     },
     addUrl() {
-        var url = new UrlInfo();
-        url.Url = generalSettings.newUrl();
+        var url = new UrlInfo("", generalSettings.newUrl());
         generalSettings.urls.push(url);
     },
     removeUrl() {
