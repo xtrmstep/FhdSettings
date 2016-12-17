@@ -44,6 +44,13 @@ class SettingsServiceApi {
             contentType: "application/json"
         });
     }
+
+    removeUrl(id: string) {
+        $.ajax({
+            url: this.serviceUrl + "/api/urls/" + id,
+            method: "DELETE"
+        });
+    }
 }
 
 var generalSettings = {
@@ -64,8 +71,9 @@ var generalSettings = {
         var urls = generalSettings.urls();
         for (var i = 0; i < urls.length; i++) {
             if (urls[i].Id === this.Id) {
-                urls.splice(i, 1);
+                urls.splice(i, 1); // remove item from the array
                 generalSettings.urls(urls);
+                settingsServiceApi.removeUrl(urls[i].Id);
                 break;
             }
         }

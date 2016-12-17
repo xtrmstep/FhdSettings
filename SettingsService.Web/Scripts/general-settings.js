@@ -38,6 +38,12 @@ var SettingsServiceApi = (function () {
             contentType: "application/json"
         });
     };
+    SettingsServiceApi.prototype.removeUrl = function (id) {
+        $.ajax({
+            url: this.serviceUrl + "/api/urls/" + id,
+            method: "DELETE"
+        });
+    };
     return SettingsServiceApi;
 }());
 var generalSettings = {
@@ -51,16 +57,16 @@ var generalSettings = {
         settingsServiceApi.saveSettings(disallow, delay);
     },
     addUrl: function () {
-        var url = new UrlInfo();
-        url.Url = generalSettings.newUrl();
+        var url = new UrlInfo("", generalSettings.newUrl());
         generalSettings.urls.push(url);
     },
     removeUrl: function () {
         var urls = generalSettings.urls();
         for (var i = 0; i < urls.length; i++) {
             if (urls[i].Id === this.Id) {
-                urls.splice(i, 1);
+                urls.splice(i, 1); // remove item from the array
                 generalSettings.urls(urls);
+                settingsServiceApi.removeUrl(urls[i].Id);
                 break;
             }
         }
