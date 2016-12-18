@@ -109,12 +109,6 @@ namespace SettingsService.Api.Tests.Controllers
         {
             using (var ctx = _testDb.CreateContext())
             {
-                ctx.CrawlHostSettings.AddRange(new[]
-                {
-                    new CrawlHostSetting {CrawlDelay = 60, Disallow = "*", Host = "", Id = Guid.NewGuid()}
-                });
-                ctx.SaveChanges();
-
                 using (var response = _httpServer.GetJson("api/hosts/default"))
                 {
                     var content = response.Content as ObjectContent<CrawlHostSetting>;
@@ -135,12 +129,6 @@ namespace SettingsService.Api.Tests.Controllers
         {
             using (var ctx = _testDb.CreateContext())
             {
-                ctx.CrawlHostSettings.AddRange(new[]
-                {
-                    new CrawlHostSetting {CrawlDelay = 60, Disallow = "*", Host = "", Id = Guid.NewGuid()}
-                });
-                ctx.SaveChanges();
-
                 var payload = JsonConvert.SerializeObject(new CrawlHostSetting
                 {
                     CrawlDelay = 20, // new value
