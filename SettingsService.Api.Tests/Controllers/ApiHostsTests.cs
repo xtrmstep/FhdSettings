@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 using Newtonsoft.Json;
 using SettingsService.Api.Tests.Fixtures;
 using SettingsService.Core.Data.Models;
-using SettingsService.Impl;
 using Xunit;
 
 namespace SettingsService.Api.Tests.Controllers
@@ -38,7 +34,7 @@ namespace SettingsService.Api.Tests.Controllers
                 // get ID for request
                 var id = ctx.CrawlHostSettings.ToList().First().Id.ToString();
 
-                using (var response = _httpServer.GetJson("api/hosts/"+ id))
+                using (var response = _httpServer.GetJson("api/hosts/" + id))
                 {
                     var content = response.Content as ObjectContent<CrawlHostSetting>;
                     Assert.NotNull(content);
@@ -62,7 +58,7 @@ namespace SettingsService.Api.Tests.Controllers
                 {
                     new CrawlHostSetting {CrawlDelay = 1, Disallow = "*", Host = "", Id = Guid.NewGuid()},
                     new CrawlHostSetting {CrawlDelay = 2, Disallow = "*", Host = "1", Id = Guid.NewGuid()},
-                    new CrawlHostSetting {CrawlDelay = 3, Disallow = "*", Host = "2", Id = Guid.NewGuid()},
+                    new CrawlHostSetting {CrawlDelay = 3, Disallow = "*", Host = "2", Id = Guid.NewGuid()}
                 });
                 ctx.SaveChanges();
 
@@ -89,11 +85,11 @@ namespace SettingsService.Api.Tests.Controllers
                 {
                     new CrawlHostSetting {CrawlDelay = 1, Disallow = "*", Host = "", Id = Guid.Empty},
                     new CrawlHostSetting {CrawlDelay = 2, Disallow = "/", Host = "1", Id = targetId},
-                    new CrawlHostSetting {CrawlDelay = 3, Disallow = "*", Host = "2", Id = Guid.NewGuid()},
+                    new CrawlHostSetting {CrawlDelay = 3, Disallow = "*", Host = "2", Id = Guid.NewGuid()}
                 });
                 ctx.SaveChanges();
 
-                using (var response = _httpServer.GetJson("api/hosts/"+ targetId))
+                using (var response = _httpServer.GetJson("api/hosts/" + targetId))
                 {
                     var content = response.Content as ObjectContent<CrawlHostSetting>;
                     Assert.NotNull(content);
@@ -115,7 +111,7 @@ namespace SettingsService.Api.Tests.Controllers
             {
                 ctx.CrawlHostSettings.AddRange(new[]
                 {
-                    new CrawlHostSetting {CrawlDelay = 60, Disallow = "*", Host = "", Id = Guid.NewGuid()},
+                    new CrawlHostSetting {CrawlDelay = 60, Disallow = "*", Host = "", Id = Guid.NewGuid()}
                 });
                 ctx.SaveChanges();
 
@@ -141,7 +137,7 @@ namespace SettingsService.Api.Tests.Controllers
             {
                 ctx.CrawlHostSettings.AddRange(new[]
                 {
-                    new CrawlHostSetting {CrawlDelay = 60, Disallow = "*", Host = "", Id = Guid.NewGuid()},
+                    new CrawlHostSetting {CrawlDelay = 60, Disallow = "*", Host = "", Id = Guid.NewGuid()}
                 });
                 ctx.SaveChanges();
 
