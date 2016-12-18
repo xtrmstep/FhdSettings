@@ -1,3 +1,4 @@
+using System;
 using System.Data.Entity.Migrations;
 using SettingsService.Core.Data.Models;
 
@@ -14,7 +15,7 @@ namespace SettingsService.Impl.Migrations
         protected override void Seed(SettingDbContext context)
         {
             context.CrawlHostSettings.AddOrUpdate(
-                p => p.Id,
+                p => p.Host,
                 new CrawlHostSetting
                 {
                     Host = string.Empty,
