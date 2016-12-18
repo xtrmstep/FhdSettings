@@ -79,6 +79,35 @@ namespace SettingsService.Api.Tests.Controllers
             }
         }
 
+        [Fact(DisplayName = "api/hosts/id: should return host by id")]
+        public void Should_return_host_by_id()
+        {
+            using (var ctx = _testDb.CreateContext())
+            {
+                var targetId = Guid.NewGuid();
+                ctx.CrawlHostSettings.AddRange(new[]
+                {
+                    new CrawlHostSetting {CrawlDelay = 1, Disallow = "*", Host = "", Id = Guid.Empty},
+                    new CrawlHostSetting {CrawlDelay = 2, Disallow = "/", Host = "1", Id = targetId},
+                    new CrawlHostSetting {CrawlDelay = 3, Disallow = "*", Host = "2", Id = Guid.NewGuid()},
+                });
+                ctx.SaveChanges();
+
+                using (var response = _httpServer.GetJson("api/hosts/"+ targetId))
+                {
+                    var content = response.Content as ObjectContent<CrawlHostSetting>;
+                    Assert.NotNull(content);
+
+                    var result = content.Value as CrawlHostSetting;
+                    Assert.NotNull(result);
+
+                    Assert.Equal(2, result.CrawlDelay);
+                    Assert.Equal("/", result.Disallow);
+                    Assert.Equal("1", result.Host);
+                }
+            }
+        }
+
         [Fact(DisplayName = "api/hosts/default: should return defaults")]
         public void Should_return_default_settings()
         {
