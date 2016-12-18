@@ -74,5 +74,31 @@ namespace SettingsService.Api.Tests.Controllers
                 }
             }
         }
+
+        [Fact(DisplayName = "api/hosts/default: should return defaults")]
+        public void Should_return_default_settings()
+        {
+            using (var ctx = _testDb.CreateContext())
+            {
+                ctx.CrawlHostSettings.AddRange(new[]
+                {
+                    new CrawlHostSetting {CrawlDelay = 60, Disallow = "*", Host = "", Id = Guid.NewGuid()},
+                });
+                ctx.SaveChanges();
+
+                using (var response = _httpServer.GetJson("api/hosts/default"))
+                {
+                    var content = response.Content as ObjectContent<CrawlHostSetting>;
+                    Assert.NotNull(content);
+
+                    var result = content.Value as CrawlHostSetting;
+                    Assert.NotNull(result);
+
+                    Assert.Equal(60, result.CrawlDelay);
+                    Assert.Equal("*", result.Disallow);
+                    Assert.Equal("", result.Host);
+                }
+            }
+        }
     }
 }

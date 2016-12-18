@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using AutoMapper;
 using SettingsService.Core.Data;
@@ -40,8 +41,10 @@ namespace SettingsService.Impl.Repositories
         {
             using (var ctx = new SettingDbContext())
             {
-                var settings = ctx.CrawlHostSettings.AsNoTracking().SingleOrDefault(s => s.Id == id);
-                return settings;
+                var crawlHostSettings = ctx.CrawlHostSettings.AsNoTracking();
+                return id == Guid.Empty 
+                    ? crawlHostSettings.SingleOrDefault(s => s.Host == string.Empty) 
+                    : crawlHostSettings.SingleOrDefault(s => s.Id == id);
             }
         }
 
