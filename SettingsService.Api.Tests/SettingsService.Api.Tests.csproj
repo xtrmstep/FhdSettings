@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ApiHostsTests.cs" />
     <Compile Include="Controllers\RulesControllerTests.cs" />
+    <Compile Include="Fixtures\DbBoundTestCollection.cs" />
     <Compile Include="Fixtures\HttpServerFixture.cs" />
     <Compile Include="Fixtures\TestDbFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

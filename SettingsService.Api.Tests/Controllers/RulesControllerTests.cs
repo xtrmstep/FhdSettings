@@ -7,7 +7,8 @@ using Xunit;
 
 namespace SettingsService.Api.Tests.Controllers
 {
-    public class RulesControllerTests : IClassFixture<HttpServerFixture>, IClassFixture<TestDbFixture>
+    [Collection("DbBoundTest")]
+    public class RulesControllerTests : IClassFixture<HttpServerFixture>
     {
         private readonly HttpServerFixture _httpServer;
         private readonly TestDbFixture _testDb;

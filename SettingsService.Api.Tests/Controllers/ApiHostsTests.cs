@@ -4,13 +4,17 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
+using Newtonsoft.Json;
 using SettingsService.Api.Tests.Fixtures;
 using SettingsService.Core.Data.Models;
+using SettingsService.Impl;
 using Xunit;
 
 namespace SettingsService.Api.Tests.Controllers
 {
-    public class ApiHostsTests : IClassFixture<HttpServerFixture>, IClassFixture<TestDbFixture>
+    [Collection("DbBoundTest")]
+    public class ApiHostsTests : IClassFixture<HttpServerFixture>
     {
         private readonly HttpServerFixture _httpServer;
         private readonly TestDbFixture _testDb;
@@ -96,6 +100,39 @@ namespace SettingsService.Api.Tests.Controllers
 
                     Assert.Equal(60, result.CrawlDelay);
                     Assert.Equal("*", result.Disallow);
+                    Assert.Equal("", result.Host);
+                }
+            }
+        }
+
+        [Fact(DisplayName = "api/hosts/default: should save defaults")]
+        public void Should_return_save_settings()
+        {
+            using (var ctx = _testDb.CreateContext())
+            {
+                ctx.CrawlHostSettings.AddRange(new[]
+                {
+                    new CrawlHostSetting {CrawlDelay = 60, Disallow = "*", Host = "", Id = Guid.NewGuid()},
+                });
+                ctx.SaveChanges();
+
+                var payload = JsonConvert.SerializeObject(new CrawlHostSetting
+                {
+                    CrawlDelay = 20, // new value
+                    Disallow = "/", // new value
+                    Host = "",
+                    Id = Guid.NewGuid()
+                });
+                using (var response = _httpServer.PutJson("api/hosts/default", payload))
+                {
+                    var content = response.Content as ObjectContent<CrawlHostSetting>;
+                    Assert.NotNull(content);
+
+                    var result = content.Value as CrawlHostSetting;
+                    Assert.NotNull(result);
+
+                    Assert.Equal(20, result.CrawlDelay);
+                    Assert.Equal("/", result.Disallow);
                     Assert.Equal("", result.Host);
                 }
             }
