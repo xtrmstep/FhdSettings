@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
+using SettingsService.Api.Models;
 using SettingsService.Core.Data;
 using SettingsService.Core.Data.Models;
 
@@ -87,11 +88,11 @@ namespace SettingsService.Api.Controllers
         /// Update host crawl settings
         /// </summary>
         [Route("default")]
-        public IHttpActionResult PutDefault(int delay, string disallow)
+        public IHttpActionResult PutDefault([FromBody] HostDefaultSettings newSettings)
         {
             var settings = _hostSettingsRepository.GetHostSettings(Guid.Empty);
-            settings.Disallow = disallow;
-            settings.CrawlDelay = delay;
+            settings.Disallow = newSettings.Disallow;
+            settings.CrawlDelay = newSettings.Delay;
             _hostSettingsRepository.UpdateHostSettings(settings);
             return Ok();
         }

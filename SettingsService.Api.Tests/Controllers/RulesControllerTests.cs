@@ -32,7 +32,7 @@ namespace SettingsService.Api.Tests.Controllers
                 });
                 ctx.SaveChanges();
 
-                using (var response = _httpServer.GetJson("api/crawler/rules?host=test"))
+                using (var response = _httpServer.Get("api/crawler/rules?host=test"))
                 {
                     var content = response.Content as ObjectContent<IList<CrawlRule>>;
                     Assert.NotNull(content);

@@ -32,7 +32,8 @@ namespace SettingsService.Impl.Repositories
         {
             using (var ctx = new SettingDbContext())
             {
-                var settings = ctx.CrawlHostSettings.AsNoTracking().ToList();
+                // return all items, without default one
+                var settings = ctx.CrawlHostSettings.AsNoTracking().Where(s => s.Host != string.Empty).ToList();
                 return settings;
             }
         }
