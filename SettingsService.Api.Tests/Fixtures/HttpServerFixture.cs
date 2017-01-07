@@ -25,10 +25,7 @@ namespace SettingsService.Api.Tests.Fixtures
 
         public void Dispose()
         {
-            if (_httpServer != null)
-            {
-                _httpServer.Dispose();
-            }
+            _httpServer?.Dispose();
         }
 
         public HttpRequestMessage CreateRequest(string url, string mthv, HttpMethod method)
@@ -52,7 +49,7 @@ namespace SettingsService.Api.Tests.Fixtures
 
         public HttpClient CreateServer()
         {
-            var httpClient = new HttpClient(_httpServer);
+            var httpClient = new HttpClient(_httpServer, false);
             return httpClient;
         }
 
