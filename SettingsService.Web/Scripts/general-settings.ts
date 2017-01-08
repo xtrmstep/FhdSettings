@@ -6,9 +6,21 @@ class UrlInfo {
     Id: string;
     Url: string;
 
-    constructor(id: string, url: string) {
-        this.Id = id;
+    constructor(url: string) {
         this.Url = url;
+    }
+}
+
+class HostsInfo {
+    Id: string;
+    Host: string;
+    Disallow: string;
+    CrawlDelay: number;
+
+    constructor(host: string, disallow: string, delay: number) {
+        this.Host = host;
+        this.Disallow = disallow;
+        this.CrawlDelay = delay;
     }
 }
 
@@ -29,6 +41,14 @@ class SettingsServiceApi {
         $.get(this.serviceUrl + "/api/urls", (data: UrlInfo[]) => {
             if (data != null) {
                 generalSettings.urls(data);
+            }
+        });
+    }
+
+    loadHostsSettings() {
+        $.get(this.serviceUrl + "/api/hosts", (data: HostsInfo[]) => {
+            if (data != null) {
+                hostsDetails.hosts(data);
             }
         });
     }
@@ -68,7 +88,15 @@ class SettingsServiceApi {
             method: "DELETE"
         });
     }
+
+    removeHost(id: string) {
+        $.ajax({
+            url: this.serviceUrl + "/api/hosts/" + id,
+            method: "DELETE"
+        });
+    }
 }
+var settingsServiceApi = new SettingsServiceApi();
 
 var generalSettings = {
     delay: ko.observable(null),
@@ -87,23 +115,44 @@ var generalSettings = {
             return;
         }
         // new URL will have ID after the call to the server, in callback
-        var url = new UrlInfo("", newUrl);
+        var url = new UrlInfo(newUrl);
         generalSettings.urls.push(url);
         settingsServiceApi.addUrl(url);
         generalSettings.newUrl(""); // clean the input
     },
     removeUrl() {
-        var urls = generalSettings.urls();
-        for (var i = 0; i < urls.length; i++) {
-            var removed = <UrlInfo>urls[i];
-            if (removed.Id === this.Id) {
-                urls.splice(i, 1); // remove item from the grid array 
-                generalSettings.urls(urls);
-                settingsServiceApi.removeUrl(removed.Id);
-                break;
+        if (confirm("Are you sure?")) {
+            var urls = generalSettings.urls();
+            for (var i = 0; i < urls.length; i++) {
+                var removed: UrlInfo = urls[i];
+                if (removed.Id === this.Id) {
+                    urls.splice(i, 1); // remove item from the grid array 
+                    generalSettings.urls(urls);
+                    settingsServiceApi.removeUrl(removed.Id);
+                    break;
+                }
             }
         }
     }
 };
 
-var settingsServiceApi = new SettingsServiceApi();
+var hostsDetails = {
+    hosts: ko.observableArray([]),
+    editHost() {
+        alert("edit");
+    },
+    removeHost() {
+        if (confirm("Are you sure?")) {
+            var hosts = hostsDetails.hosts();
+            for (var i = 0; i < hosts.length; i++) {
+                var removed: HostsInfo = hosts[i];
+                if (removed.Id === this.Id) {
+                    hosts.splice(i, 1); // remove item from the grid array 
+                    hostsDetails.hosts(hosts);
+                    settingsServiceApi.removeHost(removed.Id);
+                    break;
+                }
+            }
+        }
+    }
+};

@@ -2,11 +2,18 @@
 /// <reference path="typings/knockout/knockout.d.ts" />
 /// <reference path="typings/models.d.ts" />
 var UrlInfo = (function () {
-    function UrlInfo(id, url) {
-        this.Id = id;
+    function UrlInfo(url) {
         this.Url = url;
     }
     return UrlInfo;
+}());
+var HostsInfo = (function () {
+    function HostsInfo(host, disallow, delay) {
+        this.Host = host;
+        this.Disallow = disallow;
+        this.CrawlDelay = delay;
+    }
+    return HostsInfo;
 }());
 var SettingsServiceApi = (function () {
     function SettingsServiceApi() {
@@ -24,6 +31,13 @@ var SettingsServiceApi = (function () {
         $.get(this.serviceUrl + "/api/urls", function (data) {
             if (data != null) {
                 generalSettings.urls(data);
+            }
+        });
+    };
+    SettingsServiceApi.prototype.loadHostsSettings = function () {
+        $.get(this.serviceUrl + "/api/hosts", function (data) {
+            if (data != null) {
+                hostsDetails.hosts(data);
             }
         });
     };
@@ -60,8 +74,15 @@ var SettingsServiceApi = (function () {
             method: "DELETE"
         });
     };
+    SettingsServiceApi.prototype.removeHost = function (id) {
+        $.ajax({
+            url: this.serviceUrl + "/api/hosts/" + id,
+            method: "DELETE"
+        });
+    };
     return SettingsServiceApi;
 }());
+var settingsServiceApi = new SettingsServiceApi();
 var generalSettings = {
     delay: ko.observable(null),
     disallow: ko.observable(""),
@@ -79,23 +100,44 @@ var generalSettings = {
             return;
         }
         // new URL will have ID after the call to the server, in callback
-        var url = new UrlInfo("", newUrl);
+        var url = new UrlInfo(newUrl);
         generalSettings.urls.push(url);
         settingsServiceApi.addUrl(url);
         generalSettings.newUrl(""); // clean the input
     },
     removeUrl: function () {
-        var urls = generalSettings.urls();
-        for (var i = 0; i < urls.length; i++) {
-            var removed = urls[i];
-            if (removed.Id === this.Id) {
-                urls.splice(i, 1); // remove item from the grid array 
-                generalSettings.urls(urls);
-                settingsServiceApi.removeUrl(removed.Id);
-                break;
+        if (confirm("Are you sure?")) {
+            var urls = generalSettings.urls();
+            for (var i = 0; i < urls.length; i++) {
+                var removed = urls[i];
+                if (removed.Id === this.Id) {
+                    urls.splice(i, 1); // remove item from the grid array 
+                    generalSettings.urls(urls);
+                    settingsServiceApi.removeUrl(removed.Id);
+                    break;
+                }
             }
         }
     }
 };
-var settingsServiceApi = new SettingsServiceApi();
+var hostsDetails = {
+    hosts: ko.observableArray([]),
+    editHost: function () {
+        alert("edit");
+    },
+    removeHost: function () {
+        if (confirm("Are you sure?")) {
+            var hosts = hostsDetails.hosts();
+            for (var i = 0; i < hosts.length; i++) {
+                var removed = hosts[i];
+                if (removed.Id === this.Id) {
+                    hosts.splice(i, 1); // remove item from the grid array 
+                    hostsDetails.hosts(hosts);
+                    settingsServiceApi.removeHost(removed.Id);
+                    break;
+                }
+            }
+        }
+    }
+};
 //# sourceMappingURL=general-settings.js.map
