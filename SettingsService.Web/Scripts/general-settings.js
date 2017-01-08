@@ -38,6 +38,22 @@ var SettingsServiceApi = (function () {
             contentType: "application/json"
         });
     };
+    SettingsServiceApi.prototype.addUrl = function (urlInfo) {
+        $.ajax({
+            url: this.serviceUrl + "/api/urls",
+            method: "POST",
+            data: JSON.stringify({
+                Url: urlInfo.Url
+            }),
+            contentType: "application/json",
+            success: function (data, textStatus, jqXHR) {
+                urlInfo.Id = data;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Status: " + textStatus + "; Error: " + errorThrown);
+            }
+        });
+    };
     SettingsServiceApi.prototype.removeUrl = function (id) {
         $.ajax({
             url: this.serviceUrl + "/api/urls/" + id,
@@ -57,8 +73,16 @@ var generalSettings = {
         settingsServiceApi.saveSettings(disallow, delay);
     },
     addUrl: function () {
-        var url = new UrlInfo("", generalSettings.newUrl());
+        var newUrl = generalSettings.newUrl();
+        if (newUrl.trim() === "") {
+            alert("URL is required.");
+            return;
+        }
+        // new URL will have ID after the call to the server, in callback
+        var url = new UrlInfo("", newUrl);
         generalSettings.urls.push(url);
+        settingsServiceApi.addUrl(url);
+        generalSettings.newUrl(""); // clean the input
     },
     removeUrl: function () {
         var urls = generalSettings.urls();

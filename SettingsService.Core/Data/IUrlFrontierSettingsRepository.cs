@@ -22,7 +22,7 @@ namespace SettingsService.Core.Data
         ///     Add new URL to the seed
         /// </summary>
         /// <param name="url"></param>
-        void AddSeedUrl(string url);
+        Guid AddSeedUrl(string url);
 
         /// <summary>
         /// Get URL by identifier

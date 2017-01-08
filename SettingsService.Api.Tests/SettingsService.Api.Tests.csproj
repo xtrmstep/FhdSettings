@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ApiUrlsTests.cs" />
     <Compile Include="Controllers\ApiHostsTests.cs" />
     <Compile Include="Controllers\RulesControllerTests.cs" />
     <Compile Include="Fixtures\DbBoundTestCollection.cs" />

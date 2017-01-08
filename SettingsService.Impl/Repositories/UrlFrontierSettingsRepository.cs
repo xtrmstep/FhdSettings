@@ -8,7 +8,7 @@ namespace SettingsService.Impl.Repositories
 {
     internal class UrlFrontierSettingsRepository : IUrlFrontierSettingsRepository
     {
-        public void AddSeedUrl(string url)
+        public Guid AddSeedUrl(string url)
         {
             using (var ctx = new SettingDbContext())
             {
@@ -16,6 +16,7 @@ namespace SettingsService.Impl.Repositories
                 seedItem.Url = url;
                 ctx.CrawlUrlSeeds.Add(seedItem);
                 ctx.SaveChanges();
+                return seedItem.Id;
             }
         }
 

@@ -45,6 +45,23 @@ class SettingsServiceApi {
         });
     }
 
+    addUrl(urlInfo: UrlInfo) {
+        $.ajax({
+            url: this.serviceUrl + "/api/urls",
+            method: "POST",
+            data: JSON.stringify({
+                Url: urlInfo.Url
+            }),
+            contentType: "application/json",
+            success: function (data, textStatus: string, jqXHR) {
+                urlInfo.Id = data;
+            },
+            error: function (jqXHR, textStatus: string, errorThrown) {
+                alert("Status: " + textStatus + "; Error: " + errorThrown);
+            }
+        });
+    }
+
     removeUrl(id: string) {
         $.ajax({
             url: this.serviceUrl + "/api/urls/" + id,
@@ -64,8 +81,16 @@ var generalSettings = {
         settingsServiceApi.saveSettings(disallow, delay);
     },
     addUrl() {
-        var url = new UrlInfo("", generalSettings.newUrl());
+        var newUrl = generalSettings.newUrl();
+        if (newUrl.trim() === "") {
+            alert("URL is required.");
+            return;
+        }
+        // new URL will have ID after the call to the server, in callback
+        var url = new UrlInfo("", newUrl);
         generalSettings.urls.push(url);
+        settingsServiceApi.addUrl(url);
+        generalSettings.newUrl(""); // clean the input
     },
     removeUrl() {
         var urls = generalSettings.urls();
