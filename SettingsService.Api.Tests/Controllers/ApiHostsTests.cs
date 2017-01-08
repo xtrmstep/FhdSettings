@@ -75,10 +75,10 @@ namespace SettingsService.Api.Tests.Controllers
                     Assert.Equal(expectedLocation, response.Headers.Location.ToString());
                 }
 
-                var defaultSettings = ctx.CrawlHostSettings.Single(s => s.Id == result);
-                Assert.Equal(1, defaultSettings.CrawlDelay);
-                Assert.Equal("*", defaultSettings.Disallow);
-                Assert.Equal("0", defaultSettings.Host);
+                var setting = ctx.CrawlHostSettings.Single(s => s.Id == result);
+                Assert.Equal(1, setting.CrawlDelay);
+                Assert.Equal("*", setting.Disallow);
+                Assert.Equal("0", setting.Host);
             }
         }
 
@@ -109,6 +109,41 @@ namespace SettingsService.Api.Tests.Controllers
                     Assert.Equal(2, result.CrawlDelay);
                     Assert.Equal("/", result.Disallow);
                     Assert.Equal("1", result.Host);
+                }
+            }
+        }
+
+        [Fact(DisplayName = "api/hosts/id PUT")]
+        public void Should_update_host_by_id()
+        {
+            using (var ctx = _testDb.CreateContext())
+            {
+                ctx.CrawlHostSettings.AddRange(new[]
+                {
+                    new CrawlHostSetting {CrawlDelay = 1, Disallow = "*", Host = "0"},
+                    new CrawlHostSetting {CrawlDelay = 2, Disallow = "/", Host = "1"},
+                    new CrawlHostSetting {CrawlDelay = 3, Disallow = "*", Host = "2"}
+                });
+                ctx.SaveChanges();
+                var targetId = ctx.CrawlHostSettings.Single(s => s.Host == "1").Id;
+
+                var payload = JsonConvert.SerializeObject(new CrawlHostSetting
+                {
+                    Id = targetId,
+                    Host = "11",
+                    CrawlDelay = 20,
+                    Disallow = "**"
+                });
+                using (var response = _httpServer.PutJson("api/hosts/" + targetId, payload))
+                {
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                }
+                using (var verifyCtx = _testDb.CreateContext())
+                {
+                    var settings = verifyCtx.CrawlHostSettings.Single(s => s.Id == targetId);
+                    Assert.Equal(20, settings.CrawlDelay);
+                    Assert.Equal("**", settings.Disallow);
+                    Assert.Equal("11", settings.Host);
                 }
             }
         }
