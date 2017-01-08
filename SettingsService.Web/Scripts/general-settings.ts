@@ -37,10 +37,10 @@ class SettingsServiceApi {
         $.ajax({
             url: this.serviceUrl + "/api/hosts/default",
             method: "PUT",
-            data: {
+            data: JSON.stringify({
                 disallow: disallow,
                 delay: delay
-            },
+            }),
             contentType: "application/json"
         });
     }
@@ -54,10 +54,10 @@ class SettingsServiceApi {
 }
 
 var generalSettings = {
-    delay: ko.observable(60),
-    disallow: ko.observable("*"),
+    delay: ko.observable(null),
+    disallow: ko.observable(""),
     urls: ko.observableArray([]),
-    newUrl: ko.observable("http://someurl"),
+    newUrl: ko.observable(""),
     saveSettings() {
         var disallow = generalSettings.disallow();
         var delay = generalSettings.delay();
@@ -70,10 +70,11 @@ var generalSettings = {
     removeUrl() {
         var urls = generalSettings.urls();
         for (var i = 0; i < urls.length; i++) {
-            if (urls[i].Id === this.Id) {
-                urls.splice(i, 1); // remove item from the array
+            var removed = <UrlInfo>urls[i];
+            if (removed.Id === this.Id) {
+                urls.splice(i, 1); // remove item from the grid array 
                 generalSettings.urls(urls);
-                settingsServiceApi.removeUrl(urls[i].Id);
+                settingsServiceApi.removeUrl(removed.Id);
                 break;
             }
         }

@@ -31,10 +31,10 @@ var SettingsServiceApi = (function () {
         $.ajax({
             url: this.serviceUrl + "/api/hosts/default",
             method: "PUT",
-            data: {
+            data: JSON.stringify({
                 disallow: disallow,
                 delay: delay
-            },
+            }),
             contentType: "application/json"
         });
     };
@@ -47,10 +47,10 @@ var SettingsServiceApi = (function () {
     return SettingsServiceApi;
 }());
 var generalSettings = {
-    delay: ko.observable(60),
-    disallow: ko.observable("*"),
+    delay: ko.observable(null),
+    disallow: ko.observable(""),
     urls: ko.observableArray([]),
-    newUrl: ko.observable("http://someurl"),
+    newUrl: ko.observable(""),
     saveSettings: function () {
         var disallow = generalSettings.disallow();
         var delay = generalSettings.delay();
@@ -63,10 +63,11 @@ var generalSettings = {
     removeUrl: function () {
         var urls = generalSettings.urls();
         for (var i = 0; i < urls.length; i++) {
-            if (urls[i].Id === this.Id) {
-                urls.splice(i, 1); // remove item from the array
+            var removed = urls[i];
+            if (removed.Id === this.Id) {
+                urls.splice(i, 1); // remove item from the grid array 
                 generalSettings.urls(urls);
-                settingsServiceApi.removeUrl(urls[i].Id);
+                settingsServiceApi.removeUrl(removed.Id);
                 break;
             }
         }
