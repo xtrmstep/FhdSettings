@@ -8,10 +8,7 @@ var UrlInfo = (function () {
     return UrlInfo;
 }());
 var HostsInfo = (function () {
-    function HostsInfo(host, disallow, delay) {
-        this.Host = host;
-        this.Disallow = disallow;
-        this.CrawlDelay = delay;
+    function HostsInfo() {
     }
     return HostsInfo;
 }());
@@ -41,7 +38,18 @@ var SettingsServiceApi = (function () {
             }
         });
     };
-    SettingsServiceApi.prototype.saveSettings = function (disallow, delay) {
+    SettingsServiceApi.prototype.saveSettings = function (hostInfo, callback) {
+        $.ajax({
+            url: this.serviceUrl + "/api/hosts/" + hostInfo.Id,
+            method: "PUT",
+            data: JSON.stringify(hostInfo),
+            contentType: "application/json",
+            success: function () {
+                callback();
+            }
+        });
+    };
+    SettingsServiceApi.prototype.saveDefaultSettings = function (disallow, delay) {
         $.ajax({
             url: this.serviceUrl + "/api/hosts/default",
             method: "PUT",
@@ -91,7 +99,8 @@ var generalSettings = {
     saveSettings: function () {
         var disallow = generalSettings.disallow();
         var delay = generalSettings.delay();
-        settingsServiceApi.saveSettings(disallow, delay);
+        // saving default
+        settingsServiceApi.saveDefaultSettings(disallow, delay);
     },
     addUrl: function () {
         var newUrl = generalSettings.newUrl();
@@ -122,9 +131,43 @@ var generalSettings = {
 };
 var hostsDetails = {
     hosts: ko.observableArray([]),
-    editHost: function () {
-        alert("edit");
+    // currently editing values
+    id: ko.observable(""),
+    host: ko.observable(""),
+    delay: ko.observable(null),
+    disallow: ko.observable(""),
+    saveHost: function () {
+        var host = new HostsInfo();
+        host.Id = hostsDetails.id();
+        host.Host = hostsDetails.host();
+        host.CrawlDelay = hostsDetails.delay();
+        host.Disallow = hostsDetails.disallow();
+        var hosts = hostsDetails.hosts();
+        for (var i = 0; i < hosts.length; i++) {
+            var item = hosts[i];
+            if (item.Id === host.Id) {
+                item.CrawlDelay = host.CrawlDelay;
+                item.Disallow = host.Disallow;
+                // todo update item on UI
+                hostsDetails.eventHostSaved();
+                break;
+            }
+        }
+        //settingsServiceApi.saveSettings(host, function () {
+        //    var hosts = hostsDetails.hosts();
+        //    for (var i = 0; i < hosts.length; i++) {
+        //        var item: HostsInfo = hosts[i];
+        //        if (item.Id === host.Id) {
+        //            item.CrawlDelay = host.CrawlDelay;
+        //            item.Disallow = host.Disallow;
+        //            hostsDetails.hosts(hosts);
+        //            hostsDetails.eventHostSaved();
+        //            break;
+        //        }
+        //    }
+        //});
     },
+    eventHostSaved: function () { },
     removeHost: function () {
         if (confirm("Are you sure?")) {
             var hosts = hostsDetails.hosts();
