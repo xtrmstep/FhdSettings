@@ -148,6 +148,31 @@ namespace SettingsService.Api.Tests.Controllers
             }
         }
 
+        [Fact(DisplayName = "api/hosts/id DELETE")]
+        public void Should_delete_host_by_id()
+        {
+            using (var ctx = _testDb.CreateContext())
+            {
+                ctx.CrawlHostSettings.AddRange(new[]
+                {
+                    new CrawlHostSetting {CrawlDelay = 1, Disallow = "*", Host = "0"},
+                    new CrawlHostSetting {CrawlDelay = 2, Disallow = "/", Host = "1"},
+                    new CrawlHostSetting {CrawlDelay = 3, Disallow = "*", Host = "2"}
+                });
+                ctx.SaveChanges();
+                var targetId = ctx.CrawlHostSettings.Single(s => s.Host == "1").Id;
+                using (var response = _httpServer.Delete("api/hosts/" + targetId))
+                {
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                }
+                using (var verifyCtx = _testDb.CreateContext())
+                {
+                    var settings = verifyCtx.CrawlHostSettings.SingleOrDefault(s => s.Id == targetId);
+                    Assert.Null(settings);
+                }
+            }
+        }
+
         [Fact(DisplayName = "api/hosts/default GET")]
         public void Should_return_default_settings()
         {
