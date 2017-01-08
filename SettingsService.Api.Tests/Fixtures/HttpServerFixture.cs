@@ -75,6 +75,11 @@ namespace SettingsService.Api.Tests.Fixtures
                 return response;
         }
 
+        internal string GetUrl(string url)
+        {
+            return BASE_URL + url;
+        }
+
         public HttpResponseMessage Delete(string url)
         {
             using (var httpClient = CreateServer())

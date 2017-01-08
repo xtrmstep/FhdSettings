@@ -67,8 +67,9 @@ namespace SettingsService.Api.Controllers
         [Route("")]
         public IHttpActionResult Post([FromBody] CrawlHostSetting crawlHostSetting)
         {
-            _hostSettingsRepository.AddHostSettings(crawlHostSetting);
-            return Ok();
+            var id = _hostSettingsRepository.AddHostSettings(crawlHostSetting);
+            var location = new Uri(Request.RequestUri + "/" + id);
+            return Created(location, id);
         }
 
         /// <summary>

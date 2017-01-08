@@ -51,6 +51,37 @@ namespace SettingsService.Api.Tests.Controllers
             }
         }
 
+        [Fact(DisplayName = "api/hosts POST")]
+        public void Should_add_settings_for_host()
+        {
+            using (var ctx = _testDb.CreateContext())
+            {
+                var payload = JsonConvert.SerializeObject(new CrawlHostSetting
+                {
+                    CrawlDelay = 1,
+                    Disallow = "*",
+                    Host = "0"
+                });
+
+                Guid result;
+                using (var response = _httpServer.PostJson("api/hosts", payload))
+                {
+                    Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+
+                    var content = response.Content as ObjectContent<Guid>;
+                    result = (Guid)content.Value;
+
+                    var expectedLocation = _httpServer.GetUrl("api/hosts/" + result);
+                    Assert.Equal(expectedLocation, response.Headers.Location.ToString());
+                }
+
+                var defaultSettings = ctx.CrawlHostSettings.Single(s => s.Id == result);
+                Assert.Equal(1, defaultSettings.CrawlDelay);
+                Assert.Equal("*", defaultSettings.Disallow);
+                Assert.Equal("0", defaultSettings.Host);
+            }
+        }
+
         [Fact(DisplayName = "api/hosts/id GET")]
         public void Should_return_host_by_id()
         {

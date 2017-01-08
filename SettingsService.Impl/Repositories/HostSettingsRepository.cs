@@ -17,7 +17,7 @@ namespace SettingsService.Impl.Repositories
             _mapper = mapper;
         }
 
-        public void AddHostSettings(CrawlHostSetting hostSettings)
+        public Guid AddHostSettings(CrawlHostSetting hostSettings)
         {
             using (var ctx = new SettingDbContext())
             {
@@ -25,6 +25,7 @@ namespace SettingsService.Impl.Repositories
                 _mapper.Map(hostSettings, newHostSettings);
                 ctx.CrawlHostSettings.Add(newHostSettings);
                 ctx.SaveChanges();
+                return newHostSettings.Id;
             }
         }
 

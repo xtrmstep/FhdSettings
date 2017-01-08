@@ -31,7 +31,7 @@ namespace SettingsService.Core.Data
         /// </summary>
         /// <param name="hostSettings"></param>
         /// <returns></returns>
-        void AddHostSettings(CrawlHostSetting hostSettings);
+        Guid AddHostSettings(CrawlHostSetting hostSettings);
 
         /// <summary>
         ///     Remove existing host settings
