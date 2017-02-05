@@ -11,7 +11,7 @@ namespace SettingsService.Web.Controllers
     {
         public AnalyzerSettingsController()
         {
-            ViewBag.PageCaption = "Analyzer Settings";
+            ViewBag.PageCaption = "Analyzer Rules";
             ViewBag.Section = SiteSections.AnalyzerRules;
         }
         public ActionResult Index()

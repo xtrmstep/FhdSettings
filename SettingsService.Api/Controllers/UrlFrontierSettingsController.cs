@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
 using SettingsService.Core.Data;
+using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Api.Controllers
 {
     /// <summary>
-    /// Provides methods to manipulate with url frontier seed
+    ///     Provides methods to manipulate with url frontier seed
     /// </summary>
     [RoutePrefix("api/urls")]
     public class UrlFrontierSettingsController : ApiController
@@ -15,7 +16,7 @@ namespace SettingsService.Api.Controllers
         private readonly IUrlFrontierSettingsRepository _urlFrontierSettingsRepository;
 
         /// <summary>
-        /// Controller
+        ///     Controller
         /// </summary>
         /// <param name="urlFrontierSettingsRepository"></param>
         public UrlFrontierSettingsController(IUrlFrontierSettingsRepository urlFrontierSettingsRepository)
@@ -24,37 +25,52 @@ namespace SettingsService.Api.Controllers
         }
 
         /// <summary>
-        /// Get all URLs from the frontier seed
+        ///     Get all URLs from the frontier seed
         /// </summary>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof(IList<string>))]
+        [ResponseType(typeof (IList<CrawlUrlSeed>))]
         public IHttpActionResult Get()
         {
             return Ok(_urlFrontierSettingsRepository.GetSeedUrls());
         }
 
         /// <summary>
-        /// Add new URL to the frontier seed
+        ///     Get URL by identifier
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [Route("")]
-        public IHttpActionResult Post(string url)
+        [Route("{id:guid}")]
+        [ResponseType(typeof (CrawlUrlSeed))]
+        public IHttpActionResult Get(Guid id)
         {
-            _urlFrontierSettingsRepository.AddSeedUrl(url);
-            return Ok();
+            var crawlUrlSeed = _urlFrontierSettingsRepository.GetUrl(id);
+            return Ok(crawlUrlSeed);
         }
 
         /// <summary>
-        /// Delete URL from the frontier seed
+        ///     Add new URL to the frontier seed
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="crawlUrlSeed">URL to be added</param>
         /// <returns></returns>
         [Route("")]
-        public IHttpActionResult Delete(string url)
+        public IHttpActionResult Post([FromBody] CrawlUrlSeed crawlUrlSeed)
         {
-            _urlFrontierSettingsRepository.RemoveSeedUrl(url);
+            var url = crawlUrlSeed.Url;
+            var id = _urlFrontierSettingsRepository.AddSeedUrl(url);
+            var location = new Uri(Request.RequestUri + "/" + id);
+            return Created(location, id);
+        }
+
+        /// <summary>
+        ///     Delete URL from the frontier seed
+        /// </summary>
+        /// <param name="id">Guid identifier of the seed</param>
+        /// <returns></returns>
+        [Route("{id:guid}")]
+        public IHttpActionResult Delete(Guid id)
+        {
+            _urlFrontierSettingsRepository.RemoveSeedUrl(id);
             return Ok();
         }
     }

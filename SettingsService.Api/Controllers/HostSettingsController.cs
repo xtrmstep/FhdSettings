@@ -1,5 +1,8 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Http;
 using System.Web.Http.Description;
+using SettingsService.Api.Models;
 using SettingsService.Core.Data;
 using SettingsService.Core.Data.Models;
 
@@ -23,15 +26,37 @@ namespace SettingsService.Api.Controllers
         }
 
         /// <summary>
-        /// Get host settings with crawl delay and other
+        /// Get settings of all hosts
         /// </summary>
-        /// <param name="host"></param>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof(CrawlHostSetting))]
-        public IHttpActionResult Get(string host)
+        [ResponseType(typeof(IList<CrawlHostSetting>))]
+        public IHttpActionResult Get()
         {
-            return Ok(_hostSettingsRepository.GetHostSettings(host));
+            return Ok(_hostSettingsRepository.GetHostSettings());
+        }
+
+        /// <summary>
+        /// Get host settings with crawl delay and other
+        /// </summary>
+        /// <param name="id">Guid identifier of settings</param>
+        /// <returns></returns>
+        [Route("{id:guid}")]
+        [ResponseType(typeof(CrawlHostSetting))]
+        public IHttpActionResult Get(Guid id)
+        {
+            return Ok(_hostSettingsRepository.GetHostSettings(id));
+        }
+
+        /// <summary>
+        /// Get host default settings
+        /// </summary>
+        /// <returns></returns>
+        [Route("default")]
+        [ResponseType(typeof(CrawlHostSetting))]
+        public IHttpActionResult GetDefault()
+        {
+            return Ok(_hostSettingsRepository.GetHostSettings(Guid.Empty));
         }
 
         /// <summary>
@@ -42,36 +67,46 @@ namespace SettingsService.Api.Controllers
         [Route("")]
         public IHttpActionResult Post([FromBody] CrawlHostSetting crawlHostSetting)
         {
-            _hostSettingsRepository.AddHostSettings(crawlHostSetting);
-            return Ok();
+            var id = _hostSettingsRepository.AddHostSettings(crawlHostSetting);
+            var location = new Uri(Request.RequestUri + "/" + id);
+            return Created(location, id);
         }
 
         /// <summary>
         /// Update host crawl settings
         /// </summary>
-        /// <param name="host">Host name</param>
         /// <param name="crawlHostSetting">Updated crawl settings for the host</param>
         /// <returns>Host in the parameter and in the object must be equal.</returns>
-        /// <response code="200">OK</response>
-        /// <response code="400">Identifiers do not match</response>
         [Route("{id:guid}")]
-        public IHttpActionResult Put(string host, [FromBody] CrawlHostSetting crawlHostSetting)
+        public IHttpActionResult Put(Guid id, [FromBody] CrawlHostSetting crawlHostSetting)
         {
-            if (host != crawlHostSetting.Host) return BadRequest();
+            if (id == crawlHostSetting.Id)
+                _hostSettingsRepository.UpdateHostSettings(crawlHostSetting);
 
-            _hostSettingsRepository.UpdateHostSettings(crawlHostSetting);
+            return Ok();
+        }
+        /// <summary>
+        /// Update host crawl settings
+        /// </summary>
+        [Route("default")]
+        public IHttpActionResult PutDefault([FromBody] HostDefaultSettings newSettings)
+        {
+            var settings = _hostSettingsRepository.GetHostSettings(Guid.Empty);
+            settings.Disallow = newSettings.Disallow;
+            settings.CrawlDelay = newSettings.Delay;
+            _hostSettingsRepository.UpdateHostSettings(settings);
             return Ok();
         }
 
         /// <summary>
         /// Delete crawl settings for specified host
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="id">Guid identifier of the settings</param>
         /// <returns></returns>
         [Route("{id:guid}")]
-        public IHttpActionResult Delete(string host)
+        public IHttpActionResult Delete(Guid id)
         {
-            _hostSettingsRepository.RemoveHostSettings(host);
+            _hostSettingsRepository.RemoveHostSettings(id);
             return Ok();
         }
     }

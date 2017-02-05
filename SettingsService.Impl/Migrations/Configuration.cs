@@ -1,4 +1,6 @@
+using System;
 using System.Data.Entity.Migrations;
+using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Impl.Migrations
 {
@@ -12,18 +14,14 @@ namespace SettingsService.Impl.Migrations
 
         protected override void Seed(SettingDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.CrawlHostSettings.AddOrUpdate(
+                p => p.Host,
+                new CrawlHostSetting
+                {
+                    Host = string.Empty,
+                    CrawlDelay = 60,
+                    Disallow = "*"
+                });
         }
     }
 }

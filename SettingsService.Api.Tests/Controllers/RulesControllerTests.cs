@@ -7,7 +7,8 @@ using Xunit;
 
 namespace SettingsService.Api.Tests.Controllers
 {
-    public class RulesControllerTests : IClassFixture<HttpServerFixture>, IClassFixture<TestDbFixture>
+    [Collection("DbBoundTest")]
+    public class RulesControllerTests : IClassFixture<HttpServerFixture>
     {
         private readonly HttpServerFixture _httpServer;
         private readonly TestDbFixture _testDb;
@@ -31,7 +32,7 @@ namespace SettingsService.Api.Tests.Controllers
                 });
                 ctx.SaveChanges();
 
-                using (var response = _httpServer.GetJson("api/crawler/rules?host=test"))
+                using (var response = _httpServer.Get("api/crawler/rules?host=test"))
                 {
                     var content = response.Content as ObjectContent<IList<CrawlRule>>;
                     Assert.NotNull(content);

@@ -11,7 +11,7 @@ namespace SettingsService.Web.Controllers
     {
         public CrawlerSettingsController()
         {
-            ViewBag.PageCaption = "Crawler Settings";
+            ViewBag.PageCaption = "Crawler Rules";
             ViewBag.Section = SiteSections.CrawlerRules;
         }
         public ActionResult Index()

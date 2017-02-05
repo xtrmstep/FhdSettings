@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SettingsService.Core.Data;
+using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Impl.Repositories
 {
     internal class UrlFrontierSettingsRepository : IUrlFrontierSettingsRepository
     {
-        public void AddSeedUrl(string url)
+        public Guid AddSeedUrl(string url)
         {
             using (var ctx = new SettingDbContext())
             {
@@ -14,22 +16,31 @@ namespace SettingsService.Impl.Repositories
                 seedItem.Url = url;
                 ctx.CrawlUrlSeeds.Add(seedItem);
                 ctx.SaveChanges();
+                return seedItem.Id;
             }
         }
 
-        public IList<string> GetSeedUrls()
+        public IList<CrawlUrlSeed> GetSeedUrls()
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.CrawlUrlSeeds.AsNoTracking().Select(s => s.Url).ToList();
+                return ctx.CrawlUrlSeeds.AsNoTracking().ToList();
             }
         }
 
-        public void RemoveSeedUrl(string url)
+        public CrawlUrlSeed GetUrl(Guid id)
         {
             using (var ctx = new SettingDbContext())
             {
-                var dbUrl = ctx.CrawlUrlSeeds.SingleOrDefault(s => s.Url == url);
+                return ctx.CrawlUrlSeeds.AsNoTracking().SingleOrDefault(s => s.Id == id);
+            }
+        }
+
+        public void RemoveSeedUrl(Guid id)
+        {
+            using (var ctx = new SettingDbContext())
+            {
+                var dbUrl = ctx.CrawlUrlSeeds.SingleOrDefault(s => s.Id == id);
                 ctx.CrawlUrlSeeds.Remove(dbUrl);
                 ctx.SaveChanges();
             }
