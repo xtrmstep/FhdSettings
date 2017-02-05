@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using SettingsService.Api.Tests.Fixtures;
 using SettingsService.Core.Data.Models;
+using SettingsService.Impl;
 using Xunit;
 
 namespace SettingsService.Api.Tests.Controllers
@@ -22,7 +23,7 @@ namespace SettingsService.Api.Tests.Controllers
         [Fact(DisplayName = "GET: api/crawler/rules?host=test")]
         public void Should_return_list_of_rules()
         {
-            using (var ctx = _testDb.CreateContext())
+            using (var ctx = new SettingDbContext())
             {
                 ctx.CrawlRules.AddRange(new[]
                 {
@@ -31,7 +32,9 @@ namespace SettingsService.Api.Tests.Controllers
                     new CrawlRule {DataType = CrawlDataBlockType.Video, Host = "test", Name = "Video"}
                 });
                 ctx.SaveChanges();
-
+            }
+            try
+            {
                 using (var response = _httpServer.Get("api/crawler/rules?host=test"))
                 {
                     var content = response.Content as ObjectContent<IList<CrawlRule>>;
@@ -42,6 +45,18 @@ namespace SettingsService.Api.Tests.Controllers
 
                     Assert.True(result.Any());
                 }
+            }
+            finally
+            {
+                #region remove data from db
+
+                using (var ctx = new SettingDbContext())
+                {
+                    ctx.CrawlRules.RemoveRange(ctx.CrawlRules.AsQueryable());
+                    ctx.SaveChanges();
+                }
+
+                #endregion
             }
         }
     }

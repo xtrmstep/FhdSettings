@@ -19,10 +19,10 @@ namespace SettingsService.Api.Tests.Fixtures
                 var r = ctx.CrawlRules.Take(1).ToList();
             }
         }
-        public SettingDbContext CreateContext()
-        {
-            return new TestDbContext().Context;
-        }
+        //public SettingDbContext CreateContext()
+        //{
+        //    return new TestDbContext().Context;
+        //}
 
         private class TestDbContext : IDisposable
         {
