@@ -19,10 +19,13 @@ namespace SettingsService.Api.Tests.Fixtures
                 var r = ctx.CrawlRules.Take(1).ToList();
             }
         }
-        //public SettingDbContext CreateContext()
-        //{
-        //    return new TestDbContext().Context;
-        //}
+
+        // note: it's not used because of the AppVeyor issue
+        // issue description https://stackoverflow.com/questions/42057471/transactionscope-in-xunit-tests-does-not-work-on-appveyor
+        public SettingDbContext CreateContext()
+        {
+            return new TestDbContext().Context;
+        }
 
         private class TestDbContext : IDisposable
         {
