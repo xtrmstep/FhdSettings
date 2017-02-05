@@ -152,37 +152,27 @@ var hostsDetails = {
     disallow: ko.observable(""),
 
     saveHost() {
-        var host = new HostsInfo();
-        host.Id = hostsDetails.id();
-        host.Host = hostsDetails.host();
-        host.CrawlDelay = hostsDetails.delay();
-        host.Disallow = hostsDetails.disallow();
+        var updatedHost = new HostsInfo();
+        updatedHost.Id = hostsDetails.id();
+        updatedHost.Host = hostsDetails.host();
+        updatedHost.CrawlDelay = hostsDetails.delay();
+        updatedHost.Disallow = hostsDetails.disallow();
 
         var hosts = hostsDetails.hosts();
         for (var i = 0; i < hosts.length; i++) {
             var item: HostsInfo = hosts[i];
-            if (item.Id === host.Id) {
-                item.CrawlDelay = host.CrawlDelay;
-                item.Disallow = host.Disallow;
-               // todo update item on UI
-                hostsDetails.eventHostSaved();
+            if (item.Id === updatedHost.Id) {
+                settingsServiceApi.saveSettings(
+                    updatedHost,
+                    () => {
+                        // refresh item of the grid
+                        hostsDetails.hosts.replace(hosts[i], updatedHost);
+                        hostsDetails.eventHostSaved();
+                    }
+                );
                 break;
             }
         }
-
-        //settingsServiceApi.saveSettings(host, function () {
-        //    var hosts = hostsDetails.hosts();
-        //    for (var i = 0; i < hosts.length; i++) {
-        //        var item: HostsInfo = hosts[i];
-        //        if (item.Id === host.Id) {
-        //            item.CrawlDelay = host.CrawlDelay;
-        //            item.Disallow = host.Disallow;
-        //            hostsDetails.hosts(hosts);
-        //            hostsDetails.eventHostSaved();
-        //            break;
-        //        }
-        //    }
-        //});
     },
 
     eventHostSaved() { },
