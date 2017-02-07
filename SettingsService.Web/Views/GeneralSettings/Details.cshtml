@@ -1,7 +1,7 @@
 ﻿@using SettingsService.Web.Properties
 @section Scripts {
+    @Scripts.Render("~/bundles/general-settings")
     <script>
-        /// <reference path="typings/models.d.ts" />
         settingsServiceApi.setApiServer("@Settings.Default.SettingServiceUrl");
         $(function () {
             ko.applyBindings(hostsDetails);

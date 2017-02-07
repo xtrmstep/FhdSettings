@@ -231,8 +231,9 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\site.ts" />
+    <TypeScriptCompile Include="Scripts\crawler-rules.ts" />
     <TypeScriptCompile Include="Scripts\general-settings.ts" />
-    <TypeScriptCompile Include="Scripts\typings\models.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\tests\jasmine.extensions.d.ts" />

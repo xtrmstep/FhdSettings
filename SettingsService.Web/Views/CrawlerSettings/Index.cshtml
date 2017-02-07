@@ -1,1 +1,41 @@
-﻿this is the body of Crawler
+﻿@using SettingsService.Web.Properties
+@section Scripts {
+    @Scripts.Render("~/bundles/crawler-rules")
+    <script>
+        /// <reference path="typings/models.d.ts" />
+        settingsServiceApi.setApiServer("@Settings.Default.SettingServiceUrl");
+        $(function () {
+            ko.applyBindings(crawlerRules);
+            settingsServiceApi.loadCrawlerRules();
+        });
+    </script>
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Extraction Rules</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="newurl">New Rule</label>
+                <input type="text" class="form-control" id="newurl" placeholder="For example: http://myurl.com/page" data-bind="value: newUrl" />
+            </div>
+            <button type="button" class="btn btn-primary" data-bind="click: addUrl">Add</button>
+        </form>
+        <br />
+        <table class="table table-hover">
+            <tr>
+                <th>URL</th>
+                <th></th>
+            </tr>
+            <tbody data-bind="foreach: urls">
+                <tr>
+                    <td data-bind="text: Url"></td>
+                    <td>
+                        <button type="button" class="btn btn-default btn-sm" title="Remove" data-bind="click: $root.removeUrl"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
