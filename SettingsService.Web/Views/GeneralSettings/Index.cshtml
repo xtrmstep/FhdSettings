@@ -2,7 +2,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/general-settings")
     <script>
-        settingsServiceApi.setApiServer("@Settings.Default.SettingServiceUrl");
+        generalSettingsApi.setApiServer("@Settings.Default.SettingServiceUrl");
         $(function () {
             ko.applyBindings(generalSettings);
             settingsServiceApi.loadGeneralSettings();

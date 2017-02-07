@@ -2,11 +2,10 @@
 @section Scripts {
     @Scripts.Render("~/bundles/crawler-rules")
     <script>
-        /// <reference path="typings/models.d.ts" />
-        settingsServiceApi.setApiServer("@Settings.Default.SettingServiceUrl");
+        crawlerRulesApi.setApiServer("@Settings.Default.SettingServiceUrl");
         $(function () {
             ko.applyBindings(crawlerRules);
-            settingsServiceApi.loadCrawlerRules();
+            //settingsServiceApi.loadCrawlerRules();
         });
     </script>
 }
@@ -15,24 +14,22 @@
         <h3 class="panel-title">Extraction Rules</h3>
     </div>
     <div class="panel-body">
-        <form class="form-inline">
-            <div class="form-group">
-                <label for="newurl">New Rule</label>
-                <input type="text" class="form-control" id="newurl" placeholder="For example: http://myurl.com/page" data-bind="value: newUrl" />
-            </div>
-            <button type="button" class="btn btn-primary" data-bind="click: addUrl">Add</button>
-        </form>
-        <br />
         <table class="table table-hover">
             <tr>
-                <th>URL</th>
+                <th>Host</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Expression</th>
                 <th></th>
             </tr>
-            <tbody data-bind="foreach: urls">
+            <tbody data-bind="foreach: rules">
                 <tr>
-                    <td data-bind="text: Url"></td>
+                    <td data-bind="text: Host"></td>
+                    <td data-bind="text: DataType"></td>
+                    <td data-bind="text: Name"></td>
+                    <td data-bind="text: RegExpression"></td>
                     <td>
-                        <button type="button" class="btn btn-default btn-sm" title="Remove" data-bind="click: $root.removeUrl"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default btn-sm" title="Remove" data-bind="click: $root.removeRule"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                     </td>
                 </tr>
             </tbody>
