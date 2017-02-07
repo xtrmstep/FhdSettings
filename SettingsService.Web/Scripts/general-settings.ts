@@ -1,6 +1,7 @@
 ﻿/// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="typings/knockout/knockout.d.ts" />
 
+// ReSharper disable InconsistentNaming
 class UrlInfo {
     Id: string;
     Url: string;
@@ -9,6 +10,7 @@ class UrlInfo {
         this.Url = url;
     }
 }
+// ReSharper restore InconsistentNaming
 
 var generalSettings = {
     delay: ko.observable(null),

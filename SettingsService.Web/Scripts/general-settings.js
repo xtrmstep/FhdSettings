@@ -1,11 +1,13 @@
 /// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="typings/knockout/knockout.d.ts" />
+// ReSharper disable InconsistentNaming
 var UrlInfo = (function () {
     function UrlInfo(url) {
         this.Url = url;
     }
     return UrlInfo;
 }());
+// ReSharper restore InconsistentNaming
 var generalSettings = {
     delay: ko.observable(null),
     disallow: ko.observable(""),
