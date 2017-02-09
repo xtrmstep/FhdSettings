@@ -18,12 +18,13 @@ namespace SettingsService.Api.Tests.Controllers
     {
         private readonly HttpServerFixture _httpServer;
         private readonly TestDbFixture _testDb;
+        private ITestOutputHelper _output;
 
-        public ApiCrawlerRulesTests(HttpServerFixture httpServer, TestDbFixture testDb)
+        public ApiCrawlerRulesTests(HttpServerFixture httpServer, TestDbFixture testDb, ITestOutputHelper output)
         {
             _httpServer = httpServer;
             _testDb = testDb;
-            
+            _output = output;
         }
 
         [Fact(DisplayName = "api/crawler/rules GET")]
@@ -179,6 +180,9 @@ namespace SettingsService.Api.Tests.Controllers
         [Fact(DisplayName = "api/crawler/rules/id DELETE")]
         public void Should_delete_rule_with_id()
         {
+            // todo affected by another tests for default rules (parallelism??)
+            // todo output is not captured
+            _output.WriteLine("sfdgsdg");
             using (var ctx = _testDb.CreateContext())
             {
                 ctx.CrawlRules.AddRange(new[]
