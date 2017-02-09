@@ -17,7 +17,7 @@ namespace SettingsService.Core.Data
         ///     Returns a list of rules specific for the host
         /// </summary>
         /// <returns></returns>
-        IList<CrawlRule> GetRules(string host);
+        IList<CrawlRule> GetRules();
 
         /// <summary>
         ///     Update existing rule
@@ -31,7 +31,7 @@ namespace SettingsService.Core.Data
         /// </summary>
         /// <param name="rule"></param>
         /// <returns></returns>
-        void AddRule(CrawlRule rule);
+        Guid AddRule(CrawlRule rule);
 
         /// <summary>
         ///     Remove existing rule

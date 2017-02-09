@@ -24,16 +24,11 @@ namespace SettingsService.Api.Controllers
             _crawlerRulesRepository = crawlerRulesRepository;
         }
 
-        /// <summary>
-        /// Get all crawler rules for specific host
-        /// </summary>
-        /// <param name="host"></param>
-        /// <returns></returns>
         [Route("")]
         [ResponseType(typeof(IList<CrawlRule>))]
-        public IHttpActionResult Get(string host)
+        public IHttpActionResult Get()
         {
-            return Ok(_crawlerRulesRepository.GetRules(host));
+            return Ok(_crawlerRulesRepository.GetRules());
         }
 
         /// <summary>
@@ -56,8 +51,9 @@ namespace SettingsService.Api.Controllers
         [Route("")]
         public IHttpActionResult Post([FromBody] CrawlRule rule)
         {
-            _crawlerRulesRepository.AddRule(rule);
-            return Ok();
+            var id = _crawlerRulesRepository.AddRule(rule);
+            var location = new Uri(Request.RequestUri + "/" + id);
+            return Created(location, id);
         }
 
         /// <summary>

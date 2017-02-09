@@ -16,7 +16,7 @@ namespace SettingsService.Impl.Repositories
             _mapper = mapper;
         }
 
-        public void AddRule(CrawlRule rule)
+        public Guid AddRule(CrawlRule rule)
         {
             using (var ctx = new SettingDbContext())
             {
@@ -24,6 +24,7 @@ namespace SettingsService.Impl.Repositories
                 _mapper.Map(rule, newRule);
                 ctx.CrawlRules.Add(newRule);
                 ctx.SaveChanges();
+                return newRule.Id;
             }
         }
 
@@ -35,11 +36,11 @@ namespace SettingsService.Impl.Repositories
             }
         }
 
-        public IList<CrawlRule> GetRules(string host)
+        public IList<CrawlRule> GetRules()
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.CrawlRules.AsNoTracking().Where(r => r.Host == host).ToList();
+                return ctx.CrawlRules.AsNoTracking().ToList();
             }
         }
 
