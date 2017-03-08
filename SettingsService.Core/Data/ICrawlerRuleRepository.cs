@@ -14,12 +14,6 @@ namespace SettingsService.Core.Data
         CrawlRule GetRule(Guid ruleId);
 
         /// <summary>
-        ///     Returns a list of rules specific for the host
-        /// </summary>
-        /// <returns></returns>
-        IList<CrawlRule> GetRules();
-
-        /// <summary>
         ///     Update existing rule
         /// </summary>
         /// <param name="rule"></param>
@@ -38,5 +32,12 @@ namespace SettingsService.Core.Data
         /// </summary>
         /// <param name="ruleId"></param>
         void RemoveRule(Guid ruleId);
+
+        /// <summary>
+        /// Returns a list of rules specific for the host
+        /// </summary>
+        /// <param name="host">Host name or empty string for default rules</param>
+        /// <returns></returns>
+        IList<CrawlRule> GetRules(string host);
     }
 }

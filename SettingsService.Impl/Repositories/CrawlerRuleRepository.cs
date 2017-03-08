@@ -36,11 +36,11 @@ namespace SettingsService.Impl.Repositories
             }
         }
 
-        public IList<CrawlRule> GetRules()
+        public IList<CrawlRule> GetRules(string host)
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.CrawlRules.AsNoTracking().ToList();
+                return ctx.CrawlRules.AsNoTracking().Where(r => r.Host == host).ToList();
             }
         }
 

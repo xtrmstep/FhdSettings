@@ -18,29 +18,28 @@ namespace SettingsService.Api.Tests.Controllers
     {
         private readonly HttpServerFixture _httpServer;
         private readonly TestDbFixture _testDb;
-        private ITestOutputHelper _output;
 
-        public ApiCrawlerRulesTests(HttpServerFixture httpServer, TestDbFixture testDb, ITestOutputHelper output)
+        public ApiCrawlerRulesTests(HttpServerFixture httpServer, TestDbFixture testDb)
         {
             _httpServer = httpServer;
             _testDb = testDb;
-            _output = output;
         }
 
         [Fact(DisplayName = "api/crawler/rules GET")]
         public void Should_return_list_of_rules()
         {
+            Debug.WriteLine("Should_return_list_of_rules : begin");
             using (var ctx = _testDb.CreateContext())
             {
                 ctx.CrawlRules.AddRange(new[]
                 {
                     new CrawlRule{Name = "1",DataType = CrawlDataBlockType.Link, Host = "1", RegExpression = "expr1"},
-                    new CrawlRule{Name = "2",DataType = CrawlDataBlockType.Picture, Host = "2", RegExpression = "expr2"},
-                    new CrawlRule{Name = "3",DataType = CrawlDataBlockType.Video, Host = "3", RegExpression = "expr3"},
+                    new CrawlRule{Name = "2",DataType = CrawlDataBlockType.Picture, Host = "1", RegExpression = "expr2"},
+                    new CrawlRule{Name = "3",DataType = CrawlDataBlockType.Video, Host = "1", RegExpression = "expr3"},
                 });
                 ctx.SaveChanges();
 
-                using (var response = _httpServer.Get("api/crawler/rules"))
+                using (var response = _httpServer.Get("api/crawler/rules?host=1"))
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -79,7 +78,7 @@ namespace SettingsService.Api.Tests.Controllers
                     var result = content.Value as IList<CrawlRule>;
                     Assert.NotNull(result);
 
-                    Assert.Equal(3, result.Count);
+                    Assert.Equal(2, result.Count);
                 }
             }
         }
@@ -182,7 +181,6 @@ namespace SettingsService.Api.Tests.Controllers
         {
             // todo affected by another tests for default rules (parallelism??)
             // todo output is not captured
-            _output.WriteLine("sfdgsdg");
             using (var ctx = _testDb.CreateContext())
             {
                 ctx.CrawlRules.AddRange(new[]
