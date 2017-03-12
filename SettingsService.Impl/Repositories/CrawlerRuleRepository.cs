@@ -16,7 +16,7 @@ namespace SettingsService.Impl.Repositories
             _mapper = mapper;
         }
 
-        public void AddRule(CrawlRule rule)
+        public Guid AddRule(CrawlRule rule)
         {
             using (var ctx = new SettingDbContext())
             {
@@ -24,6 +24,7 @@ namespace SettingsService.Impl.Repositories
                 _mapper.Map(rule, newRule);
                 ctx.CrawlRules.Add(newRule);
                 ctx.SaveChanges();
+                return newRule.Id;
             }
         }
 

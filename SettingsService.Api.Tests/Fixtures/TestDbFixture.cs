@@ -19,12 +19,13 @@ namespace SettingsService.Api.Tests.Fixtures
                 var r = ctx.CrawlRules.Take(1).ToList();
             }
         }
+
         public SettingDbContext CreateContext()
         {
-            return new TestDbContext().Context;
+            return new TestDbContext();
         }
 
-        private class TestDbContext : IDisposable
+        private class TestDbContext : SettingDbContext, IDisposable
         {
             private readonly TransactionScope _transaction;
 
@@ -32,14 +33,10 @@ namespace SettingsService.Api.Tests.Fixtures
             {
                 // create a transaction scope
                 _transaction = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions {IsolationLevel = IsolationLevel.ReadUncommitted});
-                Context = new SettingDbContext();
             }
 
-            public SettingDbContext Context { get; }
-
-            public void Dispose()
+            public new void Dispose()
             {
-                Context.Dispose();
                 _transaction.Dispose();
             }
         }

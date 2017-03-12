@@ -21,7 +21,13 @@ namespace SettingsService.Web
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/knockout.validation.js",
+                "~/Scripts/site.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/general-settings").Include(
                 "~/Scripts/general-settings.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/crawler-rules").Include(
+                "~/Scripts/crawler-rules.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",

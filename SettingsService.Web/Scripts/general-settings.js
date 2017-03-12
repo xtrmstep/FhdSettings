@@ -1,24 +1,29 @@
 /// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="typings/knockout/knockout.d.ts" />
-/// <reference path="typings/models.d.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+// ReSharper disable InconsistentNaming
+var HostsInfo = (function () {
+    function HostsInfo() {
+    }
+    return HostsInfo;
+}());
 var UrlInfo = (function () {
     function UrlInfo(url) {
         this.Url = url;
     }
     return UrlInfo;
 }());
-var HostsInfo = (function () {
-    function HostsInfo() {
+// ReSharper restore InconsistentNaming
+var GeneralSettingsApi = (function (_super) {
+    __extends(GeneralSettingsApi, _super);
+    function GeneralSettingsApi() {
+        return _super.apply(this, arguments) || this;
     }
-    return HostsInfo;
-}());
-var SettingsServiceApi = (function () {
-    function SettingsServiceApi() {
-    }
-    SettingsServiceApi.prototype.setApiServer = function (baseServiceUrl) {
-        this.serviceUrl = baseServiceUrl;
-    };
-    SettingsServiceApi.prototype.loadGeneralSettings = function () {
+    GeneralSettingsApi.prototype.loadGeneralSettings = function () {
         $.get(this.serviceUrl + "/api/hosts/default", function (data) {
             if (data != null) {
                 generalSettings.delay(data.CrawlDelay);
@@ -31,42 +36,45 @@ var SettingsServiceApi = (function () {
             }
         });
     };
-    SettingsServiceApi.prototype.loadHostsSettings = function () {
+    GeneralSettingsApi.prototype.loadHostsSettings = function () {
         $.get(this.serviceUrl + "/api/hosts", function (data) {
             if (data != null) {
                 hostsDetails.hosts(data);
             }
         });
     };
-    SettingsServiceApi.prototype.saveSettings = function (hostInfo, callback) {
+    GeneralSettingsApi.prototype.saveSettings = function (hostInfo, callback) {
+        var jsonValue = JSON.stringify(hostInfo);
         $.ajax({
             url: this.serviceUrl + "/api/hosts/" + hostInfo.Id,
             method: "PUT",
-            data: JSON.stringify(hostInfo),
+            data: jsonValue,
             contentType: "application/json",
             success: function () {
                 callback();
             }
         });
     };
-    SettingsServiceApi.prototype.saveDefaultSettings = function (disallow, delay) {
+    GeneralSettingsApi.prototype.saveDefaultSettings = function (disallow, delay) {
+        var jsonValue = JSON.stringify({
+            disallow: disallow,
+            delay: delay
+        });
         $.ajax({
             url: this.serviceUrl + "/api/hosts/default",
             method: "PUT",
-            data: JSON.stringify({
-                disallow: disallow,
-                delay: delay
-            }),
+            data: jsonValue,
             contentType: "application/json"
         });
     };
-    SettingsServiceApi.prototype.addUrl = function (urlInfo) {
+    GeneralSettingsApi.prototype.addUrl = function (urlInfo) {
+        var jsonValue = JSON.stringify({
+            Url: urlInfo.Url
+        });
         $.ajax({
             url: this.serviceUrl + "/api/urls",
             method: "POST",
-            data: JSON.stringify({
-                Url: urlInfo.Url
-            }),
+            data: jsonValue,
             contentType: "application/json",
             success: function (data, textStatus, jqXHR) {
                 urlInfo.Id = data;
@@ -76,21 +84,21 @@ var SettingsServiceApi = (function () {
             }
         });
     };
-    SettingsServiceApi.prototype.removeUrl = function (id) {
+    GeneralSettingsApi.prototype.removeUrl = function (id) {
         $.ajax({
             url: this.serviceUrl + "/api/urls/" + id,
             method: "DELETE"
         });
     };
-    SettingsServiceApi.prototype.removeHost = function (id) {
+    GeneralSettingsApi.prototype.removeHost = function (id) {
         $.ajax({
             url: this.serviceUrl + "/api/hosts/" + id,
             method: "DELETE"
         });
     };
-    return SettingsServiceApi;
-}());
-var settingsServiceApi = new SettingsServiceApi();
+    return GeneralSettingsApi;
+}(ServiceApi));
+var generalSettingsApi = new GeneralSettingsApi();
 var generalSettings = {
     delay: ko.observable(null),
     disallow: ko.observable(""),
@@ -100,7 +108,7 @@ var generalSettings = {
         var disallow = generalSettings.disallow();
         var delay = generalSettings.delay();
         // saving default
-        settingsServiceApi.saveDefaultSettings(disallow, delay);
+        generalSettingsApi.saveDefaultSettings(disallow, delay);
     },
     addUrl: function () {
         var newUrl = generalSettings.newUrl();
@@ -111,7 +119,7 @@ var generalSettings = {
         // new URL will have ID after the call to the server, in callback
         var url = new UrlInfo(newUrl);
         generalSettings.urls.push(url);
-        settingsServiceApi.addUrl(url);
+        generalSettingsApi.addUrl(url);
         generalSettings.newUrl(""); // clean the input
     },
     removeUrl: function () {
@@ -122,7 +130,7 @@ var generalSettings = {
                 if (removed.Id === this.Id) {
                     urls.splice(i, 1); // remove item from the grid array 
                     generalSettings.urls(urls);
-                    settingsServiceApi.removeUrl(removed.Id);
+                    generalSettingsApi.removeUrl(removed.Id);
                     break;
                 }
             }
@@ -146,7 +154,7 @@ var hostsDetails = {
         for (var i = 0; i < hosts.length; i++) {
             var item = hosts[i];
             if (item.Id === updatedHost.Id) {
-                settingsServiceApi.saveSettings(updatedHost, function () {
+                generalSettingsApi.saveSettings(updatedHost, function () {
                     // refresh item of the grid
                     hostsDetails.hosts.replace(hosts[i], updatedHost);
                     hostsDetails.eventHostSaved();
@@ -164,7 +172,7 @@ var hostsDetails = {
                 if (removed.Id === this.Id) {
                     hosts.splice(i, 1); // remove item from the grid array 
                     hostsDetails.hosts(hosts);
-                    settingsServiceApi.removeHost(removed.Id);
+                    generalSettingsApi.removeHost(removed.Id);
                     break;
                 }
             }
