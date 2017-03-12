@@ -83,7 +83,10 @@ namespace SettingsService.Api
                         // By default, this will be controller name but you can use the "GroupActionsBy" option to
                         // override with any value.
                         //
-                        //c.GroupActionsBy(apiDesc => apiDesc.HttpMethod.ToString());
+                        c.GroupActionsBy(apiDesc => apiDesc.RelativePath.StartsWith("api/analyzer") ? "api/analyzer"
+                            : apiDesc.RelativePath.StartsWith("api/crawler") ? "api/crawler"
+                                : apiDesc.RelativePath.StartsWith("api/hosts") ? "api/hosts"
+                                    : apiDesc.RelativePath);
 
                         // You can also specify a custom sort order for groups (as defined by "GroupActionsBy") to dictate
                         // the order in which operations are listed. For example, if the default grouping is in place
