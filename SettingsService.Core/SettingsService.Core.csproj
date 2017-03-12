@@ -51,19 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\IAnalizerRepository.cs" />
-    <Compile Include="Data\IAuthRepository.cs" />
-    <Compile Include="Data\ICrawlerRuleRepository.cs" />
-    <Compile Include="Data\IHostSettingsRepository.cs" />
-    <Compile Include="Data\Models\AuthToken.cs" />
-    <Compile Include="Data\Models\ClinetService.cs" />
-    <Compile Include="Data\Models\CrawlDataBlockType.cs" />
-    <Compile Include="Data\Models\CrawlHostSetting.cs" />
-    <Compile Include="Data\Models\CrawlUrlSeed.cs" />
+    <Compile Include="Data\IRulesRepository.cs" />
+    <Compile Include="Data\ISettingsRepository.cs" />
+    <Compile Include="Data\Models\ExtratorDataType.cs" />
+    <Compile Include="Data\Models\HostSetting.cs" />
+    <Compile Include="Data\Models\Host.cs" />
     <Compile Include="Data\Models\NumericDataType.cs" />
-    <Compile Include="Data\IUrlFrontierSettingsRepository.cs" />
+    <Compile Include="Data\IHostsRepository.cs" />
     <Compile Include="Data\Models\NumericDataExtractorRule.cs" />
-    <Compile Include="Data\Models\CrawlRule.cs" />
+    <Compile Include="Data\Models\ExtractRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
   </ItemGroup>

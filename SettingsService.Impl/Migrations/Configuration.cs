@@ -14,11 +14,11 @@ namespace SettingsService.Impl.Migrations
 
         protected override void Seed(SettingDbContext context)
         {
-            context.CrawlHostSettings.AddOrUpdate(
+            context.HostSettings.AddOrUpdate(
                 p => p.Host,
-                new CrawlHostSetting
+                new HostSetting
                 {
-                    Host = string.Empty,
+                    Host = null,
                     CrawlDelay = 60,
                     Disallow = "*"
                 });

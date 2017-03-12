@@ -11,17 +11,17 @@ namespace SettingsService.Api.Controllers
     /// Provides methods to manipulate with crawler rules
     /// </summary>
     [RoutePrefix("api/crawler/rules")]
-    public class CrawlerRulesController : ApiController
+    public class CrawlerController : ApiController
     {
-        private readonly ICrawlerRuleRepository _crawlerRulesRepository;
+        private readonly IRulesRepository _rulesRepository;
 
         /// <summary>
         /// Controller
         /// </summary>
-        /// <param name="crawlerRulesRepository"></param>
-        public CrawlerRulesController(ICrawlerRuleRepository crawlerRulesRepository)
+        /// <param name="rulesRepository"></param>
+        public CrawlerController(IRulesRepository rulesRepository)
         {
-            _crawlerRulesRepository = crawlerRulesRepository;
+            _rulesRepository = rulesRepository;
         }
 
         /// <summary>
@@ -30,10 +30,10 @@ namespace SettingsService.Api.Controllers
         /// <param name="host"></param>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof(IList<CrawlRule>))]
+        [ResponseType(typeof(IList<ExtractRule>))]
         public IHttpActionResult Get([FromUri]string host)
         {
-            return Ok(_crawlerRulesRepository.GetRules(host));
+            return Ok(_rulesRepository.GetRules(host));
         }
 
         /// <summary>
@@ -42,10 +42,10 @@ namespace SettingsService.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Route("{id:guid}")]
-        [ResponseType(typeof (CrawlRule))]
+        [ResponseType(typeof (ExtractRule))]
         public IHttpActionResult Get(Guid id)
         {
-            return Ok(_crawlerRulesRepository.GetRule(id));
+            return Ok(_rulesRepository.GetRule(id));
         }
 
         /// <summary>
@@ -53,10 +53,10 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("default")]
-        [ResponseType(typeof(IList<CrawlRule>))]
+        [ResponseType(typeof(IList<ExtractRule>))]
         public IHttpActionResult GetDefault()
         {
-            return Ok(_crawlerRulesRepository.GetRules(string.Empty));
+            return Ok(_rulesRepository.GetRules(string.Empty));
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace SettingsService.Api.Controllers
         /// <param name="rule"></param>
         /// <returns></returns>
         [Route("")]
-        public IHttpActionResult Post([FromBody] CrawlRule rule)
+        public IHttpActionResult Post([FromBody] ExtractRule rule)
         {
-            var id = _crawlerRulesRepository.AddRule(rule);
+            var id = _rulesRepository.AddRule(rule);
             var location = new Uri(Request.RequestUri + "/" + id);
             return Created(location, id);
         }
@@ -81,10 +81,10 @@ namespace SettingsService.Api.Controllers
         /// <response code="200">OK</response>
         /// <response code="400">Identifiers do not match</response>
         [Route("{id:guid}")]
-        public IHttpActionResult Put(Guid id, [FromBody] CrawlRule rule)
+        public IHttpActionResult Put(Guid id, [FromBody] ExtractRule rule)
         {
             if (id != rule.Id) return BadRequest();
-            _crawlerRulesRepository.UpdateRule(rule);
+            _rulesRepository.UpdateRule(rule);
             return Ok();
         }
 
@@ -96,7 +96,7 @@ namespace SettingsService.Api.Controllers
         [Route("{id:guid}")]
         public IHttpActionResult Delete(Guid id)
         {
-            _crawlerRulesRepository.RemoveRule(id);
+            _rulesRepository.RemoveRule(id);
             return Ok();
         }
     }

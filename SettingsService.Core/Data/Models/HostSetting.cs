@@ -10,14 +10,13 @@ namespace SettingsService.Core.Data.Models
     ///     Initial host settings are not tied to a host.
     ///     With the first request a crawler should check robots.txt and update the settings for the host.
     /// </remarks>
-    public class CrawlHostSetting
+    public class HostSetting
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         /// <remarks>It should be unique for whole set</remarks>
-        // todo test for uniqueness
-        public string Host { get; set; }
+        public Host Host { get; set; }
 
         /// <summary>
         /// Sets the files or folders that are not allowed to be crawled

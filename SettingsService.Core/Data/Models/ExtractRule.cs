@@ -7,19 +7,19 @@ namespace SettingsService.Core.Data.Models
     ///     Description of one crawler rule
     /// </summary>
     /// <remarks>It describes a regex expression and a type of data</remarks>
-    public class CrawlRule
+    public class ExtractRule
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         public string Name { get; set; }
-        public CrawlDataBlockType DataType { get; set; }
+        public ExtratorDataType DataType { get; set; }
         public string RegExpression { get; set; }
-        public string Host { get; set; }
+        public Host Host { get; set; }
 
         public override bool Equals(object obj)
         {
-            var other = obj as CrawlRule;
+            var other = obj as ExtractRule;
             if (obj == null || other == null) { return false; }
 
             return Id == other.Id

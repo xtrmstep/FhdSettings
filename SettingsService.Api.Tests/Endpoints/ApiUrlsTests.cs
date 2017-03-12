@@ -28,11 +28,11 @@ namespace SettingsService.Api.Tests.Controllers
         {
             using (var ctx = _testDb.CreateContext())
             {
-                ctx.CrawlUrlSeeds.AddRange(new[]
+                ctx.Hosts.AddRange(new[]
                 {
-                    new CrawlUrlSeed{Url = "0"},
-                    new CrawlUrlSeed{Url = "1"},
-                    new CrawlUrlSeed{Url = "2"}
+                    new Host{SeedUrl = "0"},
+                    new Host{SeedUrl = "1"},
+                    new Host{SeedUrl = "2"}
                 });
                 ctx.SaveChanges();
 
@@ -40,10 +40,10 @@ namespace SettingsService.Api.Tests.Controllers
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-                    var content = response.Content as ObjectContent<IList<CrawlUrlSeed>>;
+                    var content = response.Content as ObjectContent<IList<Host>>;
                     Assert.NotNull(content);
 
-                    var result = content.Value as IList<CrawlUrlSeed>;
+                    var result = content.Value as IList<Host>;
                     Assert.NotNull(result);
 
                     Assert.Equal(3, result.Count);
@@ -56,9 +56,9 @@ namespace SettingsService.Api.Tests.Controllers
         {
             using (var ctx = _testDb.CreateContext())
             {
-                var payload = JsonConvert.SerializeObject(new CrawlUrlSeed
+                var payload = JsonConvert.SerializeObject(new Host
                 {
-                    Url = "0"
+                    SeedUrl = "0"
                 });
 
                 Guid result;
@@ -73,8 +73,8 @@ namespace SettingsService.Api.Tests.Controllers
                     Assert.Equal(expectedLocation, response.Headers.Location.ToString());
                 }
 
-                var url = ctx.CrawlUrlSeeds.Single(s => s.Id == result);
-                Assert.Equal("0", url.Url);
+                var url = ctx.Hosts.Single(s => s.Id == result);
+                Assert.Equal("0", url.SeedUrl);
             }
         }
 
@@ -83,26 +83,26 @@ namespace SettingsService.Api.Tests.Controllers
         {
             using (var ctx = _testDb.CreateContext())
             {
-                ctx.CrawlUrlSeeds.AddRange(new[]
+                ctx.Hosts.AddRange(new[]
                 {
-                    new CrawlUrlSeed {Url = "0"},
-                    new CrawlUrlSeed {Url = "1"},
-                    new CrawlUrlSeed {Url = "2"}
+                    new Host {SeedUrl = "0"},
+                    new Host {SeedUrl = "1"},
+                    new Host {SeedUrl = "2"}
                 });
                 ctx.SaveChanges();
-                var targetId = ctx.CrawlUrlSeeds.Single(s => s.Url == "1").Id;
+                var targetId = ctx.Hosts.Single(s => s.SeedUrl == "1").Id;
 
                 using (var response = _httpServer.Get("api/urls/" + targetId))
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-                    var content = response.Content as ObjectContent<CrawlUrlSeed>;
+                    var content = response.Content as ObjectContent<Host>;
                     Assert.NotNull(content);
 
-                    var result = content.Value as CrawlUrlSeed;
+                    var result = content.Value as Host;
                     Assert.NotNull(result);
 
-                    Assert.Equal("1", result.Url);
+                    Assert.Equal("1", result.SeedUrl);
                 }
             }
         }
@@ -111,10 +111,10 @@ namespace SettingsService.Api.Tests.Controllers
         public void Should_reject_update_request_to_url()
         {
             var anyGuid = Guid.NewGuid();
-            var payload = JsonConvert.SerializeObject(new CrawlUrlSeed
+            var payload = JsonConvert.SerializeObject(new Host
             {
                 Id = anyGuid,
-                Url = "new"
+                SeedUrl = "new"
             });
             using (var response = _httpServer.PutJson("api/urls/" + anyGuid, payload))
             {
@@ -127,21 +127,21 @@ namespace SettingsService.Api.Tests.Controllers
         {
             using (var ctx = _testDb.CreateContext())
             {
-                ctx.CrawlUrlSeeds.AddRange(new[]
+                ctx.Hosts.AddRange(new[]
                 {
-                    new CrawlUrlSeed {Url = "0"},
-                    new CrawlUrlSeed {Url = "1"},
-                    new CrawlUrlSeed {Url = "2"}
+                    new Host {SeedUrl = "0"},
+                    new Host {SeedUrl = "1"},
+                    new Host {SeedUrl = "2"}
                 });
                 ctx.SaveChanges();
-                var targetId = ctx.CrawlUrlSeeds.Single(s => s.Url == "1").Id;
+                var targetId = ctx.Hosts.Single(s => s.SeedUrl == "1").Id;
                 using (var response = _httpServer.Delete("api/urls/" + targetId))
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 }
                 using (var verifyCtx = _testDb.CreateContext())
                 {
-                    var url = verifyCtx.CrawlUrlSeeds.SingleOrDefault(s => s.Id == targetId);
+                    var url = verifyCtx.Hosts.SingleOrDefault(s => s.Id == targetId);
                     Assert.Null(url);
                 }
             }

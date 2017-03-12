@@ -13,13 +13,13 @@ namespace SettingsService.Api.Controllers
     [RoutePrefix("api/urls")]
     public class UrlFrontierSettingsController : ApiController
     {
-        private readonly IUrlFrontierSettingsRepository _urlFrontierSettingsRepository;
+        private readonly IHostsRepository _urlFrontierSettingsRepository;
 
         /// <summary>
         ///     Controller
         /// </summary>
         /// <param name="urlFrontierSettingsRepository"></param>
-        public UrlFrontierSettingsController(IUrlFrontierSettingsRepository urlFrontierSettingsRepository)
+        public UrlFrontierSettingsController(IHostsRepository urlFrontierSettingsRepository)
         {
             _urlFrontierSettingsRepository = urlFrontierSettingsRepository;
         }
@@ -29,10 +29,10 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof (IList<CrawlUrlSeed>))]
+        [ResponseType(typeof (IList<Host>))]
         public IHttpActionResult Get()
         {
-            return Ok(_urlFrontierSettingsRepository.GetSeedUrls());
+            return Ok(_urlFrontierSettingsRepository.GetHosts());
         }
 
         /// <summary>
@@ -41,10 +41,10 @@ namespace SettingsService.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Route("{id:guid}")]
-        [ResponseType(typeof (CrawlUrlSeed))]
+        [ResponseType(typeof (Host))]
         public IHttpActionResult Get(Guid id)
         {
-            var crawlUrlSeed = _urlFrontierSettingsRepository.GetUrl(id);
+            var crawlUrlSeed = _urlFrontierSettingsRepository.GetHost(id);
             return Ok(crawlUrlSeed);
         }
 
@@ -54,10 +54,10 @@ namespace SettingsService.Api.Controllers
         /// <param name="crawlUrlSeed">URL to be added</param>
         /// <returns></returns>
         [Route("")]
-        public IHttpActionResult Post([FromBody] CrawlUrlSeed crawlUrlSeed)
+        public IHttpActionResult Post([FromBody] Host crawlUrlSeed)
         {
-            var url = crawlUrlSeed.Url;
-            var id = _urlFrontierSettingsRepository.AddSeedUrl(url);
+            var url = crawlUrlSeed.SeedUrl;
+            var id = _urlFrontierSettingsRepository.AddHost(url);
             var location = new Uri(Request.RequestUri + "/" + id);
             return Created(location, id);
         }
@@ -70,7 +70,7 @@ namespace SettingsService.Api.Controllers
         [Route("{id:guid}")]
         public IHttpActionResult Delete(Guid id)
         {
-            _urlFrontierSettingsRepository.RemoveSeedUrl(id);
+            _urlFrontierSettingsRepository.RemoveHost(id);
             return Ok();
         }
     }

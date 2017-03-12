@@ -4,31 +4,31 @@ using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Core.Data
 {
-    public interface IUrlFrontierSettingsRepository
+    public interface IHostsRepository
     {
         /// <summary>
         ///     Get the whole list of URLs in the seed
         /// </summary>
         /// <returns></returns>
-        IList<CrawlUrlSeed> GetSeedUrls();
+        IList<Host> GetHosts();
 
         /// <summary>
         ///     Remove existing URL from the seed
         /// </summary>
         /// <param name="id"></param>
-        void RemoveSeedUrl(Guid id);
+        void RemoveHost(Guid id);
 
         /// <summary>
         ///     Add new URL to the seed
         /// </summary>
-        /// <param name="url"></param>
-        Guid AddSeedUrl(string url);
+        /// <param name="host"></param>
+        Guid AddHost(Host host);
 
         /// <summary>
-        /// Get URL by identifier
+        ///     Update existing host
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="host"></param>
         /// <returns></returns>
-        CrawlUrlSeed GetUrl(Guid id);
+        void UpdateHost(Host host);
     }
 }

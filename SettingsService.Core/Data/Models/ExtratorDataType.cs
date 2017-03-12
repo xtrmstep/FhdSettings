@@ -3,7 +3,7 @@
     /// <summary>
     ///     Type of crawled data
     /// </summary>
-    public enum CrawlDataBlockType
+    public enum ExtratorDataType
     {
         Link,
         Video,

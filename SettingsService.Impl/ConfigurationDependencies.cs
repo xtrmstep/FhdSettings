@@ -8,10 +8,9 @@ namespace SettingsService.Impl
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UrlFrontierSettingsRepository>().As<IUrlFrontierSettingsRepository>().InstancePerRequest();
-            builder.RegisterType<CrawlerRuleRepository>().As<ICrawlerRuleRepository>().InstancePerRequest();
-            builder.RegisterType<AnalizerRepository>().As<IAnalizerRepository>().InstancePerRequest();
-            builder.RegisterType<HostSettingsRepository>().As<IHostSettingsRepository>().InstancePerRequest();
+            builder.RegisterType<HostsRepository>().As<IHostsRepository>().InstancePerRequest();
+            builder.RegisterType<RulesRepository>().As<IRulesRepository>().InstancePerRequest();
+            builder.RegisterType<SettingsRepository>().As<ISettingsRepository>().InstancePerRequest();
         }
     }
 }

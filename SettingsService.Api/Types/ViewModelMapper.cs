@@ -12,8 +12,8 @@ namespace SettingsService.Api.Types
 
         public ViewModelMapper()
         {
-            var config = new MapperConfiguration(cfg => { cfg.CreateMap<AuthToken, AuthTokenViewModel>(); });
-            _mapper = config.CreateMapper();
+            //var config = new MapperConfiguration(cfg => { cfg.CreateMap<AuthToken, AuthTokenViewModel>(); });
+            //_mapper = config.CreateMapper();
         }
 
         private static dynamic Instance
@@ -26,11 +26,6 @@ namespace SettingsService.Api.Types
             var model = new TToModel();
             Instance.MapFromTo(entity, model);
             return model;
-        }
-
-        private void MapFromTo(AuthToken from, AuthTokenViewModel to)
-        {
-            _mapper.Map(from, to);
         }
     }
 }

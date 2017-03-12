@@ -68,16 +68,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationDependencies.cs" />
-    <Compile Include="Migrations\201605211445259_initial.cs" />
-    <Compile Include="Migrations\201605211445259_initial.Designer.cs">
-      <DependentUpon>201605211445259_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201703121258552_initial.cs" />
+    <Compile Include="Migrations\201703121258552_initial.Designer.cs">
+      <DependentUpon>201703121258552_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ConfigurationMapping.cs" />
-    <Compile Include="Repositories\AnalizerRepository.cs" />
-    <Compile Include="Repositories\UrlFrontierSettingsRepository.cs" />
-    <Compile Include="Repositories\CrawlerRuleRepository.cs" />
-    <Compile Include="Repositories\HostSettingsRepository.cs" />
+    <Compile Include="Repositories\HostsRepository.cs" />
+    <Compile Include="Repositories\RulesRepository.cs" />
+    <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="SettingDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -92,8 +91,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605211445259_initial.resx">
-      <DependentUpon>201605211445259_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703121258552_initial.resx">
+      <DependentUpon>201703121258552_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

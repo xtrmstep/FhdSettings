@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using SettingsService.Api.Models;
+using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Api
 {
@@ -6,7 +8,7 @@ namespace SettingsService.Api
     {
         protected override void Configure()
         {
-           
+            CreateMap<HostCreateModel, Host>();
         }
     }
 }

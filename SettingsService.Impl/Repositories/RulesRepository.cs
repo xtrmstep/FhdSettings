@@ -7,58 +7,58 @@ using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Impl.Repositories
 {
-    internal class CrawlerRuleRepository : ICrawlerRuleRepository
+    internal class RulesRepository : IRulesRepository
     {
         private readonly IMapper _mapper;
 
-        public CrawlerRuleRepository(IMapper mapper)
+        public RulesRepository(IMapper mapper)
         {
             _mapper = mapper;
         }
 
-        public Guid AddRule(CrawlRule rule)
+        public Guid AddRule(ExtractRule rule)
         {
             using (var ctx = new SettingDbContext())
             {
-                var newRule = ctx.CrawlRules.Create();
+                var newRule = ctx.ExtractRules.Create();
                 _mapper.Map(rule, newRule);
-                ctx.CrawlRules.Add(newRule);
+                ctx.ExtractRules.Add(newRule);
                 ctx.SaveChanges();
                 return newRule.Id;
             }
         }
 
-        public CrawlRule GetRule(Guid ruleId)
+        public ExtractRule GetRule(Guid ruleId)
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.CrawlRules.AsNoTracking().SingleOrDefault(r => r.Id == ruleId);
+                return ctx.ExtractRules.AsNoTracking().SingleOrDefault(r => r.Id == ruleId);
             }
         }
 
-        public IList<CrawlRule> GetRules(string host)
+        public IList<ExtractRule> GetRules(string host)
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.CrawlRules.AsNoTracking().Where(r => r.Host == host).ToList();
+                return ctx.ExtractRules.AsNoTracking().Where(r => r.Host.SeedUrl == host).ToList();
             }
         }
 
-        public void RemoveRule(Guid ruleId)
+        public void RemoveRule(Guid id)
         {
             using (var ctx = new SettingDbContext())
             {
-                var rule = ctx.CrawlRules.SingleOrDefault(s => s.Id == ruleId);
-                ctx.CrawlRules.Remove(rule);
+                var rule = ctx.ExtractRules.SingleOrDefault(s => s.Id == id);
+                ctx.ExtractRules.Remove(rule);
                 ctx.SaveChanges();
             }
         }
 
-        public void UpdateRule(CrawlRule rule)
+        public void UpdateRule(ExtractRule rule)
         {
             using (var ctx = new SettingDbContext())
             {
-                var existing = ctx.CrawlRules.SingleOrDefault(s => s.Id == rule.Id);
+                var existing = ctx.ExtractRules.SingleOrDefault(s => s.Id == rule.Id);
                 if (existing != null)
                 {
                     _mapper.Map(rule, existing);

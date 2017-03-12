@@ -7,12 +7,10 @@ namespace SettingsService.Impl
     {
         protected override void Configure()
         {
-            CreateMap<CrawlRule, CrawlRule>();
-            CreateMap<ClinetService, ClinetService>();
-            CreateMap<AuthToken, AuthToken>();
-            CreateMap<CrawlHostSetting, CrawlHostSetting>();
-            CreateMap<CrawlUrlSeed, CrawlUrlSeed>();
-            CreateMap<NumericDataExtractorRule, NumericDataExtractorRule>();
+            // this mapping is used for quick assignment from parameters to tracked objects inside repositories
+            CreateMap<ExtractRule, ExtractRule>();
+            CreateMap<HostSetting, HostSetting>();
+            CreateMap<Host, Host>();
         }
     }
 }

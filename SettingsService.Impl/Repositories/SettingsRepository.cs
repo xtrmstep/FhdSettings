@@ -8,44 +8,34 @@ using SettingsService.Core.Data.Models;
 
 namespace SettingsService.Impl.Repositories
 {
-    internal class HostSettingsRepository : IHostSettingsRepository
+    internal class SettingsRepository : ISettingsRepository
     {
         private readonly IMapper _mapper;
 
-        public HostSettingsRepository(IMapper mapper)
+        public SettingsRepository(IMapper mapper)
         {
             _mapper = mapper;
         }
 
-        public Guid AddHostSettings(CrawlHostSetting hostSettings)
+        public Guid AddHostSettings(HostSetting hostSettings)
         {
             using (var ctx = new SettingDbContext())
             {
-                var newHostSettings = ctx.CrawlHostSettings.Create();
+                var newHostSettings = ctx.HostSettings.Create();
                 _mapper.Map(hostSettings, newHostSettings);
-                ctx.CrawlHostSettings.Add(newHostSettings);
+                ctx.HostSettings.Add(newHostSettings);
                 ctx.SaveChanges();
                 return newHostSettings.Id;
             }
         }
 
-        public IList<CrawlHostSetting> GetHostSettings()
+        public HostSetting GetHostSettings(Guid id)
         {
             using (var ctx = new SettingDbContext())
             {
-                // return all items, without default one
-                var settings = ctx.CrawlHostSettings.AsNoTracking().Where(s => s.Host != string.Empty).ToList();
-                return settings;
-            }
-        }
-
-        public CrawlHostSetting GetHostSettings(Guid id)
-        {
-            using (var ctx = new SettingDbContext())
-            {
-                var crawlHostSettings = ctx.CrawlHostSettings.AsNoTracking();
+                var crawlHostSettings = ctx.HostSettings.AsNoTracking();
                 return id == Guid.Empty 
-                    ? crawlHostSettings.SingleOrDefault(s => s.Host == string.Empty) 
+                    ? crawlHostSettings.SingleOrDefault(s => s.Host == null) 
                     : crawlHostSettings.SingleOrDefault(s => s.Id == id);
             }
         }
@@ -54,17 +44,17 @@ namespace SettingsService.Impl.Repositories
         {
             using (var ctx = new SettingDbContext())
             {
-                var settings = ctx.CrawlHostSettings.SingleOrDefault(s => s.Id == id);
-                ctx.CrawlHostSettings.Remove(settings);
+                var settings = ctx.HostSettings.SingleOrDefault(s => s.Id == id);
+                ctx.HostSettings.Remove(settings);
                 ctx.SaveChanges();
             }
         }
 
-        public void UpdateHostSettings(CrawlHostSetting hostSettings)
+        public void UpdateHostSettings(HostSetting hostSettings)
         {
             using (var ctx = new SettingDbContext())
             {
-                var existing = ctx.CrawlHostSettings.SingleOrDefault(s => s.Id == hostSettings.Id);
+                var existing = ctx.HostSettings.SingleOrDefault(s => s.Id == hostSettings.Id);
                 if (existing != null)
                 {
                     _mapper.Map(hostSettings, existing);

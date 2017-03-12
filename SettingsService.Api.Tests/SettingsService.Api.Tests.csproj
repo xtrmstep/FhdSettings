@@ -107,15 +107,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ApiCrawlerRulesTests.cs" />
-    <Compile Include="Controllers\ApiUrlsTests.cs" />
-    <Compile Include="Controllers\ApiHostsTests.cs" />
-    <Compile Include="Controllers\RulesControllerTests.cs" />
+    <Compile Include="Endpoints\ApiCrawlerRulesTests.cs" />
+    <Compile Include="Endpoints\ApiUrlsTests.cs" />
+    <Compile Include="Endpoints\ApiHostsTests.cs" />
+    <Compile Include="Endpoints\RulesControllerTests.cs" />
     <Compile Include="Fixtures\DbBoundTestCollection.cs" />
     <Compile Include="Fixtures\HttpServerFixture.cs" />
     <Compile Include="Fixtures\TestDbFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\ViewModelMapperTests.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

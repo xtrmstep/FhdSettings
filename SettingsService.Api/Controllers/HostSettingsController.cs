@@ -14,13 +14,13 @@ namespace SettingsService.Api.Controllers
     [RoutePrefix("api/hosts")]
     public class HostSettingsController : ApiController
     {
-        private readonly IHostSettingsRepository _hostSettingsRepository;
+        private readonly ISettingsRepository _hostSettingsRepository;
 
         /// <summary>
         /// Controller
         /// </summary>
         /// <param name="hostSettingsRepository"></param>
-        public HostSettingsController(IHostSettingsRepository hostSettingsRepository)
+        public HostSettingsController(ISettingsRepository hostSettingsRepository)
         {
             _hostSettingsRepository = hostSettingsRepository;
         }
@@ -30,7 +30,7 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof(IList<CrawlHostSetting>))]
+        [ResponseType(typeof(IList<HostSetting>))]
         public IHttpActionResult Get()
         {
             return Ok(_hostSettingsRepository.GetHostSettings());
@@ -42,7 +42,7 @@ namespace SettingsService.Api.Controllers
         /// <param name="id">Guid identifier of settings</param>
         /// <returns></returns>
         [Route("{id:guid}")]
-        [ResponseType(typeof(CrawlHostSetting))]
+        [ResponseType(typeof(HostSetting))]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(_hostSettingsRepository.GetHostSettings(id));
@@ -53,7 +53,7 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("default")]
-        [ResponseType(typeof(CrawlHostSetting))]
+        [ResponseType(typeof(HostSetting))]
         public IHttpActionResult GetDefault()
         {
             return Ok(_hostSettingsRepository.GetHostSettings(Guid.Empty));
@@ -62,12 +62,12 @@ namespace SettingsService.Api.Controllers
         /// <summary>
         /// Create a record with settings for a new host
         /// </summary>
-        /// <param name="crawlHostSetting">Settings object</param>
+        /// <param name="hostSetting">Settings object</param>
         /// <returns></returns>
         [Route("")]
-        public IHttpActionResult Post([FromBody] CrawlHostSetting crawlHostSetting)
+        public IHttpActionResult Post([FromBody] HostSetting hostSetting)
         {
-            var id = _hostSettingsRepository.AddHostSettings(crawlHostSetting);
+            var id = _hostSettingsRepository.AddHostSettings(hostSetting);
             var location = new Uri(Request.RequestUri + "/" + id);
             return Created(location, id);
         }
@@ -75,13 +75,13 @@ namespace SettingsService.Api.Controllers
         /// <summary>
         /// Update host crawl settings
         /// </summary>
-        /// <param name="crawlHostSetting">Updated crawl settings for the host</param>
+        /// <param name="hostSetting">Updated crawl settings for the host</param>
         /// <returns>Host in the parameter and in the object must be equal.</returns>
         [Route("{id:guid}")]
-        public IHttpActionResult Put(Guid id, [FromBody] CrawlHostSetting crawlHostSetting)
+        public IHttpActionResult Put(Guid id, [FromBody] HostSetting hostSetting)
         {
-            if (id == crawlHostSetting.Id)
-                _hostSettingsRepository.UpdateHostSettings(crawlHostSetting);
+            if (id == hostSetting.Id)
+                _hostSettingsRepository.UpdateHostSettings(hostSetting);
 
             return Ok();
         }

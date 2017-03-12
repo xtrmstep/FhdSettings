@@ -24,20 +24,22 @@ namespace SettingsService.Api.Tests.Controllers
         {
             using (var ctx = _testDb.CreateContext())
             {
-                ctx.CrawlRules.AddRange(new[]
+                var host = new Host {SeedUrl = "test"};
+                ctx.Hosts.Add(host);
+                ctx.ExtractRules.AddRange(new[]
                 {
-                    new CrawlRule {DataType = CrawlDataBlockType.Link, Host = "test", Name = "Link"},
-                    new CrawlRule {DataType = CrawlDataBlockType.Picture, Host = "test", Name = "Picture"},
-                    new CrawlRule {DataType = CrawlDataBlockType.Video, Host = "test", Name = "Video"}
+                    new ExtractRule {DataType = ExtratorDataType.Link, Host = host, Name = "Link"},
+                    new ExtractRule {DataType = ExtratorDataType.Picture, Host = host, Name = "Picture"},
+                    new ExtractRule {DataType = ExtratorDataType.Video, Host = host, Name = "Video"}
                 });
                 ctx.SaveChanges();
 
                 using (var response = _httpServer.Get("api/crawler/rules?host=test"))
                 {
-                    var content = response.Content as ObjectContent<IList<CrawlRule>>;
+                    var content = response.Content as ObjectContent<IList<ExtractRule>>;
                     Assert.NotNull(content);
 
-                    var result = content.Value as IList<CrawlRule>;
+                    var result = content.Value as IList<ExtractRule>;
                     Assert.NotNull(result);
 
                     Assert.True(result.Any());
