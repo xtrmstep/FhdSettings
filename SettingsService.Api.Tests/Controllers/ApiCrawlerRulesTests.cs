@@ -179,8 +179,6 @@ namespace SettingsService.Api.Tests.Controllers
         [Fact(DisplayName = "api/crawler/rules/id DELETE")]
         public void Should_delete_rule_with_id()
         {
-            // todo affected by another tests for default rules (parallelism??)
-            // todo output is not captured
             using (var ctx = _testDb.CreateContext())
             {
                 ctx.CrawlRules.AddRange(new[]
