@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
@@ -26,6 +27,17 @@ namespace SettingsService.Api.Controllers
         {
             _hostSettingsRepository = hostSettingsRepository;
             _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Return list of all settings
+        /// </summary>
+        /// <returns></returns>
+        [Route("")]
+        [ResponseType(typeof(IList<Setting>))]
+        public IHttpActionResult Get()
+        {
+            return Ok(_hostSettingsRepository.Get());
         }
 
         /// <summary>

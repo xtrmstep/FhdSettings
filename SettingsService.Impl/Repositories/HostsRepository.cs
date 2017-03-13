@@ -61,8 +61,8 @@ namespace SettingsService.Impl.Repositories
         {
             using (var ctx = new SettingDbContext())
             {
-                var dbUrl = ctx.Hosts.SingleOrDefault(s => s.Id == id);
-                ctx.Hosts.Remove(dbUrl);
+                var existing = ctx.Hosts.SingleOrDefault(s => s.Id == id);
+                ctx.Hosts.Remove(existing);
                 ctx.SaveChanges();
             }
         }

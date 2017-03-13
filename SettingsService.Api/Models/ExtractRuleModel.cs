@@ -8,7 +8,7 @@ namespace SettingsService.Api.Models
     /// <summary>
     /// Create model of extract rule
     /// </summary>
-    public class ExtractRuleCreateModel
+    public class ExtractRuleModel
     {
         /// <summary>
         /// Name of the rule

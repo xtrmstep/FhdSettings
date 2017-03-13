@@ -154,15 +154,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ConfigurationMapping.cs" />
     <Compile Include="Controllers\Attributes\ValidateAuthTokenFilterAttribute.cs" />
-    <Compile Include="Controllers\CrawlerController.cs" />
+    <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\HostsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Loggers\TelemetryExceptionsLogger.cs" />
-    <Compile Include="Models\ExtractRuleCreateModel.cs" />
-    <Compile Include="Models\ExtractRuleUpdateModel.cs" />
+    <Compile Include="Models\ExtractRuleModel.cs" />
     <Compile Include="Models\HostModel.cs" />
     <Compile Include="Models\SettingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

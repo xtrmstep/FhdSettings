@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,36 +8,35 @@ using SettingsService.Api.Models;
 using SettingsService.Api.Tests.Fixtures;
 using SettingsService.Core.Data.Models;
 using Xunit;
-using Xunit.Abstractions;
 
-namespace SettingsService.Api.Tests.Controllers
+namespace SettingsService.Api.Tests.Endpoints
 {
     [Collection("DbBoundTest")]
-    public class ApiCrawlerRulesTests : IClassFixture<HttpServerFixture>
+    public class ApiRulesTests : IClassFixture<HttpServerFixture>
     {
         private readonly HttpServerFixture _httpServer;
         private readonly TestDbFixture _testDb;
 
-        public ApiCrawlerRulesTests(HttpServerFixture httpServer, TestDbFixture testDb)
+        public ApiRulesTests(HttpServerFixture httpServer, TestDbFixture testDb)
         {
             _httpServer = httpServer;
             _testDb = testDb;
         }
 
-        [Fact(DisplayName = "api/crawler/rules GET")]
-        public void Should_return_list_of_default_rules()
+        [Fact(DisplayName = "api/rules GET")]
+        public void Should_return_list_of_rules()
         {
             using (var ctx = _testDb.CreateContext())
             {
                 ctx.ExtractRules.AddRange(new[]
                 {
-                    new ExtractRule{Name = "1",DataType = ExtratorDataType.Link, RegExpression = "expr1"},
-                    new ExtractRule{Name = "2",DataType = ExtratorDataType.Picture, RegExpression = "expr2"},
-                    new ExtractRule{Name = "3",DataType = ExtratorDataType.Video, RegExpression = "expr3"},
+                    new ExtractRule {Name = "1", DataType = ExtratorDataType.Link, RegExpression = "expr1"},
+                    new ExtractRule {Name = "2", DataType = ExtratorDataType.Picture, RegExpression = "expr2"},
+                    new ExtractRule {Name = "3", DataType = ExtratorDataType.Video, RegExpression = "expr3"}
                 });
                 ctx.SaveChanges();
 
-                using (var response = _httpServer.Get("api/crawler/rules"))
+                using (var response = _httpServer.Get("api/rules"))
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -53,12 +51,12 @@ namespace SettingsService.Api.Tests.Controllers
             }
         }
 
-        [Fact(DisplayName = "api/crawler/rules POST")]
-        public void Should_add_new_default_rule()
+        [Fact(DisplayName = "api/rules POST")]
+        public void Should_add_new_rule()
         {
             using (var ctx = _testDb.CreateContext())
             {
-                var payload = JsonConvert.SerializeObject(new ExtractRuleCreateModel
+                var payload = JsonConvert.SerializeObject(new ExtractRuleModel
                 {
                     Name = "Name1",
                     DataType = ExtratorDataType.Link,
@@ -66,14 +64,14 @@ namespace SettingsService.Api.Tests.Controllers
                 });
 
                 Guid result;
-                using (var response = _httpServer.PostJson("api/crawler/rules", payload))
+                using (var response = _httpServer.PostJson("api/rules", payload))
                 {
                     Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
                     var content = response.Content as ObjectContent<Guid>;
-                    result = (Guid)content.Value;
+                    result = (Guid) content.Value;
 
-                    var expectedLocation = _httpServer.GetUrl("api/crawler/rules/" + result);
+                    var expectedLocation = _httpServer.GetUrl("api/rules/" + result);
                     Assert.Equal(expectedLocation, response.Headers.Location.ToString());
                 }
 
@@ -82,21 +80,21 @@ namespace SettingsService.Api.Tests.Controllers
             }
         }
 
-        [Fact(DisplayName = "api/crawler/rules/id GET")]
-        public void Should_return_single_default_rule_by_id()
+        [Fact(DisplayName = "api/rules/id GET")]
+        public void Should_return_single_rule_by_id()
         {
             using (var ctx = _testDb.CreateContext())
             {
                 ctx.ExtractRules.AddRange(new[]
                 {
-                    new ExtractRule{Name = "1",DataType = ExtratorDataType.Link, RegExpression = "expr1"},
-                    new ExtractRule{Name = "2",DataType = ExtratorDataType.Picture, RegExpression = "expr2"},
-                    new ExtractRule{Name = "3",DataType = ExtratorDataType.Video, RegExpression = "expr3"},
+                    new ExtractRule {Name = "1", DataType = ExtratorDataType.Link, RegExpression = "expr1"},
+                    new ExtractRule {Name = "2", DataType = ExtratorDataType.Picture, RegExpression = "expr2"},
+                    new ExtractRule {Name = "3", DataType = ExtratorDataType.Video, RegExpression = "expr3"}
                 });
                 ctx.SaveChanges();
                 var targetId = ctx.ExtractRules.Single(s => s.Name == "2").Id;
 
-                using (var response = _httpServer.Get("api/crawler/rules/"+ targetId))
+                using (var response = _httpServer.Get("api/rules/" + targetId))
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -111,20 +109,16 @@ namespace SettingsService.Api.Tests.Controllers
             }
         }
 
-        [Fact(DisplayName = "api/crawler/rules/id PUT")]
+        [Fact(DisplayName = "api/rules/id PUT")]
         public void Should_update_rule_with_id()
         {
             using (var ctx = _testDb.CreateContext())
             {
-                var host1 = new Host { SeedUrl = "1" };
-                var host2 = new Host { SeedUrl = "2" };
-                var host3 = new Host { SeedUrl = "3" };
-                ctx.Hosts.AddRange(new[] { host1, host2, host3 });
                 ctx.ExtractRules.AddRange(new[]
                 {
-                    new ExtractRule{Name = "1",DataType = ExtratorDataType.Link, Host = host1, RegExpression = "expr1"},
-                    new ExtractRule{Name = "2",DataType = ExtratorDataType.Picture, Host = host2, RegExpression = "expr2"},
-                    new ExtractRule{Name = "3",DataType = ExtratorDataType.Video, Host = host3, RegExpression = "expr3"},
+                    new ExtractRule {Name = "1", DataType = ExtratorDataType.Link, RegExpression = "expr1"},
+                    new ExtractRule {Name = "2", DataType = ExtratorDataType.Picture, RegExpression = "expr2"},
+                    new ExtractRule {Name = "3", DataType = ExtratorDataType.Video, RegExpression = "expr3"}
                 });
                 ctx.SaveChanges();
                 var targetId = ctx.ExtractRules.Single(s => s.Name == "2").Id;
@@ -134,10 +128,9 @@ namespace SettingsService.Api.Tests.Controllers
                     Id = targetId,
                     RegExpression = "new_expr2",
                     Name = "2",
-                    DataType = ExtratorDataType.Picture,
-                    Host = host2
+                    DataType = ExtratorDataType.Picture
                 });
-                using (var response = _httpServer.PutJson("api/crawler/rules/" + targetId, payload))
+                using (var response = _httpServer.PutJson("api/rules/" + targetId, payload))
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 }
@@ -149,25 +142,21 @@ namespace SettingsService.Api.Tests.Controllers
             }
         }
 
-        [Fact(DisplayName = "api/crawler/rules/id DELETE")]
+        [Fact(DisplayName = "api/rules/id DELETE")]
         public void Should_delete_rule_with_id()
         {
             using (var ctx = _testDb.CreateContext())
             {
-                var host1 = new Host { SeedUrl = "1" };
-                var host2 = new Host { SeedUrl = "2" };
-                var host3 = new Host { SeedUrl = "3" };
-                ctx.Hosts.AddRange(new[] { host1, host2, host3 });
                 ctx.ExtractRules.AddRange(new[]
                 {
-                    new ExtractRule{Name = "1",DataType = ExtratorDataType.Link, Host = host1, RegExpression = "expr1"},
-                    new ExtractRule{Name = "2",DataType = ExtratorDataType.Picture, Host = host2, RegExpression = "expr2"},
-                    new ExtractRule{Name = "3",DataType = ExtratorDataType.Video, Host = host3, RegExpression = "expr3"},
+                    new ExtractRule {Name = "1", DataType = ExtratorDataType.Link, RegExpression = "expr1"},
+                    new ExtractRule {Name = "2", DataType = ExtratorDataType.Picture, RegExpression = "expr2"},
+                    new ExtractRule {Name = "3", DataType = ExtratorDataType.Video, RegExpression = "expr3"}
                 });
                 ctx.SaveChanges();
                 var targetId = ctx.ExtractRules.Single(s => s.Name == "2").Id;
 
-                using (var response = _httpServer.Delete("api/crawler/rules/" + targetId))
+                using (var response = _httpServer.Delete("api/rules/" + targetId))
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 }

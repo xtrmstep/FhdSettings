@@ -60,7 +60,12 @@ namespace SettingsService.Impl.Repositories
 
         public void Remove(Guid id)
         {
-            throw new NotImplementedException();
+            using (var ctx = new SettingDbContext())
+            {
+                var existing = ctx.ExtractRules.SingleOrDefault(s => s.Id == id);
+                ctx.ExtractRules.Remove(existing);
+                ctx.SaveChanges();
+            }
         }
     }
 }

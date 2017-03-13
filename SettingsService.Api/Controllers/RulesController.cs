@@ -13,7 +13,7 @@ namespace SettingsService.Api.Controllers
     ///     Provides methods to manipulate with crawler rules
     /// </summary>
     [RoutePrefix("api/rules")]
-    public class CrawlerController : ApiController
+    public class RulesController : ApiController
     {
         private readonly IMapper _mapper;
         private readonly IRulesRepository _rulesRepository;
@@ -21,7 +21,7 @@ namespace SettingsService.Api.Controllers
         /// <summary>
         ///     Controller
         /// </summary>
-        public CrawlerController(IRulesRepository rulesRepository, IMapper mapper)
+        public RulesController(IRulesRepository rulesRepository, IMapper mapper)
         {
             _rulesRepository = rulesRepository;
             _mapper = mapper;
@@ -55,9 +55,9 @@ namespace SettingsService.Api.Controllers
         /// <param name="ruleModel"></param>
         /// <returns></returns>
         [Route("")]
-        public IHttpActionResult Post([FromBody] ExtractRuleCreateModel ruleModel)
+        public IHttpActionResult Post([FromBody] ExtractRuleModel ruleModel)
         {
-            var rule = _mapper.Map<ExtractRuleCreateModel, ExtractRule>(ruleModel);
+            var rule = _mapper.Map<ExtractRuleModel, ExtractRule>(ruleModel);
             var id = _rulesRepository.Add(rule);
             var location = new Uri(Request.RequestUri + "/" + id);
             return Created(location, id);
@@ -72,9 +72,9 @@ namespace SettingsService.Api.Controllers
         /// <response code="200">OK</response>
         /// <response code="400">Identifiers do not match</response>
         [Route("{id:guid}")]
-        public IHttpActionResult Put(Guid id, [FromBody] ExtractRuleCreateModel ruleModel)
+        public IHttpActionResult Put(Guid id, [FromBody] ExtractRuleModel ruleModel)
         {
-            var rule = _mapper.Map<ExtractRuleCreateModel, ExtractRule>(ruleModel);
+            var rule = _mapper.Map<ExtractRuleModel, ExtractRule>(ruleModel);
             rule.Id = id;
             _rulesRepository.Update(rule);
             return Ok();

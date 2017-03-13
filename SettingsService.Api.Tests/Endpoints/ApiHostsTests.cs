@@ -9,7 +9,7 @@ using SettingsService.Api.Tests.Fixtures;
 using SettingsService.Core.Data.Models;
 using Xunit;
 
-namespace SettingsService.Api.Tests.Controllers
+namespace SettingsService.Api.Tests.Endpoints
 {
     [Collection("DbBoundTest")]
     public class ApiHostsTests : IClassFixture<HttpServerFixture>
@@ -130,48 +130,5 @@ namespace SettingsService.Api.Tests.Controllers
                 }
             }
         }
-
-        //[Fact(DisplayName = "api/hosts/default GET")]
-        //public void Should_return_default_settings()
-        //{
-        //    using (var ctx = _testDb.CreateContext())
-        //    {
-        //        using (var response = _httpServer.Get("api/hosts/default"))
-        //        {
-        //            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-        //            var content = response.Content as ObjectContent<Setting>;
-        //            Assert.NotNull(content);
-
-        //            var result = content.Value as Setting;
-        //            Assert.NotNull(result);
-
-        //            Assert.Equal(60, result.CrawlDelay);
-        //            Assert.Equal("*", result.Disallow);
-        //            Assert.Null(result.Host);
-        //        }
-        //    }
-        //}
-
-        //[Fact(DisplayName = "api/hosts/default PUT")]
-        //public void Should_return_save_settings()
-        //{
-        //    using (var ctx = _testDb.CreateContext())
-        //    {
-        //        var payload = JsonConvert.SerializeObject(new HostDefaultSettings
-        //        {
-        //            Delay = 20,
-        //            Disallow = "/"
-        //        });
-        //        using (var response = _httpServer.PutJson("api/hosts/default", payload))
-        //        {
-        //            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        //        }
-
-        //        var defaultSettings = ctx.HostSettings.Single(s => s.Host == null);
-        //        Assert.Equal(20, defaultSettings.CrawlDelay);
-        //        Assert.Equal("/", defaultSettings.Disallow);
-        //    }
-        //}
     }
 }

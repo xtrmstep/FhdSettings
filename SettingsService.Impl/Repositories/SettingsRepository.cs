@@ -17,15 +17,11 @@ namespace SettingsService.Impl.Repositories
             _mapper = mapper;
         }
 
-        public Guid Add(Setting item)
+        public IList<Setting> Get()
         {
             using (var ctx = new SettingDbContext())
             {
-                var newSetting = ctx.Settings.Create();
-                _mapper.Map(item, newSetting);
-                ctx.Settings.Add(newSetting);
-                ctx.SaveChanges();
-                return newSetting.Id;
+                return ctx.Settings.AsNoTracking().ToList();
             }
         }
 
@@ -37,21 +33,15 @@ namespace SettingsService.Impl.Repositories
             }
         }
 
-        public IList<Setting> Get()
+        public Guid Add(Setting item)
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.Settings.AsNoTracking().ToList();
-            }
-        }
-
-        public void Remove(Guid id)
-        {
-            using (var ctx = new SettingDbContext())
-            {
-                var setting = ctx.Settings.SingleOrDefault(s => s.Id == id);
-                ctx.Settings.Remove(setting);
+                var newSetting = ctx.Settings.Create();
+                _mapper.Map(item, newSetting);
+                ctx.Settings.Add(newSetting);
                 ctx.SaveChanges();
+                return newSetting.Id;
             }
         }
 
@@ -65,6 +55,16 @@ namespace SettingsService.Impl.Repositories
                     _mapper.Map(item, existing);
                     ctx.SaveChanges();
                 }
+            }
+        }
+
+        public void Remove(Guid id)
+        {
+            using (var ctx = new SettingDbContext())
+            {
+                var existing = ctx.Settings.SingleOrDefault(s => s.Id == id);
+                ctx.Settings.Remove(existing);
+                ctx.SaveChanges();
             }
         }
     }
