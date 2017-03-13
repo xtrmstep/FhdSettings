@@ -24,7 +24,7 @@ var CrawlRule = (function () {
 var CrawlerRulesApi = (function (_super) {
     __extends(CrawlerRulesApi, _super);
     function CrawlerRulesApi() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     CrawlerRulesApi.prototype.loadCrawlerRules = function () {
         $.get(this.serviceUrl + "/api/crawler/rules", function (data) {

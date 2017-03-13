@@ -21,7 +21,7 @@ var UrlInfo = (function () {
 var GeneralSettingsApi = (function (_super) {
     __extends(GeneralSettingsApi, _super);
     function GeneralSettingsApi() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     GeneralSettingsApi.prototype.loadGeneralSettings = function () {
         $.get(this.serviceUrl + "/api/hosts/default", function (data) {

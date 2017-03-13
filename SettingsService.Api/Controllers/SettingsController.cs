@@ -45,7 +45,7 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <param name="id">Guid identifier of settings</param>
         /// <returns></returns>
-        [Route("")]
+        [Route("{id:guid}")]
         [ResponseType(typeof(Setting))]
         public IHttpActionResult Get(Guid id)
         {
