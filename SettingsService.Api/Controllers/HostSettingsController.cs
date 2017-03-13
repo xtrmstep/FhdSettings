@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
 using SettingsService.Api.Models;
 using SettingsService.Core.Data;
 using SettingsService.Core.Data.Models;
@@ -15,25 +16,17 @@ namespace SettingsService.Api.Controllers
     public class HostSettingsController : ApiController
     {
         private readonly ISettingsRepository _hostSettingsRepository;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Controller
         /// </summary>
         /// <param name="hostSettingsRepository"></param>
-        public HostSettingsController(ISettingsRepository hostSettingsRepository)
+        /// <param name="mapper"></param>
+        public HostSettingsController(ISettingsRepository hostSettingsRepository, IMapper mapper)
         {
             _hostSettingsRepository = hostSettingsRepository;
-        }
-
-        /// <summary>
-        /// Get settings of all hosts
-        /// </summary>
-        /// <returns></returns>
-        [Route("")]
-        [ResponseType(typeof(IList<HostSetting>))]
-        public IHttpActionResult Get()
-        {
-            return Ok(_hostSettingsRepository.GetHostSettings());
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -41,7 +34,7 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <param name="id">Guid identifier of settings</param>
         /// <returns></returns>
-        [Route("{id:guid}")]
+        [Route("{id:guid}/settings")]
         [ResponseType(typeof(HostSetting))]
         public IHttpActionResult Get(Guid id)
         {
@@ -49,62 +42,45 @@ namespace SettingsService.Api.Controllers
         }
 
         /// <summary>
-        /// Get host default settings
-        /// </summary>
-        /// <returns></returns>
-        [Route("default")]
-        [ResponseType(typeof(HostSetting))]
-        public IHttpActionResult GetDefault()
-        {
-            return Ok(_hostSettingsRepository.GetHostSettings(Guid.Empty));
-        }
-
-        /// <summary>
         /// Create a record with settings for a new host
         /// </summary>
-        /// <param name="hostSetting">Settings object</param>
+        /// <param name="id">Host identifier</param>
+        /// <param name="hostSettingModel">Host create model</param>
         /// <returns></returns>
-        [Route("")]
-        public IHttpActionResult Post([FromBody] HostSetting hostSetting)
+        [Route("{id:guid}/settings")]
+        public IHttpActionResult Post(Guid id, [FromBody] HostSettingCreateModel hostSettingModel)
         {
-            var id = _hostSettingsRepository.AddHostSettings(hostSetting);
-            var location = new Uri(Request.RequestUri + "/" + id);
-            return Created(location, id);
+            var hostSettings = _mapper.Map<HostSettingCreateModel, HostSetting>(hostSettingModel);
+            var newId = _hostSettingsRepository.AddHostSettings(hostSettings);
+            var location = new Uri(Request.RequestUri + "/" + newId);
+            return Created(location, newId);
         }
 
         /// <summary>
         /// Update host crawl settings
         /// </summary>
-        /// <param name="hostSetting">Updated crawl settings for the host</param>
+        /// <param name="hostId"></param>
+        /// <param name="id"></param>
+        /// <param name="hostSettingModel">Updated crawl settings for the host</param>
         /// <returns>Host in the parameter and in the object must be equal.</returns>
-        [Route("{id:guid}")]
-        public IHttpActionResult Put(Guid id, [FromBody] HostSetting hostSetting)
+        [Route("{hostId:guid}/settings/{id:guid}")]
+        public IHttpActionResult Put(Guid hostId, Guid id, [FromBody] HostSettingUpdateModel hostSettingModel)
         {
-            if (id == hostSetting.Id)
-                _hostSettingsRepository.UpdateHostSettings(hostSetting);
+            var hostSettings = _mapper.Map<HostSettingCreateModel, HostSetting>(hostSettingModel);
+            if (id == hostSettings.Id)
+                _hostSettingsRepository.UpdateHostSettings(hostSettings);
 
-            return Ok();
-        }
-        /// <summary>
-        /// Update host crawl settings
-        /// </summary>
-        [Route("default")]
-        public IHttpActionResult PutDefault([FromBody] HostDefaultSettings newSettings)
-        {
-            var settings = _hostSettingsRepository.GetHostSettings(Guid.Empty);
-            settings.Disallow = newSettings.Disallow;
-            settings.CrawlDelay = newSettings.Delay;
-            _hostSettingsRepository.UpdateHostSettings(settings);
             return Ok();
         }
 
         /// <summary>
         /// Delete crawl settings for specified host
         /// </summary>
+        /// <param name="hostId"></param>
         /// <param name="id">Guid identifier of the settings</param>
         /// <returns></returns>
-        [Route("{id:guid}")]
-        public IHttpActionResult Delete(Guid id)
+        [Route("{hostId:guid}/settings/{id:guid}")]
+        public IHttpActionResult Delete(Guid hostId, Guid id)
         {
             _hostSettingsRepository.RemoveHostSettings(id);
             return Ok();

@@ -108,9 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Endpoints\ApiCrawlerRulesTests.cs" />
-    <Compile Include="Endpoints\ApiUrlsTests.cs" />
+    <Compile Include="Endpoints\ApiHostsSettingsTests.cs" />
     <Compile Include="Endpoints\ApiHostsTests.cs" />
-    <Compile Include="Endpoints\RulesControllerTests.cs" />
     <Compile Include="Fixtures\DbBoundTestCollection.cs" />
     <Compile Include="Fixtures\HttpServerFixture.cs" />
     <Compile Include="Fixtures\TestDbFixture.cs" />

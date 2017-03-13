@@ -156,15 +156,17 @@
     <Compile Include="Controllers\Attributes\ValidateAuthTokenFilterAttribute.cs" />
     <Compile Include="Controllers\CrawlerController.cs" />
     <Compile Include="Controllers\HostsController.cs" />
+    <Compile Include="Controllers\HostSettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Loggers\TelemetryExceptionsLogger.cs" />
-    <Compile Include="Models\Auth\AuthTokenViewModel.cs" />
+    <Compile Include="Models\ExtractRuleCreateModel.cs" />
+    <Compile Include="Models\ExtractRuleUpdateModel.cs" />
     <Compile Include="Models\HostCreateModel.cs" />
-    <Compile Include="Models\HostDefaultSettings.cs" />
+    <Compile Include="Models\HostSettingCreateModel.cs" />
+    <Compile Include="Models\HostSettingUpdateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\ViewModelMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

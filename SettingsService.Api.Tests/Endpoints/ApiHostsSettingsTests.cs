@@ -12,27 +12,28 @@ using Xunit;
 namespace SettingsService.Api.Tests.Controllers
 {
     [Collection("DbBoundTest")]
-    public class ApiHostsTests : IClassFixture<HttpServerFixture>
+    public class ApiHostsSettingsTests : IClassFixture<HttpServerFixture>
     {
         private readonly HttpServerFixture _httpServer;
         private readonly TestDbFixture _testDb;
 
-        public ApiHostsTests(HttpServerFixture httpServer, TestDbFixture testDb)
+        public ApiHostsSettingsTests(HttpServerFixture httpServer, TestDbFixture testDb)
         {
             _httpServer = httpServer;
             _testDb = testDb;
         }
 
-        [Fact(DisplayName = "api/hosts GET")]
-        public void Should_return_the_list_of_available_hosts()
+        [Fact(DisplayName = "api/hosts/{id}/settings GET")]
+        public void Should_return_host_settings()
         {
             using (var ctx = _testDb.CreateContext())
             {
-                ctx.Hosts.AddRange(new[] 
+                var host = new Host {SeedUrl = "1"};
+                ctx.Hosts.AddRange(new[] {new Host {SeedUrl = "0"}, host});
+                ctx.HostSettings.AddRange(new[]
                 {
-                    new Host {SeedUrl = "0"},
-                    new Host {SeedUrl = "1"},
-                    new Host {SeedUrl = "2"}
+                    new HostSetting {CrawlDelay = 1, Disallow = "some", Host = host}, 
+                    new HostSetting {CrawlDelay = 1, Disallow = "some", Host = host}, 
                 });
                 ctx.SaveChanges();
 

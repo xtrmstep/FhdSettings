@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using AutoMapper;
 using SettingsService.Core.Data;
@@ -28,19 +29,31 @@ namespace SettingsService.Impl.Repositories
             }
         }
 
-        public ExtractRule GetRule(Guid ruleId)
+        public IList<ExtractRule> GetDefaultRules()
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.ExtractRules.AsNoTracking().SingleOrDefault(r => r.Id == ruleId);
+                return ctx.ExtractRules.AsQueryable().Include(r => r.Host).AsNoTracking()
+                    .Where(r => r.Host == null)
+                    .ToList();
             }
         }
 
-        public IList<ExtractRule> GetRules(string host)
+        public ExtractRule GetRule(Guid id)
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.ExtractRules.AsNoTracking().Where(r => r.Host.SeedUrl == host).ToList();
+                return ctx.ExtractRules.AsNoTracking().SingleOrDefault(r => r.Id == id);
+            }
+        }
+
+        public IList<ExtractRule> GetRules(Guid hostId)
+        {
+            using (var ctx = new SettingDbContext())
+            {
+                return ctx.ExtractRules.AsQueryable().Include(r => r.Host).AsNoTracking()
+                    .Where(r => r.Host.Id == hostId)
+                    .ToList();
             }
         }
 

@@ -9,6 +9,12 @@ namespace SettingsService.Api
         protected override void Configure()
         {
             CreateMap<HostCreateModel, Host>();
+
+            CreateMap<ExtractRuleCreateModel, ExtractRule>();
+            CreateMap<ExtractRuleUpdateModel, ExtractRule>();
+
+            CreateMap<HostSettingCreateModel, HostSetting>();
+            CreateMap<HostSettingUpdateModel, HostSetting>();
         }
     }
 }

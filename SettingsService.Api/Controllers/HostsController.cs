@@ -4,7 +4,6 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
 using SettingsService.Api.Models;
-using SettingsService.Api.Types;
 using SettingsService.Core.Data;
 using SettingsService.Core.Data.Models;
 
@@ -22,7 +21,6 @@ namespace SettingsService.Api.Controllers
         /// <summary>
         /// Controller
         /// </summary>
-        /// <param name="hostsRepository"></param>
         public HostsController(IHostsRepository hostsRepository, IMapper mapper)
         {
             _hostsRepository = hostsRepository;
@@ -41,23 +39,24 @@ namespace SettingsService.Api.Controllers
         }
 
         /// <summary>
-        /// Add new hostCreateModel
+        /// Add new hostModel
         /// </summary>
-        /// <param name="hostCreateModel"></param>
+        /// <param name="hostModel"></param>
         /// <returns></returns>
         [Route("")]
-        public IHttpActionResult Post([FromBody] HostCreateModel hostCreateModel)
+        public IHttpActionResult Post([FromBody] HostCreateModel hostModel)
         {
-            var host = _mapper.Map<HostCreateModel, Host>(hostCreateModel);
+            var host = _mapper.Map<HostCreateModel, Host>(hostModel);
             var id = _hostsRepository.AddHost(host);
             var location = new Uri(Request.RequestUri + "/" + id);
             return Created(location, id);
         }
 
         /// <summary>
-        /// Update hostCreateModel crawl settings
+        /// Update hostModel crawl settings
         /// </summary>
-        /// <param name="hostSetting">Updated crawl settings for the hostCreateModel</param>
+        /// <param name="id"></param>
+        /// <param name="hostSetting">Updated crawl settings for the hostModel</param>
         /// <returns>Host in the parameter and in the object must be equal.</returns>
         [Route("{id:guid}")]
         public IHttpActionResult Put(Guid id, [FromBody] Host hostSetting)
@@ -69,7 +68,7 @@ namespace SettingsService.Api.Controllers
         }
 
         /// <summary>
-        /// Delete crawl settings for specified hostCreateModel
+        /// Delete crawl settings for specified hostModel
         /// </summary>
         /// <param name="id">Guid identifier of the settings</param>
         /// <returns></returns>

@@ -9,9 +9,9 @@ namespace SettingsService.Core.Data
         /// <summary>
         ///     Returns a single rule
         /// </summary>
-        /// <param name="ruleId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        ExtractRule GetRule(Guid ruleId);
+        ExtractRule GetRule(Guid id);
 
         /// <summary>
         ///     Update existing rule
@@ -36,8 +36,15 @@ namespace SettingsService.Core.Data
         /// <summary>
         /// Returns a list of rules specific for the host
         /// </summary>
-        /// <param name="host">Host name or empty string for default rules</param>
+        /// <param name="hostId">Host name or empty string for default rules</param>
         /// <returns></returns>
-        IList<ExtractRule> GetRules(string host);
+        IList<ExtractRule> GetRules(Guid hostId);
+
+        /// <summary>
+        /// Return default list of rules
+        /// </summary>
+        /// <remarks>Default list of rules applied to each of the new hosts</remarks>
+        /// <returns></returns>
+        IList<ExtractRule> GetDefaultRules();
     }
 }

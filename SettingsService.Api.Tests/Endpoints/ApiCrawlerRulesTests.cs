@@ -26,21 +26,19 @@ namespace SettingsService.Api.Tests.Controllers
         }
 
         [Fact(DisplayName = "api/crawler/rules GET")]
-        public void Should_return_list_of_rules()
+        public void Should_return_list_of_default_rules()
         {
             using (var ctx = _testDb.CreateContext())
             {
-                var host = new Host {SeedUrl = "1"};
-                ctx.Hosts.Add(host);
                 ctx.ExtractRules.AddRange(new[]
                 {
-                    new ExtractRule{Name = "1",DataType = ExtratorDataType.Link, Host = host, RegExpression = "expr1"},
-                    new ExtractRule{Name = "2",DataType = ExtratorDataType.Picture, Host = host, RegExpression = "expr2"},
-                    new ExtractRule{Name = "3",DataType = ExtratorDataType.Video, Host = host, RegExpression = "expr3"},
+                    new ExtractRule{Name = "1",DataType = ExtratorDataType.Link, RegExpression = "expr1"},
+                    new ExtractRule{Name = "2",DataType = ExtratorDataType.Picture, RegExpression = "expr2"},
+                    new ExtractRule{Name = "3",DataType = ExtratorDataType.Video, RegExpression = "expr3"},
                 });
                 ctx.SaveChanges();
 
-                using (var response = _httpServer.Get("api/crawler/rules?host=1"))
+                using (var response = _httpServer.Get("api/crawler/rules"))
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -55,52 +53,15 @@ namespace SettingsService.Api.Tests.Controllers
             }
         }
 
-        [Fact(DisplayName = "api/crawler/rules/default GET")]
-        public void Should_return_list_of_default_rules()
-        {
-            using (var ctx = _testDb.CreateContext())
-            {
-                // host should be empty for default rules
-                var hostEmpty = new Host {SeedUrl = string.Empty};
-                var hostDef = new Host {SeedUrl = "def"};
-                ctx.Hosts.AddRange(new[]
-                {
-                    hostEmpty,
-                    hostDef
-                });
-                ctx.ExtractRules.AddRange(new[]
-                {
-                    new ExtractRule{Name = "1",DataType = ExtratorDataType.Link, Host = hostEmpty, RegExpression = "expr1"},
-                    new ExtractRule{Name = "2",DataType = ExtratorDataType.Picture, Host = hostDef, RegExpression = "expr2"},
-                    new ExtractRule{Name = "3",DataType = ExtratorDataType.Video, Host = hostEmpty, RegExpression = "expr3"},
-                });
-                ctx.SaveChanges();
-
-                using (var response = _httpServer.Get("api/crawler/rules/default"))
-                {
-                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-                    var content = response.Content as ObjectContent<IList<ExtractRule>>;
-                    Assert.NotNull(content);
-
-                    var result = content.Value as IList<ExtractRule>;
-                    Assert.NotNull(result);
-
-                    Assert.Equal(2, result.Count);
-                }
-            }
-        }
-
         [Fact(DisplayName = "api/crawler/rules POST")]
-        public void Should_add_new_rule()
+        public void Should_add_new_default_rule()
         {
             using (var ctx = _testDb.CreateContext())
             {
-                var payload = JsonConvert.SerializeObject(new ExtractRule
+                var payload = JsonConvert.SerializeObject(new ExtractRuleCreateModel
                 {
                     Name = "Name1",
                     DataType = ExtratorDataType.Link,
-                    Host = new Host { SeedUrl = "Host1" },
                     RegExpression = "expr1"
                 });
 
@@ -122,19 +83,15 @@ namespace SettingsService.Api.Tests.Controllers
         }
 
         [Fact(DisplayName = "api/crawler/rules/id GET")]
-        public void Should_return_single_rule_by_id()
+        public void Should_return_single_default_rule_by_id()
         {
             using (var ctx = _testDb.CreateContext())
             {
-                var host1 = new Host {SeedUrl = "1"};
-                var host2 = new Host {SeedUrl = "2"};
-                var host3 = new Host {SeedUrl = "3"};
-                ctx.Hosts.AddRange(new[] { host1, host2, host3 });
                 ctx.ExtractRules.AddRange(new[]
                 {
-                    new ExtractRule{Name = "1",DataType = ExtratorDataType.Link, Host = host1, RegExpression = "expr1"},
-                    new ExtractRule{Name = "2",DataType = ExtratorDataType.Picture, Host = host2, RegExpression = "expr2"},
-                    new ExtractRule{Name = "3",DataType = ExtratorDataType.Video, Host = host3, RegExpression = "expr3"},
+                    new ExtractRule{Name = "1",DataType = ExtratorDataType.Link, RegExpression = "expr1"},
+                    new ExtractRule{Name = "2",DataType = ExtratorDataType.Picture, RegExpression = "expr2"},
+                    new ExtractRule{Name = "3",DataType = ExtratorDataType.Video, RegExpression = "expr3"},
                 });
                 ctx.SaveChanges();
                 var targetId = ctx.ExtractRules.Single(s => s.Name == "2").Id;
