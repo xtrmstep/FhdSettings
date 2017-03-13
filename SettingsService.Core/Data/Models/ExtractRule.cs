@@ -15,7 +15,6 @@ namespace SettingsService.Core.Data.Models
         public string Name { get; set; }
         public ExtratorDataType DataType { get; set; }
         public string RegExpression { get; set; }
-        public Host Host { get; set; }
 
         public override bool Equals(object obj)
         {

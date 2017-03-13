@@ -35,7 +35,7 @@ namespace SettingsService.Api.Controllers
         [ResponseType(typeof(IList<Host>))]
         public IHttpActionResult Get()
         {
-            return Ok(_hostsRepository.GetHosts());
+            return Ok(_hostsRepository.Get());
         }
 
         /// <summary>
@@ -44,10 +44,10 @@ namespace SettingsService.Api.Controllers
         /// <param name="hostModel"></param>
         /// <returns></returns>
         [Route("")]
-        public IHttpActionResult Post([FromBody] HostCreateModel hostModel)
+        public IHttpActionResult Post([FromBody] HostModel hostModel)
         {
-            var host = _mapper.Map<HostCreateModel, Host>(hostModel);
-            var id = _hostsRepository.AddHost(host);
+            var host = _mapper.Map<HostModel, Host>(hostModel);
+            var id = _hostsRepository.Add(host);
             var location = new Uri(Request.RequestUri + "/" + id);
             return Created(location, id);
         }
@@ -56,14 +56,14 @@ namespace SettingsService.Api.Controllers
         /// Update hostModel crawl settings
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="hostSetting">Updated crawl settings for the hostModel</param>
+        /// <param name="hostModel">Updated crawl settings for the hostModel</param>
         /// <returns>Host in the parameter and in the object must be equal.</returns>
         [Route("{id:guid}")]
-        public IHttpActionResult Put(Guid id, [FromBody] Host hostSetting)
+        public IHttpActionResult Put(Guid id, [FromBody] HostModel hostModel)
         {
-            if (id == hostSetting.Id)
-                _hostsRepository.UpdateHost(hostSetting);
-
+            var host = _mapper.Map<HostModel, Host>(hostModel);
+            host.Id = id;
+            _hostsRepository.Update(host);
             return Ok();
         }
 
@@ -75,7 +75,7 @@ namespace SettingsService.Api.Controllers
         [Route("{id:guid}")]
         public IHttpActionResult Delete(Guid id)
         {
-            _hostsRepository.RemoveHost(id);
+            _hostsRepository.Remove(id);
             return Ok();
         }
     }

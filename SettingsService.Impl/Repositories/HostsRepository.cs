@@ -15,33 +15,7 @@ namespace SettingsService.Impl.Repositories
             _mapper = mapper;
         }
 
-        public Guid AddHost(Host host)
-        {
-            using (var ctx = new SettingDbContext())
-            {
-                var newHost = ctx.Hosts.Create();
-                _mapper.Map(host, newHost);
-                newHost.AddedToSeed = DateTimeOffset.UtcNow;
-                ctx.Hosts.Add(newHost);
-                ctx.SaveChanges();
-                return newHost.Id;
-            }
-        }
-
-        public void UpdateHost(Host host)
-        {
-            using (var ctx = new SettingDbContext())
-            {
-                var existing = ctx.Hosts.SingleOrDefault(s => s.Id == host.Id);
-                if (existing != null)
-                {
-                    _mapper.Map(host, existing);
-                    ctx.SaveChanges();
-                }
-            }
-        }
-
-        public IList<Host> GetHosts()
+        public IList<Host> Get()
         {
             using (var ctx = new SettingDbContext())
             {
@@ -49,7 +23,41 @@ namespace SettingsService.Impl.Repositories
             }
         }
 
-        public void RemoveHost(Guid id)
+        public Host Get(Guid id)
+        {
+            using (var ctx = new SettingDbContext())
+            {
+                return ctx.Hosts.AsNoTracking().SingleOrDefault(h => h.Id == id);
+            }
+        }
+
+        public Guid Add(Host item)
+        {
+            using (var ctx = new SettingDbContext())
+            {
+                var newHost = ctx.Hosts.Create();
+                _mapper.Map(item, newHost);
+                newHost.AddedToSeed = DateTimeOffset.UtcNow;
+                ctx.Hosts.Add(newHost);
+                ctx.SaveChanges();
+                return newHost.Id;
+            }
+        }
+
+        public void Update(Host item)
+        {
+            using (var ctx = new SettingDbContext())
+            {
+                var existing = ctx.Hosts.SingleOrDefault(s => s.Id == item.Id);
+                if (existing != null)
+                {
+                    _mapper.Map(item, existing);
+                    ctx.SaveChanges();
+                }
+            }
+        }
+
+        public void Remove(Guid id)
         {
             using (var ctx = new SettingDbContext())
             {

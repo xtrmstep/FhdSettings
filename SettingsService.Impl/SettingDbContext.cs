@@ -11,7 +11,7 @@ namespace SettingsService.Impl
         }
 
         public DbSet<ExtractRule> ExtractRules { get; set; }
-        public DbSet<HostSetting> HostSettings { get; set; }
+        public DbSet<Setting> Settings { get; set; }
         public DbSet<Host> Hosts { get; set; }
     }
 }

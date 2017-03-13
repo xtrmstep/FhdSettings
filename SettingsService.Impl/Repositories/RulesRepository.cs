@@ -17,29 +17,15 @@ namespace SettingsService.Impl.Repositories
             _mapper = mapper;
         }
 
-        public Guid AddRule(ExtractRule rule)
+        public IList<ExtractRule> Get()
         {
             using (var ctx = new SettingDbContext())
             {
-                var newRule = ctx.ExtractRules.Create();
-                _mapper.Map(rule, newRule);
-                ctx.ExtractRules.Add(newRule);
-                ctx.SaveChanges();
-                return newRule.Id;
+                return ctx.ExtractRules.AsNoTracking().ToList();
             }
         }
 
-        public IList<ExtractRule> GetDefaultRules()
-        {
-            using (var ctx = new SettingDbContext())
-            {
-                return ctx.ExtractRules.AsQueryable().Include(r => r.Host).AsNoTracking()
-                    .Where(r => r.Host == null)
-                    .ToList();
-            }
-        }
-
-        public ExtractRule GetRule(Guid id)
+        public ExtractRule Get(Guid id)
         {
             using (var ctx = new SettingDbContext())
             {
@@ -47,27 +33,19 @@ namespace SettingsService.Impl.Repositories
             }
         }
 
-        public IList<ExtractRule> GetRules(Guid hostId)
+        public Guid Add(ExtractRule item)
         {
             using (var ctx = new SettingDbContext())
             {
-                return ctx.ExtractRules.AsQueryable().Include(r => r.Host).AsNoTracking()
-                    .Where(r => r.Host.Id == hostId)
-                    .ToList();
-            }
-        }
-
-        public void RemoveRule(Guid id)
-        {
-            using (var ctx = new SettingDbContext())
-            {
-                var rule = ctx.ExtractRules.SingleOrDefault(s => s.Id == id);
-                ctx.ExtractRules.Remove(rule);
+                var newRule = ctx.ExtractRules.Create();
+                _mapper.Map(item, newRule);
+                ctx.ExtractRules.Add(newRule);
                 ctx.SaveChanges();
+                return newRule.Id;
             }
         }
 
-        public void UpdateRule(ExtractRule rule)
+        public void Update(ExtractRule rule)
         {
             using (var ctx = new SettingDbContext())
             {
@@ -78,6 +56,11 @@ namespace SettingsService.Impl.Repositories
                     ctx.SaveChanges();
                 }
             }
+        }
+
+        public void Remove(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

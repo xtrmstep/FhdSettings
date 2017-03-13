@@ -17,47 +17,52 @@ namespace SettingsService.Impl.Repositories
             _mapper = mapper;
         }
 
-        public Guid AddHostSettings(HostSetting hostSettings)
+        public Guid Add(Setting item)
         {
             using (var ctx = new SettingDbContext())
             {
-                var newHostSettings = ctx.HostSettings.Create();
-                _mapper.Map(hostSettings, newHostSettings);
-                ctx.HostSettings.Add(newHostSettings);
+                var newSetting = ctx.Settings.Create();
+                _mapper.Map(item, newSetting);
+                ctx.Settings.Add(newSetting);
                 ctx.SaveChanges();
-                return newHostSettings.Id;
+                return newSetting.Id;
             }
         }
 
-        public HostSetting GetHostSettings(Guid id)
+        public Setting Get(Guid id)
         {
             using (var ctx = new SettingDbContext())
             {
-                var crawlHostSettings = ctx.HostSettings.AsNoTracking();
-                return id == Guid.Empty 
-                    ? crawlHostSettings.SingleOrDefault(s => s.Host == null) 
-                    : crawlHostSettings.SingleOrDefault(s => s.Id == id);
+                return ctx.Settings.AsNoTracking().SingleOrDefault(s => s.Id == id);
             }
         }
 
-        public void RemoveHostSettings(Guid id)
+        public IList<Setting> Get()
         {
             using (var ctx = new SettingDbContext())
             {
-                var settings = ctx.HostSettings.SingleOrDefault(s => s.Id == id);
-                ctx.HostSettings.Remove(settings);
+                return ctx.Settings.AsNoTracking().ToList();
+            }
+        }
+
+        public void Remove(Guid id)
+        {
+            using (var ctx = new SettingDbContext())
+            {
+                var setting = ctx.Settings.SingleOrDefault(s => s.Id == id);
+                ctx.Settings.Remove(setting);
                 ctx.SaveChanges();
             }
         }
 
-        public void UpdateHostSettings(HostSetting hostSettings)
+        public void Update(Setting item)
         {
             using (var ctx = new SettingDbContext())
             {
-                var existing = ctx.HostSettings.SingleOrDefault(s => s.Id == hostSettings.Id);
+                var existing = ctx.Settings.SingleOrDefault(s => s.Id == item.Id);
                 if (existing != null)
                 {
-                    _mapper.Map(hostSettings, existing);
+                    _mapper.Map(item, existing);
                     ctx.SaveChanges();
                 }
             }

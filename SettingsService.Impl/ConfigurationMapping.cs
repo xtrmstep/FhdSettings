@@ -9,7 +9,7 @@ namespace SettingsService.Impl
         {
             // this mapping is used for quick assignment from parameters to tracked objects inside repositories
             CreateMap<ExtractRule, ExtractRule>();
-            CreateMap<HostSetting, HostSetting>();
+            CreateMap<Setting, Setting>();
             CreateMap<Host, Host>();
         }
     }

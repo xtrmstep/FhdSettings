@@ -51,15 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\IRulesRepository.cs" />
     <Compile Include="Data\ISettingsRepository.cs" />
     <Compile Include="Data\Models\ExtratorDataType.cs" />
-    <Compile Include="Data\Models\HostSetting.cs" />
+    <Compile Include="Data\Models\Setting.cs" />
     <Compile Include="Data\Models\Host.cs" />
-    <Compile Include="Data\Models\NumericDataType.cs" />
     <Compile Include="Data\IHostsRepository.cs" />
-    <Compile Include="Data\Models\NumericDataExtractorRule.cs" />
     <Compile Include="Data\Models\ExtractRule.cs" />
+    <Compile Include="Data\Models\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
   </ItemGroup>

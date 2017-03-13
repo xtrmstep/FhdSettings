@@ -32,8 +32,8 @@ namespace SettingsService.Api.Tests.Controllers
                 ctx.Hosts.AddRange(new[] {new Host {SeedUrl = "0"}, host});
                 ctx.HostSettings.AddRange(new[]
                 {
-                    new HostSetting {CrawlDelay = 1, Disallow = "some", Host = host}, 
-                    new HostSetting {CrawlDelay = 1, Disallow = "some", Host = host}, 
+                    new Setting {CrawlDelay = 1, Disallow = "some", Host = host}, 
+                    new Setting {CrawlDelay = 1, Disallow = "some", Host = host}, 
                 });
                 ctx.SaveChanges();
 
@@ -57,7 +57,7 @@ namespace SettingsService.Api.Tests.Controllers
         {
             using (var ctx = _testDb.CreateContext())
             {
-                var payload = JsonConvert.SerializeObject(new HostCreateModel { SeedUrl = "0" });
+                var payload = JsonConvert.SerializeObject(new HostModel { SeedUrl = "0" });
 
                 Guid result;
                 using (var response = _httpServer.PostJson("api/hosts", payload))
@@ -141,10 +141,10 @@ namespace SettingsService.Api.Tests.Controllers
         //        {
         //            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        //            var content = response.Content as ObjectContent<HostSetting>;
+        //            var content = response.Content as ObjectContent<Setting>;
         //            Assert.NotNull(content);
 
-        //            var result = content.Value as HostSetting;
+        //            var result = content.Value as Setting;
         //            Assert.NotNull(result);
 
         //            Assert.Equal(60, result.CrawlDelay);
