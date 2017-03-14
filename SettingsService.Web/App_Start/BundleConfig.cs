@@ -24,7 +24,7 @@ namespace SettingsService.Web
                 "~/Scripts/site/site.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/general-settings").Include(
-                "~/Scripts/general-settings.js"));
+                "~/Scripts/site/general-settings.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/crawler-rules").Include(
                 "~/Scripts/crawler-rules.js"));

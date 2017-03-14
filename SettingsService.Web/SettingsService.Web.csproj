@@ -175,21 +175,9 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Scripts\crawler-rules.js">
-      <DependentUpon>crawler-rules.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\crawler-rules.js.map">
-      <DependentUpon>crawler-rules.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\general-settings.js">
-      <DependentUpon>general-settings.ts</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\general-settings.js.map">
-      <DependentUpon>general-settings.ts</DependentUpon>
-    </Content>
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -199,6 +187,12 @@
     <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\knockout.validation.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\site\general-settings.js">
+      <DependentUpon>general-settings.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\site\site.js">
+      <DependentUpon>site.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\GeneralSettings\Index.cshtml" />
@@ -218,9 +212,13 @@
     </Content>
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Shared\_SideMenu.cshtml" />
-    <Content Include="Views\CrawlerSettings\Index.cshtml" />
-    <Content Include="Views\AnalyzerSettings\Index.cshtml" />
     <Content Include="Views\GeneralSettings\Details.cshtml" />
+    <Content Include="Scripts\site\site.js.map">
+      <DependentUpon>site.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\site\general-settings.js.map">
+      <DependentUpon>general-settings.ts</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -235,8 +233,7 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\crawler-rules.ts" />
-    <TypeScriptCompile Include="Scripts\general-settings.ts" />
+    <TypeScriptCompile Include="Scripts\site\general-settings.ts" />
     <TypeScriptCompile Include="Scripts\site\site.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
