@@ -219,6 +219,9 @@
     <Content Include="Scripts\site\general-settings.js.map">
       <DependentUpon>general-settings.ts</DependentUpon>
     </Content>
+    <Content Include="Views\GeneralSettings\_Settings.cshtml" />
+    <Content Include="Views\GeneralSettings\_Hosts.cshtml" />
+    <Content Include="Views\GeneralSettings\_Rules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

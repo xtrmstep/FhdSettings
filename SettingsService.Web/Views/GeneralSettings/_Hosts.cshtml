@@ -1,0 +1,27 @@
+﻿<div id="hosts" class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Hosts</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-inline">
+            <div class="form-group">
+                <label>New</label>
+            </div>
+        </form>
+        <br />
+        <table class="table table-hover">
+            <tr>
+                <th>URL</th>
+                <th></th>
+            </tr>
+            <tbody data-bind="foreach: hosts">
+                <tr>
+                    <td data-bind="text: SeedUrl"></td>
+                    <td>
+                        <button type="button" class="btn btn-default btn-sm" title="Remove"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

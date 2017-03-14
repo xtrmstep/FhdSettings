@@ -7,4 +7,18 @@ class ServiceApi {
     setApiServer(baseServiceUrl: string) {
         this.serviceUrl = baseServiceUrl;
     }
+
+    putAjax(url: string, jsonPayload: string, callback: () => any) {
+        $.ajax({
+            url: url,
+            method: "PUT",
+            data: jsonPayload,
+            contentType: "application/json",
+            success() { callback(); }
+        });
+    }
+
+    getAjax(url: string, callback: (data: any) => any) {
+        $.get(url, callback);
+    }
 }

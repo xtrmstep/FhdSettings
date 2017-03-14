@@ -6,6 +6,17 @@ var ServiceApi = (function () {
     ServiceApi.prototype.setApiServer = function (baseServiceUrl) {
         this.serviceUrl = baseServiceUrl;
     };
+    ServiceApi.prototype.putAjax = function (url, jsonPayload, callback) {
+        $.ajax({
+            url: url,
+            method: "PUT",
+            data: jsonPayload,
+            contentType: "application/json",
+            success: function () { callback(); }
+        });
+    };
+    ServiceApi.prototype.getAjax = function (url, callback) {
+        $.get(url, callback);
+    };
     return ServiceApi;
 }());
-//# sourceMappingURL=site.js.map

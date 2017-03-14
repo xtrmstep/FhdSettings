@@ -6,19 +6,45 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 // ReSharper disable InconsistentNaming
-var HostsInfo = (function () {
-    function HostsInfo() {
+var Setting = (function () {
+    function Setting() {
     }
-    return HostsInfo;
+    return Setting;
 }());
-var UrlInfo = (function () {
-    function UrlInfo(url) {
-        this.Url = url;
+var SettingsViewModel = (function () {
+    function SettingsViewModel(settings) {
+        this.settings = ko.observableArray(settings);
     }
-    return UrlInfo;
+    SettingsViewModel.prototype.add = function (setting) {
+        this.settings.push(setting);
+    };
+    SettingsViewModel.prototype.remove = function (setting) {
+        this.settings.remove(setting);
+    };
+    return SettingsViewModel;
 }());
-var CrawlRule = (function () {
-    function CrawlRule(id, name, dataType, expression, host) {
+var settingsViewModel = new SettingsViewModel([]);
+var Host = (function () {
+    function Host(url) {
+        this.SeedUrl = url;
+    }
+    return Host;
+}());
+var HostsViewModel = (function () {
+    function HostsViewModel(hosts) {
+        this.hosts = ko.observableArray(hosts);
+    }
+    HostsViewModel.prototype.add = function (host) {
+        this.hosts.push(host);
+    };
+    HostsViewModel.prototype.remove = function (host) {
+        this.hosts.remove(host);
+    };
+    return HostsViewModel;
+}());
+var hostsViewModel = new HostsViewModel([]);
+var Rule = (function () {
+    function Rule(id, name, dataType, expression) {
         this.Id = id;
         if (name)
             this.Name = name;
@@ -26,204 +52,76 @@ var CrawlRule = (function () {
             this.DataType = dataType;
         if (expression)
             this.RegExpression = expression;
-        if (host)
-            this.Host = host;
     }
-    return CrawlRule;
+    return Rule;
 }());
-// ReSharper restore InconsistentNaming
-var GeneralSettingsApi = (function (_super) {
-    __extends(GeneralSettingsApi, _super);
-    function GeneralSettingsApi() {
-        return _super.apply(this, arguments) || this;
-    }
-    GeneralSettingsApi.prototype.loadGeneralSettings = function () {
-        $.get(this.serviceUrl + "/api/hosts/default", function (data) {
-            if (data != null) {
-                generalSettings.delay(data.CrawlDelay);
-                generalSettings.disallow(data.Disallow);
-            }
-        });
-        $.get(this.serviceUrl + "/api/urls", function (data) {
-            if (data != null) {
-                generalSettings.urls(data);
-            }
-        });
-    };
-    GeneralSettingsApi.prototype.loadHostsSettings = function () {
-        $.get(this.serviceUrl + "/api/hosts", function (data) {
-            if (data != null) {
-                hostsDetails.hosts(data);
-            }
-        });
-    };
-    GeneralSettingsApi.prototype.saveSettings = function (hostInfo, callback) {
-        var jsonValue = JSON.stringify(hostInfo);
-        $.ajax({
-            url: this.serviceUrl + "/api/hosts/" + hostInfo.Id,
-            method: "PUT",
-            data: jsonValue,
-            contentType: "application/json",
-            success: function () {
-                callback();
-            }
-        });
-    };
-    GeneralSettingsApi.prototype.saveDefaultSettings = function (disallow, delay) {
-        var jsonValue = JSON.stringify({
-            disallow: disallow,
-            delay: delay
-        });
-        $.ajax({
-            url: this.serviceUrl + "/api/hosts/default",
-            method: "PUT",
-            data: jsonValue,
-            contentType: "application/json"
-        });
-    };
-    GeneralSettingsApi.prototype.addUrl = function (urlInfo) {
-        var jsonValue = JSON.stringify({
-            Url: urlInfo.Url
-        });
-        $.ajax({
-            url: this.serviceUrl + "/api/urls",
-            method: "POST",
-            data: jsonValue,
-            contentType: "application/json",
-            success: function (data, textStatus, jqXHR) {
-                urlInfo.Id = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("Status: " + textStatus + "; Error: " + errorThrown);
-            }
-        });
-    };
-    GeneralSettingsApi.prototype.removeUrl = function (id) {
-        $.ajax({
-            url: this.serviceUrl + "/api/urls/" + id,
-            method: "DELETE"
-        });
-    };
-    GeneralSettingsApi.prototype.removeHost = function (id) {
-        $.ajax({
-            url: this.serviceUrl + "/api/hosts/" + id,
-            method: "DELETE"
-        });
-    };
-    return GeneralSettingsApi;
-}(ServiceApi));
-var generalSettingsApi = new GeneralSettingsApi();
-var generalSettings = {
-    delay: ko.observable(null),
-    disallow: ko.observable(""),
-    urls: ko.observableArray([]),
-    newUrl: ko.observable(""),
-    saveSettings: function () {
-        var disallow = generalSettings.disallow();
-        var delay = generalSettings.delay();
-        // saving default
-        generalSettingsApi.saveDefaultSettings(disallow, delay);
-    },
-    addUrl: function () {
-        var newUrl = generalSettings.newUrl();
-        if (newUrl.trim() === "") {
-            alert("URL is required.");
-            return;
-        }
-        // new URL will have ID after the call to the server, in callback
-        var url = new UrlInfo(newUrl);
-        generalSettings.urls.push(url);
-        generalSettingsApi.addUrl(url);
-        generalSettings.newUrl(""); // clean the input
-    },
-    removeUrl: function () {
-        if (confirm("Are you sure?")) {
-            var urls = generalSettings.urls();
-            for (var i = 0; i < urls.length; i++) {
-                var removed = urls[i];
-                if (removed.Id === this.Id) {
-                    urls.splice(i, 1); // remove item from the grid array 
-                    generalSettings.urls(urls);
-                    generalSettingsApi.removeUrl(removed.Id);
-                    break;
-                }
-            }
-        }
-    }
-};
-var hostsDetails = {
-    hosts: ko.observableArray([]),
-    // currently editing values
-    id: ko.observable(""),
-    host: ko.observable(""),
-    delay: ko.observable(null),
-    disallow: ko.observable(""),
-    saveHost: function () {
-        var updatedHost = new HostsInfo();
-        updatedHost.Id = hostsDetails.id();
-        updatedHost.Host = hostsDetails.host();
-        updatedHost.CrawlDelay = hostsDetails.delay();
-        updatedHost.Disallow = hostsDetails.disallow();
-        var hosts = hostsDetails.hosts();
-        for (var i = 0; i < hosts.length; i++) {
-            var item = hosts[i];
-            if (item.Id === updatedHost.Id) {
-                generalSettingsApi.saveSettings(updatedHost, function () {
-                    // refresh item of the grid
-                    hostsDetails.hosts.replace(hosts[i], updatedHost);
-                    hostsDetails.eventHostSaved();
-                });
-                break;
-            }
-        }
-    },
-    eventHostSaved: function () { },
-    removeHost: function () {
-        if (confirm("Are you sure?")) {
-            var hosts = hostsDetails.hosts();
-            for (var i = 0; i < hosts.length; i++) {
-                var removed = hosts[i];
-                if (removed.Id === this.Id) {
-                    hosts.splice(i, 1); // remove item from the grid array 
-                    hostsDetails.hosts(hosts);
-                    generalSettingsApi.removeHost(removed.Id);
-                    break;
-                }
-            }
-        }
-    }
-};
-/// <reference path="typings/jquery/jquery.d.ts" />
-/// <reference path="typings/knockout/knockout.d.ts" />
-var CrawlerRulesApi = (function (_super) {
-    __extends(CrawlerRulesApi, _super);
-    function CrawlerRulesApi() {
-        return _super.apply(this, arguments) || this;
-    }
-    CrawlerRulesApi.prototype.loadCrawlerRules = function () {
-        $.get(this.serviceUrl + "/api/crawler/rules", function (data) {
-            if (data != null) {
-                crawlerRules.rules(data);
-            }
-        });
-    };
-    return CrawlerRulesApi;
-}(ServiceApi));
-var crawlerRulesApi = new CrawlerRulesApi();
-var CrawlerRulesViewModel = (function () {
-    function CrawlerRulesViewModel(rules) {
+var RulesViewModel = (function () {
+    function RulesViewModel(rules) {
         this.rules = ko.observableArray(rules);
     }
-    CrawlerRulesViewModel.prototype.addRules = function (rule) {
+    RulesViewModel.prototype.add = function (rule) {
         this.rules.push(rule);
     };
-    CrawlerRulesViewModel.prototype.removeRule = function (rule) {
+    RulesViewModel.prototype.remove = function (rule) {
         this.rules.remove(rule);
     };
-    return CrawlerRulesViewModel;
+    return RulesViewModel;
 }());
-var crawlerRules = new CrawlerRulesViewModel([
-    new CrawlRule("1", "Item1", "Video", "expression1", "url"),
-    new CrawlRule("2", "Item2", "Picture", "expression2", "url")
+var rulesViewModel = new RulesViewModel([
+    new Rule("1", "Item1", "Video", "expression1"),
+    new Rule("2", "Item2", "Picture", "expression2")
 ]);
-//# sourceMappingURL=general-settings.js.map
+// ReSharper restore InconsistentNaming
+var SettingsApi = (function (_super) {
+    __extends(SettingsApi, _super);
+    function SettingsApi() {
+        _super.apply(this, arguments);
+    }
+    SettingsApi.prototype.load = function () {
+        var url = this.serviceUrl + "/api/settings";
+        this.getAjax(url, function (data) {
+            if (data != null) {
+                settingsViewModel.settings(data);
+            }
+        });
+    };
+    SettingsApi.prototype.save = function (setting, callback) {
+        var jsonValue = JSON.stringify(setting);
+        var url = this.serviceUrl + "/api/settings/" + setting.Id;
+        this.putAjax(url, jsonValue, callback);
+    };
+    return SettingsApi;
+}(ServiceApi));
+var settingsApi = new SettingsApi();
+var HostsApi = (function (_super) {
+    __extends(HostsApi, _super);
+    function HostsApi() {
+        _super.apply(this, arguments);
+    }
+    HostsApi.prototype.load = function () {
+        var url = this.serviceUrl + "/api/hosts";
+        this.getAjax(url, function (data) {
+            if (data != null) {
+                hostsViewModel.hosts(data);
+            }
+        });
+    };
+    return HostsApi;
+}(ServiceApi));
+var hostsApi = new HostsApi();
+var RulesApi = (function (_super) {
+    __extends(RulesApi, _super);
+    function RulesApi() {
+        _super.apply(this, arguments);
+    }
+    RulesApi.prototype.load = function () {
+        var url = this.serviceUrl + "/api/rules";
+        this.getAjax(url, function (data) {
+            if (data != null) {
+                rulesViewModel.rules(data);
+            }
+        });
+    };
+    return RulesApi;
+}(ServiceApi));
+var rulesApi = new RulesApi();
