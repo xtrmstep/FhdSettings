@@ -26,8 +26,6 @@ class SettingsViewModel {
     }
 }
 
-var settingsViewModel = new SettingsViewModel([]);
-
 class Host {
     Id: string;
     SeedUrl: string;
@@ -52,8 +50,6 @@ class HostsViewModel {
         this.hosts.remove(host);
     }
 }
-
-var hostsViewModel = new HostsViewModel([]);
 
 class Rule {
     Id: string;
@@ -85,20 +81,22 @@ class RulesViewModel {
     }
 }
 
-var rulesViewModel = new RulesViewModel([
-    new Rule("1", "Item1", "Video", "expression1"),
-    new Rule("2", "Item2", "Picture", "expression2")
-]);
-
 // ReSharper restore InconsistentNaming
 
 class SettingsApi extends ServiceApi {
+
+    viewModel: SettingsViewModel;
+
+    constructor(baseServiceUrl: string, settingsViewModel: SettingsViewModel) {
+        super(baseServiceUrl);
+        this.viewModel = settingsViewModel;
+    }
 
     load() {
         var url = this.serviceUrl + "/api/settings";
         this.getAjax(url, (data: Setting[]) => {
             if (data != null) {
-                settingsViewModel.settings(data);
+                this.viewModel.settings(data);
             }
         });
     }
@@ -110,30 +108,40 @@ class SettingsApi extends ServiceApi {
     }
 }
 
-var settingsApi = new SettingsApi();
-
 class HostsApi extends ServiceApi {
+
+    viewModel: HostsViewModel;
+
+    constructor(baseServiceUrl: string, hostsViewModel: HostsViewModel) {
+        super(baseServiceUrl);
+        this.viewModel = hostsViewModel;
+    }
 
     load() {
         var url = this.serviceUrl + "/api/hosts";
         this.getAjax(url, (data: Host[]) => {
             if (data != null) {
-                hostsViewModel.hosts(data);
+                this.viewModel.hosts(data);
             }
         });
     }
 }
 
-var hostsApi = new HostsApi();
-
 class RulesApi extends ServiceApi {
+
+    viewModel: RulesViewModel;
+
+    constructor(baseServiceUrl: string, rulesViewModel: RulesViewModel) {
+        super(baseServiceUrl);
+        this.viewModel = rulesViewModel;
+    }
+
     load() {
         var url = this.serviceUrl + "/api/rules";
         this.getAjax(url, (data: Rule[]) => {
             if (data != null) {
-                rulesViewModel.rules(data);
+                this.viewModel.rules(data);
             }
         });
     }
 }
-var rulesApi = new RulesApi();

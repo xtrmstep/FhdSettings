@@ -2,9 +2,16 @@
 @section Scripts {
     @Scripts.Render("~/bundles/general-settings")
     <script>
-        settingsApi.setApiServer("@Settings.Default.SettingServiceUrl");
-        hostsApi.setApiServer("@Settings.Default.SettingServiceUrl");
-        rulesApi.setApiServer("@Settings.Default.SettingServiceUrl");
+        var settingsViewModel = new SettingsViewModel([]);
+        var hostsViewModel = new HostsViewModel([]);
+        var rulesViewModel = new RulesViewModel([
+            new Rule("1", "Item1", "Video", "expression1"),
+            new Rule("2", "Item2", "Picture", "expression2")
+        ]);
+        var settingsApi = new SettingsApi("@Settings.Default.SettingServiceUrl", settingsViewModel);
+        var hostsApi = new HostsApi("@Settings.Default.SettingServiceUrl", hostsViewModel);
+        var rulesApi = new RulesApi("@Settings.Default.SettingServiceUrl", rulesViewModel);
+
         $(function () {
             settingsApi.load();
             hostsApi.load();

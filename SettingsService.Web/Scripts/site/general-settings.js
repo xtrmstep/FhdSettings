@@ -23,7 +23,6 @@ var SettingsViewModel = (function () {
     };
     return SettingsViewModel;
 }());
-var settingsViewModel = new SettingsViewModel([]);
 var Host = (function () {
     function Host(url) {
         this.SeedUrl = url;
@@ -42,7 +41,6 @@ var HostsViewModel = (function () {
     };
     return HostsViewModel;
 }());
-var hostsViewModel = new HostsViewModel([]);
 var Rule = (function () {
     function Rule(id, name, dataType, expression) {
         this.Id = id;
@@ -67,21 +65,20 @@ var RulesViewModel = (function () {
     };
     return RulesViewModel;
 }());
-var rulesViewModel = new RulesViewModel([
-    new Rule("1", "Item1", "Video", "expression1"),
-    new Rule("2", "Item2", "Picture", "expression2")
-]);
 // ReSharper restore InconsistentNaming
 var SettingsApi = (function (_super) {
     __extends(SettingsApi, _super);
-    function SettingsApi() {
-        _super.apply(this, arguments);
+    function SettingsApi(baseServiceUrl, settingsViewModel) {
+        var _this = _super.call(this, baseServiceUrl) || this;
+        _this.viewModel = settingsViewModel;
+        return _this;
     }
     SettingsApi.prototype.load = function () {
+        var _this = this;
         var url = this.serviceUrl + "/api/settings";
         this.getAjax(url, function (data) {
             if (data != null) {
-                settingsViewModel.settings(data);
+                _this.viewModel.settings(data);
             }
         });
     };
@@ -92,36 +89,40 @@ var SettingsApi = (function (_super) {
     };
     return SettingsApi;
 }(ServiceApi));
-var settingsApi = new SettingsApi();
 var HostsApi = (function (_super) {
     __extends(HostsApi, _super);
-    function HostsApi() {
-        _super.apply(this, arguments);
+    function HostsApi(baseServiceUrl, hostsViewModel) {
+        var _this = _super.call(this, baseServiceUrl) || this;
+        _this.viewModel = hostsViewModel;
+        return _this;
     }
     HostsApi.prototype.load = function () {
+        var _this = this;
         var url = this.serviceUrl + "/api/hosts";
         this.getAjax(url, function (data) {
             if (data != null) {
-                hostsViewModel.hosts(data);
+                _this.viewModel.hosts(data);
             }
         });
     };
     return HostsApi;
 }(ServiceApi));
-var hostsApi = new HostsApi();
 var RulesApi = (function (_super) {
     __extends(RulesApi, _super);
-    function RulesApi() {
-        _super.apply(this, arguments);
+    function RulesApi(baseServiceUrl, rulesViewModel) {
+        var _this = _super.call(this, baseServiceUrl) || this;
+        _this.viewModel = rulesViewModel;
+        return _this;
     }
     RulesApi.prototype.load = function () {
+        var _this = this;
         var url = this.serviceUrl + "/api/rules";
         this.getAjax(url, function (data) {
             if (data != null) {
-                rulesViewModel.rules(data);
+                _this.viewModel.rules(data);
             }
         });
     };
     return RulesApi;
 }(ServiceApi));
-var rulesApi = new RulesApi();
+//# sourceMappingURL=general-settings.js.map

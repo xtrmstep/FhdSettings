@@ -4,7 +4,7 @@
 class ServiceApi {
     serviceUrl: string;
 
-    setApiServer(baseServiceUrl: string) {
+    constructor(baseServiceUrl: string) {
         this.serviceUrl = baseServiceUrl;
     }
 
