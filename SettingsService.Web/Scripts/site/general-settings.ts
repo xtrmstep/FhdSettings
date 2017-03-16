@@ -12,9 +12,11 @@ class Setting {
 
 class SettingsViewModel {
     settings: any;
+    settingsApi: SettingsApi;
 
-    constructor(settings: Setting[]) {
+    constructor(settings: Setting[], settingsApi: SettingsApi) {
         this.settings = ko.observableArray(settings);
+        this.settingsApi = settingsApi;
     }
 
     add(setting: Setting) {
@@ -23,6 +25,23 @@ class SettingsViewModel {
 
     remove(setting: Setting) {
         this.settings.remove(setting);
+    }
+
+    delete(setting: Setting) {
+        if (confirm("Are you sure?")) {
+            alert("delete " + setting.Code);
+            this.settingsApi.remove(setting,
+                () => {
+                    alert("OK");
+                    // this.settings.remove(setting);
+                },
+            (error) => { alert(error); });
+        }
+        
+    }
+
+    edit(setting: Setting) {
+        alert("edit " + setting.Code);
     }
 }
 
@@ -105,6 +124,12 @@ class SettingsApi extends ServiceApi {
         var jsonValue: string = JSON.stringify(setting);
         var url = this.serviceUrl + "/api/settings/" + setting.Id;
         this.putAjax(url, jsonValue, callback);
+    }
+
+    remove(setting: Setting, success: () => any, error: (errorMessage: string) => any) {
+        alert("api call to remove setting " + setting.Code);
+        success();
+        error("error message");
     }
 }
 

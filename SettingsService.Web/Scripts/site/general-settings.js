@@ -12,14 +12,27 @@ var Setting = (function () {
     return Setting;
 }());
 var SettingsViewModel = (function () {
-    function SettingsViewModel(settings) {
+    function SettingsViewModel(settings, settingsApi) {
         this.settings = ko.observableArray(settings);
+        this.settingsApi = settingsApi;
     }
     SettingsViewModel.prototype.add = function (setting) {
         this.settings.push(setting);
     };
     SettingsViewModel.prototype.remove = function (setting) {
         this.settings.remove(setting);
+    };
+    SettingsViewModel.prototype.delete = function (setting) {
+        if (confirm("Are you sure?")) {
+            alert("delete " + setting.Code);
+            this.settingsApi.remove(setting, function () {
+                alert("OK");
+                // this.settings.remove(setting);
+            }, function (error) { alert(error); });
+        }
+    };
+    SettingsViewModel.prototype.edit = function (setting) {
+        alert("edit " + setting.Code);
     };
     return SettingsViewModel;
 }());
@@ -87,6 +100,11 @@ var SettingsApi = (function (_super) {
         var url = this.serviceUrl + "/api/settings/" + setting.Id;
         this.putAjax(url, jsonValue, callback);
     };
+    SettingsApi.prototype.remove = function (setting, success, error) {
+        alert("api call to remove setting " + setting.Code);
+        success();
+        error("error message");
+    };
     return SettingsApi;
 }(ServiceApi));
 var HostsApi = (function (_super) {
@@ -125,4 +143,3 @@ var RulesApi = (function (_super) {
     };
     return RulesApi;
 }(ServiceApi));
-//# sourceMappingURL=general-settings.js.map

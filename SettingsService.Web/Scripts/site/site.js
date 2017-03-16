@@ -18,4 +18,3 @@ var ServiceApi = (function () {
     };
     return ServiceApi;
 }());
-//# sourceMappingURL=site.js.map
