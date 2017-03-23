@@ -20,11 +20,13 @@ class SettingsViewModel {
     }
 
     add(setting: Setting) {
-        this.settings.push(setting);
-    }
-
-    remove(setting: Setting) {
-        this.settings.remove(setting);
+        alert("add");
+        var s = new Setting();
+        s.Id = "1";
+        s.Code = "2";
+        s.Name = "3";
+        s.Value = "4";
+        this.settings.push(s);
     }
 
     delete(setting: Setting) {

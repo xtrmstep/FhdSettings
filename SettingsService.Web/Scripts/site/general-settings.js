@@ -17,10 +17,13 @@ var SettingsViewModel = (function () {
         this.settingsApi = settingsApi;
     }
     SettingsViewModel.prototype.add = function (setting) {
-        this.settings.push(setting);
-    };
-    SettingsViewModel.prototype.remove = function (setting) {
-        this.settings.remove(setting);
+        alert("add");
+        var s = new Setting();
+        s.Id = "1";
+        s.Code = "2";
+        s.Name = "3";
+        s.Value = "4";
+        this.settings.push(s);
     };
     SettingsViewModel.prototype.delete = function (setting) {
         if (confirm("Are you sure?")) {
@@ -143,3 +146,4 @@ var RulesApi = (function (_super) {
     };
     return RulesApi;
 }(ServiceApi));
+//# sourceMappingURL=general-settings.js.map
