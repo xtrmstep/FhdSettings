@@ -2,20 +2,30 @@
 @section Scripts {
     @Scripts.Render("~/bundles/general-settings")
     <script>
-        var settingsViewModel = new SettingsViewModel([]);
-        var hostsViewModel = new HostsViewModel([]);
-        var rulesViewModel = new RulesViewModel([
-            new Rule("1", "Item1", "Video", "expression1"),
-            new Rule("2", "Item2", "Picture", "expression2")
+        var settingsViewModel = new SettingsViewModel("@Settings.Default.SettingServiceUrl", []);
+        var hostsViewModel = new HostsViewModel("@Settings.Default.SettingServiceUrl", []);
+
+        var rule1 = new Rule();
+        rule1.Id = "1";
+        rule1.Name = "Item1";
+        rule1.DataType = "Video";
+        rule1.RegExpression = "expression1";
+
+        var rule2 = new Rule();
+        rule2.Id = "2";
+        rule2.Name = "Item2";
+        rule2.DataType = "Picture";
+        rule2.RegExpression = "expression2";
+
+        var rulesViewModel = new RulesViewModel("@Settings.Default.SettingServiceUrl", [
+            rule1,
+            rule2
         ]);
-        var settingsApi = new SettingsApi("@Settings.Default.SettingServiceUrl", settingsViewModel);
-        var hostsApi = new HostsApi("@Settings.Default.SettingServiceUrl", hostsViewModel);
-        var rulesApi = new RulesApi("@Settings.Default.SettingServiceUrl", rulesViewModel);
 
         $(function () {
-            settingsApi.load();
-            hostsApi.load();
-            rulesApi.load();
+            settingsViewModel.load();
+            hostsViewModel.load();
+            rulesViewModel.load();
             ko.applyBindings(settingsViewModel, document.getElementById("settings"));
             ko.applyBindings(hostsViewModel, document.getElementById("hosts"));
             ko.applyBindings(rulesViewModel, document.getElementById("rules"));

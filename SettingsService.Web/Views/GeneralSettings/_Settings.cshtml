@@ -1,10 +1,8 @@
 ﻿<div id="settings" class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Settings</h3>
+        <h3 class="panel-title">Settings&nbsp;<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#settings-dialog" data-bind="click: add">Add</button></h3>
     </div>
     <div class="panel-body">
-        <button type="button" class="btn btn-primary" data-bind="click: add" data-toggle="modal" data-target="#settings-dialog">Add</button>
-        <br/>
         <table class="table table-hover">
             <tr>
                 <th>Code</th>
@@ -18,8 +16,8 @@
                 <td data-bind="text: Name"></td>
                 <td data-bind="text: Value"></td>
                 <td>
-                    <button type="button" class="btn btn-default btn-sm" title="Edit" data-bind="click: $root.edit"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
-                    <button type="button" class="btn btn-default btn-sm" title="Remove" data-bind="click: $root.delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                    <button type="button" class="btn btn-default btn-sm" title="Edit" data-bind="click:function(){ $root.edit($root, $data);}" data-toggle="modal" data-target="#settings-dialog"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                    <button type="button" class="btn btn-default btn-sm" title="Remove" data-bind="click:function(){ $root.delete($root, $data);}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                 </td>
             </tr>
             </tbody>
@@ -35,20 +33,20 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="code">Code</label>
-                        <input type="text" class="form-control" id="code" placeholder="Code">
+                        <input type="text" class="form-control" id="code" placeholder="Code" data-bind="value: editCode">
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Name">
+                        <input type="text" class="form-control" id="name" placeholder="Name" data-bind="value: editName">
                     </div>
                     <div class="form-group">
                         <label for="value">Value</label>
-                        <input type="text" class="form-control" id="value">
+                        <input type="text" class="form-control" id="value" data-bind="value: editValue">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: save" data-dismiss="modal">Save</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
