@@ -40,10 +40,10 @@ namespace SettingsService.Api.Tests.Endpoints
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-                    var content = response.Content as ObjectContent<IList<ExtractRule>>;
+                    var content = response.Content as ObjectContent<IList<ExtractRuleReadModel>>;
                     Assert.NotNull(content);
 
-                    var result = content.Value as IList<ExtractRule>;
+                    var result = content.Value as IList<ExtractRuleReadModel>;
                     Assert.NotNull(result);
 
                     Assert.Equal(3, result.Count);
@@ -59,7 +59,7 @@ namespace SettingsService.Api.Tests.Endpoints
                 var payload = JsonConvert.SerializeObject(new ExtractRuleModel
                 {
                     Name = "Name1",
-                    DataType = ExtratorDataType.Link,
+                    DataType = ExtratorDataType.Link.ToString(),
                     RegExpression = "expr1"
                 });
 
@@ -92,19 +92,20 @@ namespace SettingsService.Api.Tests.Endpoints
                     new ExtractRule {Name = "3", DataType = ExtratorDataType.Video, RegExpression = "expr3"}
                 });
                 ctx.SaveChanges();
-                var targetId = ctx.ExtractRules.Single(s => s.Name == "2").Id;
+                var targetId = ctx.ExtractRules.Single(s => s.Name == "1").Id;
 
                 using (var response = _httpServer.Get("api/rules/" + targetId))
                 {
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-                    var content = response.Content as ObjectContent<ExtractRule>;
+                    var content = response.Content as ObjectContent<ExtractRuleReadModel>;
                     Assert.NotNull(content);
 
-                    var result = content.Value as ExtractRule;
+                    var result = content.Value as ExtractRuleModel;
                     Assert.NotNull(result);
 
-                    Assert.Equal("2", result.Name);
+                    Assert.Equal("1", result.Name);
+                    Assert.Equal("Link", result.DataType);
                 }
             }
         }

@@ -18,7 +18,7 @@ namespace SettingsService.Api.Models
         /// <summary>
         /// Rule data type
         /// </summary>
-        public ExtratorDataType DataType { get; set; }
+        public string DataType { get; set; }
 
         /// <summary>
         /// Rule expression

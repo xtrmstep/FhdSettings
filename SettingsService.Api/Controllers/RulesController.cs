@@ -32,10 +32,12 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof (IList<ExtractRule>))]
+        [ResponseType(typeof (IList<ExtractRuleReadModel>))]
         public IHttpActionResult Get()
         {
-            return Ok(_rulesRepository.Get());
+            var extractRules = _rulesRepository.Get();
+            var viewModel = _mapper.Map<IList<ExtractRuleReadModel>>(extractRules);
+            return Ok(viewModel);
         }
 
         /// <summary>
@@ -43,10 +45,12 @@ namespace SettingsService.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("{id:guid}")]
-        [ResponseType(typeof (ExtractRule))]
+        [ResponseType(typeof (ExtractRuleReadModel))]
         public IHttpActionResult Get(Guid id)
         {
-            return Ok(_rulesRepository.Get(id));
+            var extractRule = _rulesRepository.Get(id);
+            var viewModel = _mapper.Map<ExtractRuleReadModel>(extractRule);
+            return Ok(viewModel);
         }
 
         /// <summary>

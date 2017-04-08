@@ -161,6 +161,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Loggers\TelemetryExceptionsLogger.cs" />
+    <Compile Include="Models\ExtractRuleReadModel.cs" />
     <Compile Include="Models\ExtractRuleModel.cs" />
     <Compile Include="Models\HostModel.cs" />
     <Compile Include="Models\SettingModel.cs" />
