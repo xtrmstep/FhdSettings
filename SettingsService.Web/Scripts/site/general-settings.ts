@@ -227,7 +227,10 @@ class RulesViewModel {
                 }
             });
         else
-            this.rulesApi.add(item, () => { this.rules.push(item); });
+            this.rulesApi.add(item, (data) => {
+                item.Id = data;
+                this.rules.push(item);
+            });
     }
 
     delete(model: RulesViewModel, rule: Rule) {
@@ -324,7 +327,7 @@ class RulesApi extends ServiceApi {
         this.getAjax(url, callback);
     }
 
-    add(rule: Rule, callback: () => any) {
+    add(rule: Rule, callback: (data: any) => any) {
         var jsonValue: string = JSON.stringify(rule);
         var url = this.serviceUrl + "/api/rules";
         this.postAjax(url, jsonValue, callback);

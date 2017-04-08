@@ -187,7 +187,10 @@ var RulesViewModel = (function () {
                 }
             });
         else
-            this.rulesApi.add(item, function () { _this.rules.push(item); });
+            this.rulesApi.add(item, function (data) {
+                item.Id = data;
+                _this.rules.push(item);
+            });
     };
     RulesViewModel.prototype.delete = function (model, rule) {
         if (confirm("Are you sure?")) {

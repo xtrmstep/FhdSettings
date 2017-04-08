@@ -10,7 +10,7 @@ var ServiceApi = (function () {
             method: "POST",
             data: jsonPayload,
             contentType: "application/json",
-            success: function () { callback(); }
+            success: function (result) { callback(result); }
         });
     };
     ServiceApi.prototype.putAjax = function (url, jsonPayload, callback) {

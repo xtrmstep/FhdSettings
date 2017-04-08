@@ -8,13 +8,13 @@ class ServiceApi {
         this.serviceUrl = baseServiceUrl;
     }
 
-    postAjax(url: string, jsonPayload: string, callback: () => any) {
+    postAjax(url: string, jsonPayload: string, callback: (data: any) => any) {
         $.ajax({
             url: url,
             method: "POST",
             data: jsonPayload,
             contentType: "application/json",
-            success() { callback(); }
+            success(result: any) { callback(result); }
         });
     }
 
