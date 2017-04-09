@@ -46,9 +46,7 @@ var SettingsViewModel = (function () {
         item.Code = this.editCode();
         item.Name = this.editName();
         item.Value = this.editValue();
-        // todo update ID for new item stored via API
         // todo delete item via API
-        // todo DataType should be show as text
         if (item.Id)
             this.settingsApi.save(item, function () {
                 var currentArray = _this.settings();
@@ -61,11 +59,14 @@ var SettingsViewModel = (function () {
                 }
             });
         else
-            this.settingsApi.add(item, function () { _this.settings.push(item); });
+            this.settingsApi.add(item, function (data) {
+                item.Id = data;
+                _this.settings.push(item);
+            });
     };
     SettingsViewModel.prototype.delete = function (model, setting) {
         if (confirm("Are you sure?")) {
-            model.settingsApi.remove(setting, function () { model.settings.remove(setting); }, function (error) { alert(error); });
+            model.settingsApi.remove(setting, function () { model.settings.remove(setting); });
         }
     };
     SettingsViewModel.prototype.edit = function (model, setting) {
@@ -122,11 +123,14 @@ var HostsViewModel = (function () {
                 }
             });
         else
-            this.hostsApi.add(item, function () { _this.hosts.push(item); });
+            this.hostsApi.add(item, function (data) {
+                item.Id = data;
+                _this.hosts.push(item);
+            });
     };
     HostsViewModel.prototype.delete = function (model, host) {
         if (confirm("Are you sure?")) {
-            model.hostsApi.remove(host, function () { model.hosts.remove(host); }, function (error) { alert(error); });
+            model.hostsApi.remove(host, function () { model.hosts.remove(host); });
         }
     };
     HostsViewModel.prototype.edit = function (model, host) {
@@ -194,7 +198,7 @@ var RulesViewModel = (function () {
     };
     RulesViewModel.prototype.delete = function (model, rule) {
         if (confirm("Are you sure?")) {
-            model.rulesApi.remove(rule, function () { model.rules.remove(rule); }, function (error) { alert(error); });
+            model.rulesApi.remove(rule, function () { model.rules.remove(rule); });
         }
     };
     RulesViewModel.prototype.edit = function (model, rule) {
@@ -226,10 +230,9 @@ var SettingsApi = (function (_super) {
         var url = this.serviceUrl + "/api/settings/" + setting.Id;
         this.putAjax(url, jsonValue, callback);
     };
-    SettingsApi.prototype.remove = function (setting, success, error) {
-        alert("api call to remove setting " + setting.Code);
-        success();
-        error("error message");
+    SettingsApi.prototype.remove = function (setting, success) {
+        var url = this.serviceUrl + "/api/settings/" + setting.Id;
+        this.deleteAjax(url, success);
     };
     return SettingsApi;
 }(ServiceApi));
@@ -252,10 +255,9 @@ var HostsApi = (function (_super) {
         var url = this.serviceUrl + "/api/hosts/" + host.Id;
         this.putAjax(url, jsonValue, callback);
     };
-    HostsApi.prototype.remove = function (host, success, error) {
-        alert("api call to remove host " + host.SeedUrl);
-        success();
-        error("error message");
+    HostsApi.prototype.remove = function (host, success) {
+        var url = this.serviceUrl + "/api/hosts/" + host.Id;
+        this.deleteAjax(url, success);
     };
     return HostsApi;
 }(ServiceApi));
@@ -278,10 +280,9 @@ var RulesApi = (function (_super) {
         var url = this.serviceUrl + "/api/rules/" + rule.Id;
         this.putAjax(url, jsonValue, callback);
     };
-    RulesApi.prototype.remove = function (rule, success, error) {
-        alert("api call to remove rule " + rule.Name);
-        success();
-        error("error message");
+    RulesApi.prototype.remove = function (rule, success) {
+        var url = this.serviceUrl + "/api/rules/" + rule.Id;
+        this.deleteAjax(url, success);
     };
     return RulesApi;
 }(ServiceApi));

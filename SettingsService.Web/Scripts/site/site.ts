@@ -28,6 +28,14 @@ class ServiceApi {
         });
     }
 
+    deleteAjax(url: string, callback: () => any) {
+        $.ajax({
+            url: url,
+            method: "DELETE",
+            success() { callback(); }
+        });
+    }
+
     getAjax(url: string, callback: (data: any) => any) {
         $.get(url, callback);
     }

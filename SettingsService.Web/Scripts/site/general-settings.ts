@@ -55,9 +55,7 @@ class SettingsViewModel {
         item.Code = this.editCode();
         item.Name = this.editName();
         item.Value = this.editValue();
-        // todo update ID for new item stored via API
         // todo delete item via API
-        // todo DataType should be show as text
         if (item.Id)
             this.settingsApi.save(item, () => {
                 var currentArray = this.settings();
@@ -70,15 +68,17 @@ class SettingsViewModel {
                 }
             });
         else
-            this.settingsApi.add(item, () => { this.settings.push(item); });
+            this.settingsApi.add(item, (data) => {
+                item.Id = data;
+                this.settings.push(item);
+            });
 
     }
 
     delete(model: SettingsViewModel, setting: Setting) {
         if (confirm("Are you sure?")) {
             model.settingsApi.remove(setting,
-            () => { model.settings.remove(setting); },
-            (error) => { alert(error); });
+            () => { model.settings.remove(setting); });
         }
     }
 
@@ -133,7 +133,7 @@ class HostsViewModel {
         item.Id = this.editId();
         item.SeedUrl = this.editUrl();
 
-        if(item.Id)
+        if (item.Id)
             this.hostsApi.save(item, () => {
                 var currentArray = this.hosts();
                 for (var idx = 0; idx < currentArray.length; idx++) {
@@ -145,14 +145,16 @@ class HostsViewModel {
                 }
             });
         else
-            this.hostsApi.add(item, () => { this.hosts.push(item); });
+            this.hostsApi.add(item, (data) => {
+                item.Id = data;
+                this.hosts.push(item);
+            });
     }
 
     delete(model: HostsViewModel, host: Host) {
         if (confirm("Are you sure?")) {
             model.hostsApi.remove(host,
-            () => { model.hosts.remove(host); },
-            (error) => { alert(error); });
+            () => { model.hosts.remove(host); });
         }
     }
 
@@ -236,8 +238,7 @@ class RulesViewModel {
     delete(model: RulesViewModel, rule: Rule) {
         if (confirm("Are you sure?")) {
             model.rulesApi.remove(rule,
-            () => { model.rules.remove(rule); },
-            (error) => { alert(error); });
+            () => { model.rules.remove(rule); });
         }
     }
 
@@ -263,7 +264,7 @@ class SettingsApi extends ServiceApi {
         this.getAjax(url, callback);
     }
 
-    add(setting: Setting, callback: () => any) {
+    add(setting: Setting, callback: (data: any) => any) {
         var jsonValue: string = JSON.stringify(setting);
         var url = this.serviceUrl + "/api/settings";
         this.postAjax(url, jsonValue, callback);
@@ -275,10 +276,9 @@ class SettingsApi extends ServiceApi {
         this.putAjax(url, jsonValue, callback);
     }
 
-    remove(setting: Setting, success: () => any, error: (errorMessage: string) => any) {
-        alert("api call to remove setting " + setting.Code);
-        success();
-        error("error message");
+    remove(setting: Setting, success: () => any) {
+        var url = this.serviceUrl + "/api/settings/" + setting.Id;
+        this.deleteAjax(url, success);
     }
 }
 
@@ -295,7 +295,7 @@ class HostsApi extends ServiceApi {
         this.getAjax(url, callback);
     }
 
-    add(host: Host, callback: () => any) {
+    add(host: Host, callback: (data: any) => any) {
         var jsonValue: string = JSON.stringify(host);
         var url = this.serviceUrl + "/api/hosts";
         this.postAjax(url, jsonValue, callback);
@@ -307,10 +307,9 @@ class HostsApi extends ServiceApi {
         this.putAjax(url, jsonValue, callback);
     }
 
-    remove(host: Host, success: () => any, error: (errorMessage: string) => any) {
-        alert("api call to remove host " + host.SeedUrl);
-        success();
-        error("error message");
+    remove(host: Host, success: () => any) {
+        var url = this.serviceUrl + "/api/hosts/" + host.Id;
+        this.deleteAjax(url, success);
     }
 }
 
@@ -339,9 +338,8 @@ class RulesApi extends ServiceApi {
         this.putAjax(url, jsonValue, callback);
     }
 
-    remove(rule: Rule, success: () => any, error: (errorMessage: string) => any) {
-        alert("api call to remove rule " + rule.Name);
-        success();
-        error("error message");
+    remove(rule: Rule, success: () => any) {
+        var url = this.serviceUrl + "/api/rules/" + rule.Id;
+        this.deleteAjax(url, success);
     }
 }

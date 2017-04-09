@@ -22,6 +22,13 @@ var ServiceApi = (function () {
             success: function () { callback(); }
         });
     };
+    ServiceApi.prototype.deleteAjax = function (url, callback) {
+        $.ajax({
+            url: url,
+            method: "DELETE",
+            success: function () { callback(); }
+        });
+    };
     ServiceApi.prototype.getAjax = function (url, callback) {
         $.get(url, callback);
     };
