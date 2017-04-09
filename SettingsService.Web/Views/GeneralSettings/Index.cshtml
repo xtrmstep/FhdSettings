@@ -2,67 +2,36 @@
 @section Scripts {
     @Scripts.Render("~/bundles/general-settings")
     <script>
-        generalSettingsApi.setApiServer("@Settings.Default.SettingServiceUrl");
+        var settingsViewModel = new SettingsViewModel("@Settings.Default.SettingServiceUrl", []);
+        var hostsViewModel = new HostsViewModel("@Settings.Default.SettingServiceUrl", []);
+
+        var rule1 = new Rule();
+        rule1.Id = "1";
+        rule1.Name = "Item1";
+        rule1.DataType = "Video";
+        rule1.RegExpression = "expression1";
+
+        var rule2 = new Rule();
+        rule2.Id = "2";
+        rule2.Name = "Item2";
+        rule2.DataType = "Picture";
+        rule2.RegExpression = "expression2";
+
+        var rulesViewModel = new RulesViewModel("@Settings.Default.SettingServiceUrl", [
+            rule1,
+            rule2
+        ]);
+
         $(function () {
-            ko.applyBindings(generalSettings);
-            settingsServiceApi.loadGeneralSettings();
+            settingsViewModel.load();
+            hostsViewModel.load();
+            rulesViewModel.load();
+            ko.applyBindings(settingsViewModel, document.getElementById("settings"));
+            ko.applyBindings(hostsViewModel, document.getElementById("hosts"));
+            ko.applyBindings(rulesViewModel, document.getElementById("rules"));
         });
     </script>
 }
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Default Crawler Settings</h3>
-    </div>
-    <div class="panel-body">
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label for="disallow" class="col-sm-2 control-label">Disallow</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="disallow" placeholder="Example: *" data-bind="value: disallow"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="delay" class="col-sm-2 control-label">Delay</label>
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" id="delay" placeholder="Example: 20" data-bind="value: delay"/>
-                    <span class="help-block">A delay in seconds</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="button" class="btn btn-primary" data-bind="click: saveSettings">Save</button>
-                    @Html.ActionLink("Details", "Details", null, new { @class = "btn btn-default" })
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Frontier Seed URLs</h3>
-    </div>
-    <div class="panel-body">
-        <form class="form-inline">
-            <div class="form-group">
-                <label for="newurl">New URL</label>
-                <input type="text" class="form-control" id="newurl" placeholder="For example: http://myurl.com/page" data-bind="value: newUrl"/>
-            </div>
-            <button type="button" class="btn btn-primary" data-bind="click: addUrl">Add</button>
-        </form>
-        <br />
-        <table class="table table-hover">
-            <tr>
-                <th>URL</th>
-                <th></th>
-            </tr>
-            <tbody data-bind="foreach: urls">
-                <tr>
-                    <td data-bind="text: Url"></td>
-                    <td>
-                        <button type="button" class="btn btn-default btn-sm" title="Remove" data-bind="click: $root.removeUrl"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+@Html.Partial("_Settings")
+@Html.Partial("_Hosts")
+@Html.Partial("_Rules")

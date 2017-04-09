@@ -1,0 +1,54 @@
+﻿<div id="settings" class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Settings&nbsp;<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#settings-dialog" data-bind="click: add">Add</button></h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Value</th>
+                <th></th>
+            </tr>
+            <tbody data-bind="foreach: settings">
+            <tr>
+                <td data-bind="text: Code"></td>
+                <td data-bind="text: Name"></td>
+                <td data-bind="text: Value"></td>
+                <td>
+                    <button type="button" class="btn btn-default btn-sm" title="Edit" data-bind="click:function(){ $root.edit($root, $data);}" data-toggle="modal" data-target="#settings-dialog"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                    <button type="button" class="btn btn-default btn-sm" title="Remove" data-bind="click:function(){ $root.delete($root, $data);}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="settings-dialog" class="modal fade" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add/Edit item</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="code">Code</label>
+                        <input type="text" class="form-control" id="code" placeholder="Code" data-bind="value: editCode">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Name" data-bind="value: editName">
+                    </div>
+                    <div class="form-group">
+                        <label for="value">Value</label>
+                        <input type="text" class="form-control" id="value" data-bind="value: editValue">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: save" data-dismiss="modal">Save</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

@@ -16,7 +16,7 @@ namespace SettingsService.Api.Tests.Fixtures
             using (var ctx = new SettingDbContext())
             {
                 // make a call to DB in order to migrate it to the latest version
-                var r = ctx.CrawlRules.Take(1).ToList();
+                var r = ctx.ExtractRules.Take(1).ToList();
             }
         }
 

@@ -1,4 +1,4 @@
-var Microsoft;
+﻿var Microsoft;
 (function (Microsoft) {
     var ApplicationInsights;
     (function (ApplicationInsights) {
@@ -716,7 +716,7 @@ var Microsoft;
                     if (!ApplicationInsights.extensions.IsNullOrUndefined(xhr) &&
                         !ApplicationInsights.extensions.IsNullOrUndefined(xhr.ajaxData) &&
                         !ApplicationInsights.extensions.IsNullOrUndefined(xhr.ajaxData.requestUrl)) {
-                        result += "(url: '" + xhr.ajaxData.requestUrl + "')";
+                        result += "(hostModel: '" + xhr.ajaxData.requestUrl + "')";
                     }
                 }
                 catch (e) { }
@@ -1884,7 +1884,7 @@ var Microsoft;
                         if (url) {
                             if (url.length > DataSanitizer.MAX_URL_LENGTH) {
                                 url = url.substring(0, DataSanitizer.MAX_URL_LENGTH);
-                                ApplicationInsights._InternalLogging.throwInternalUserActionable(ApplicationInsights.LoggingSeverity.WARNING, new ApplicationInsights._InternalLogMessage(ApplicationInsights._InternalMessageId.USRACT_UrlTooLong, "url is too long, it has been trucated to " + DataSanitizer.MAX_URL_LENGTH + " characters.", { url: url }));
+                                ApplicationInsights._InternalLogging.throwInternalUserActionable(ApplicationInsights.LoggingSeverity.WARNING, new ApplicationInsights._InternalLogMessage(ApplicationInsights._InternalMessageId.USRACT_UrlTooLong, "hostModel is too long, it has been trucated to " + DataSanitizer.MAX_URL_LENGTH + " characters.", { url: url }));
                             }
                         }
                         return url;

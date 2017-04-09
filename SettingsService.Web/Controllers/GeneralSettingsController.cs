@@ -8,7 +8,7 @@ namespace SettingsService.Web.Controllers
         public GeneralSettingsController()
         {
             ViewBag.PageCaption = "General Settings";
-            ViewBag.Section = SiteSections.GereralSections;
+            ViewBag.Section = SiteSections.Gereral;
         }
         public ActionResult Index()
         {

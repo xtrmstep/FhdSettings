@@ -154,18 +154,18 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ConfigurationMapping.cs" />
     <Compile Include="Controllers\Attributes\ValidateAuthTokenFilterAttribute.cs" />
-    <Compile Include="Controllers\AnalyzerRulesController.cs" />
-    <Compile Include="Controllers\CrawlerRulesController.cs" />
-    <Compile Include="Controllers\UrlFrontierSettingsController.cs" />
-    <Compile Include="Controllers\HostSettingsController.cs" />
+    <Compile Include="Controllers\RulesController.cs" />
+    <Compile Include="Controllers\HostsController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Loggers\TelemetryExceptionsLogger.cs" />
-    <Compile Include="Models\Auth\AuthTokenViewModel.cs" />
-    <Compile Include="Models\HostDefaultSettings.cs" />
+    <Compile Include="Models\ExtractRuleReadModel.cs" />
+    <Compile Include="Models\ExtractRuleModel.cs" />
+    <Compile Include="Models\HostModel.cs" />
+    <Compile Include="Models\SettingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\ViewModelMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
